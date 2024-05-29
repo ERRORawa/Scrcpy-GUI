@@ -22,13 +22,7 @@ jobs:
         dotnet-version: 3.1.202
     # 添加 MSBuild.exe 到环境变量: https://github.com/microsoft/setup-msbuild
     - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
-    # 安装 NuGet（如果后面需要，可以使用它）
-    - name: Setup NuGet
-      uses: nuget/setup-nuget@v1
-      with:
-        nuget-api-key: ${{ secrets.NuGetAPIKey }}
-        nuget-version: '5.x'
+      uses: microsoft/setup-msbuild@v2
     # 编译整个项目
     - name: Build the solution
       run: msbuild /p:Configuration=$env:Configuration -restore
@@ -39,3 +33,8 @@ jobs:
       run: dotnet test -c $env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
+    - name: Upload Scrcpy-GUI
+        uses: actions/upload-artifact@v2
+        with:
+          name: Scrcpy-GUI
+          path: bin\Debug\scrcpy-gui.exe
