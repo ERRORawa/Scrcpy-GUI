@@ -1,28 +1,41 @@
-name: build and test
+name: .NET Build & Test
 on:
   push:
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
-    paths-ignore:
-    - 'README.md'
-env:
-  DOTNET_VERSION: '6.0.x'
+    branches: [ master ]
 jobs:
-  build-and-test:
-    name: build-and-test-${{matrix.os}}
-    runs-on: ${{ matrix.os }}
+  build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        configuration: [Debug, Release]
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    # 安装 .NET Core
+    - name: Install .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+        dotnet-version: 3.1.202
+    # 添加 MSBuild.exe 到环境变量: https://github.com/microsoft/setup-msbuild
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+    # 安装 NuGet（如果后面需要，可以使用它）
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.NuGetAPIKey }}
+        nuget-version: '5.x'
+    # 编译整个项目
+    - name: Build the solution
+      run: msbuild /p:Configuration=$env:Configuration -restore
+      env:
+        Configuration: ${{ matrix.configuration }}
+    # 执行单元测试
+    - name: Execute unit tests
+      run: dotnet test -c $env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
