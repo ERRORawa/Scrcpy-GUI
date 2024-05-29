@@ -34,7 +34,7 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
     - name: Upload Scrcpy-GUI
-        uses: actions/upload-artifact@v2
-        with:
-          name: Scrcpy-GUI
-          path: bin\Debug\scrcpy-gui.exe
+      uses: actions/upload-artifact@v4
+      with:
+        name: Scrcpy-GUI
+        path: bin\Debug\scrcpy-gui.exe
