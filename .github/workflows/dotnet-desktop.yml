@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Scrcpy-GUI
-        path: bin\Debug\scrcpy-gui.exe
+        path: bin\Release\scrcpy-gui.exe
