@@ -40,13 +40,14 @@
             this.UnauthDevices = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.disableToolBar = new System.Windows.Forms.CheckBox();
+            this.OTG = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Start
             // 
             this.Start.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Start.Location = new System.Drawing.Point(21, 15);
+            this.Start.Location = new System.Drawing.Point(21, 39);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(150, 60);
             this.Start.TabIndex = 0;
@@ -57,7 +58,7 @@
             // UsbToWifi
             // 
             this.UsbToWifi.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.UsbToWifi.Location = new System.Drawing.Point(21, 115);
+            this.UsbToWifi.Location = new System.Drawing.Point(21, 158);
             this.UsbToWifi.Name = "UsbToWifi";
             this.UsbToWifi.Size = new System.Drawing.Size(150, 60);
             this.UsbToWifi.TabIndex = 1;
@@ -68,7 +69,7 @@
             // WirelessDebug
             // 
             this.WirelessDebug.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.WirelessDebug.Location = new System.Drawing.Point(21, 215);
+            this.WirelessDebug.Location = new System.Drawing.Point(21, 267);
             this.WirelessDebug.Name = "WirelessDebug";
             this.WirelessDebug.Size = new System.Drawing.Size(150, 60);
             this.WirelessDebug.TabIndex = 2;
@@ -80,7 +81,7 @@
             // 
             this.ConnectedTitle.AutoSize = true;
             this.ConnectedTitle.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.ConnectedTitle.Location = new System.Drawing.Point(195, 20);
+            this.ConnectedTitle.Location = new System.Drawing.Point(200, 50);
             this.ConnectedTitle.Name = "ConnectedTitle";
             this.ConnectedTitle.Size = new System.Drawing.Size(122, 21);
             this.ConnectedTitle.TabIndex = 4;
@@ -88,7 +89,7 @@
             // 
             // Reset
             // 
-            this.Reset.Location = new System.Drawing.Point(324, 284);
+            this.Reset.Location = new System.Drawing.Point(285, 292);
             this.Reset.Name = "Reset";
             this.Reset.Size = new System.Drawing.Size(93, 35);
             this.Reset.TabIndex = 5;
@@ -106,7 +107,7 @@
             // 
             this.ConnectedDevices.AutoSize = true;
             this.ConnectedDevices.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.ConnectedDevices.Location = new System.Drawing.Point(200, 50);
+            this.ConnectedDevices.Location = new System.Drawing.Point(200, 81);
             this.ConnectedDevices.Name = "ConnectedDevices";
             this.ConnectedDevices.Size = new System.Drawing.Size(51, 20);
             this.ConnectedDevices.TabIndex = 6;
@@ -116,7 +117,7 @@
             // 
             this.UnauthTitle.AutoSize = true;
             this.UnauthTitle.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.UnauthTitle.Location = new System.Drawing.Point(380, 20);
+            this.UnauthTitle.Location = new System.Drawing.Point(380, 60);
             this.UnauthTitle.Name = "UnauthTitle";
             this.UnauthTitle.Size = new System.Drawing.Size(122, 21);
             this.UnauthTitle.TabIndex = 7;
@@ -126,7 +127,7 @@
             // 
             this.UnauthDevices.AutoSize = true;
             this.UnauthDevices.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.UnauthDevices.Location = new System.Drawing.Point(385, 50);
+            this.UnauthDevices.Location = new System.Drawing.Point(380, 81);
             this.UnauthDevices.Name = "UnauthDevices";
             this.UnauthDevices.Size = new System.Drawing.Size(51, 20);
             this.UnauthDevices.TabIndex = 8;
@@ -145,7 +146,7 @@
             // disableToolBar
             // 
             this.disableToolBar.AutoSize = true;
-            this.disableToolBar.Location = new System.Drawing.Point(60, 81);
+            this.disableToolBar.Location = new System.Drawing.Point(56, 105);
             this.disableToolBar.Name = "disableToolBar";
             this.disableToolBar.Size = new System.Drawing.Size(84, 16);
             this.disableToolBar.TabIndex = 10;
@@ -153,11 +154,24 @@
             this.disableToolBar.UseVisualStyleBackColor = true;
             this.disableToolBar.CheckedChanged += new System.EventHandler(this.disableToolBar_CheckedChanged);
             // 
+            // OTG
+            // 
+            this.OTG.AutoSize = true;
+            this.OTG.Location = new System.Drawing.Point(56, 127);
+            this.OTG.Name = "OTG";
+            this.OTG.Size = new System.Drawing.Size(66, 16);
+            this.OTG.TabIndex = 11;
+            this.OTG.Text = "启用OTG";
+            this.OTG.UseVisualStyleBackColor = true;
+            this.OTG.CheckedChanged += new System.EventHandler(this.OTG_CheckedChanged);
+            this.OTG.MouseHover += new System.EventHandler(this.OTG_MouseHover);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.OTG);
             this.Controls.Add(this.disableToolBar);
             this.Controls.Add(this.UnauthDevices);
             this.Controls.Add(this.UnauthTitle);
@@ -196,6 +210,7 @@
         private System.Windows.Forms.Label UnauthDevices;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox disableToolBar;
+        private System.Windows.Forms.CheckBox OTG;
     }
 }
 

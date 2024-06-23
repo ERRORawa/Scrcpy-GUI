@@ -66,6 +66,54 @@ namespace scrcpy_gui
 
             return ReadFile(fileName);
         }
+        
+        private void SetArgs()
+        {
+            if (Settings.Default.用OTG)
+            {
+                MessageBox.Show("使用OTG模式时\n所有功能将无法使用", "你莫得选择！", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                command = " --otg";
+            }
+            else
+            {
+                if (Settings.Default.置顶)
+                {
+                    command = command + " --always-on-top";
+                }
+                if (Settings.Default.禁用屏幕保护程序)
+                {
+                    command = command + " --disable-screensaver";
+                }
+                if (!Settings.Default.剪切板同步)
+                {
+                    command = command + " --no-clipboard-autosync";
+                }
+                if (Settings.Default.禁用控制)
+                {
+                    command = command + " --no-control";
+                }
+                if (!Settings.Default.音频流转)
+                {
+                    command = command + " --no-audio";
+                }
+                if (Settings.Default.结束后关闭屏幕)
+                {
+                    command = command + " --power-off-on-close";
+                }
+                if (Settings.Default.保持唤醒)
+                {
+                    command = command + " --stay-awake";
+                }
+            }
+            if (Settings.Default.窗口标题 != "")
+            {
+                command = command + " --window-title=" + Settings.Default.窗口标题;
+            }
+            if (Settings.Default.文件存放目录 != "")
+            {
+                command = command + " --push-target=" + Settings.Default.文件存放目录;
+            }
+        }
 
         public Main()
         {
@@ -75,6 +123,7 @@ namespace scrcpy_gui
         private void Main_Load(object sender, EventArgs e)    //窗体控件对齐，初始化设置项
         {
             disableToolBar.Checked = Settings.Default.关闭工具栏;
+            OTG.Checked = Settings.Default.用OTG;
             if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))
             {
                 DialogResult dialogResult = MessageBox.Show("首次启动需要下载环境配置，是否继续？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -103,6 +152,7 @@ namespace scrcpy_gui
             }
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;
             disableToolBar.Left = Start.Left + Start.Width / 2 - disableToolBar.Width /2;
+            OTG.Left = disableToolBar.Left + disableToolBar.Width / 2 - OTG.Width / 2;
             UsbToWifi.Left = this.ClientRectangle.Width / 3 / 2 - UsbToWifi.Width / 2;
             WirelessDebug.Left = this.ClientRectangle.Width / 3 / 2 - WirelessDebug.Width / 2;
             ConnectedTitle.Left = this.ClientRectangle.Width / 3 * 2 - this.ClientRectangle.Width / 3 / 2 - ConnectedTitle.Width / 2;
@@ -113,6 +163,7 @@ namespace scrcpy_gui
 
             Start.Top = this.ClientRectangle.Height / 3 / 2 - Start.Height / 2;
             disableToolBar.Top = Start.Bottom + 5;
+            OTG.Top = disableToolBar.Bottom + 5;
             UsbToWifi.Top = this.ClientRectangle.Height / 3 * 2 - this.ClientRectangle.Height / 3 / 2 - UsbToWifi.Height / 2;
             WirelessDebug.Top = this.ClientRectangle.Height - this.ClientRectangle.Height / 3 / 2 - WirelessDebug.Height / 2;
             ConnectedTitle.Top = this.ClientRectangle.Height / 3 / 2 - ConnectedTitle.Height / 2 - 10;
@@ -120,49 +171,6 @@ namespace scrcpy_gui
             ConnectedDevices.Top = ConnectedTitle.Bottom + 5;
             UnauthDevices.Top = UnauthTitle.Bottom + 5;
             Reset.Top = WirelessDebug.Bottom - Reset.Height;
-
-
-            if (Settings.Default.用OTG)
-            {
-                MessageBox.Show("当前配置正在使用OTG模式\n所有功能将无法使用\nOTG模式下可以使用Alt跳出设备", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                command = " --otg";
-            }
-            if (Settings.Default.置顶)
-            {
-                command = command + " --always-on-top";
-            }
-            if (Settings.Default.禁用屏幕保护程序)
-            {
-                command = command + " --disable-screensaver";
-            }
-            if (!Settings.Default.剪切板同步)
-            {
-                command = command + " --no-clipboard-autosync";
-            }
-            if (Settings.Default.禁用控制)
-            {
-                command = command + " --no-control";
-            }
-            if (!Settings.Default.音频流转)
-            {
-                command = command + " --no-audio";
-            }
-            if (Settings.Default.结束后关闭屏幕)
-            {
-                command = command + " --power-off-on-close";
-            }
-            if (Settings.Default.保持唤醒)
-            {
-                command = command + " --stay-awake";
-            }
-            if (Settings.Default.窗口标题 != "")
-            {
-                command = command + " --window-title=" + Settings.Default.窗口标题;
-            }
-            if (Settings.Default.文件存放目录 != "")
-            {
-                command = command + " --push-target=" + Settings.Default.文件存放目录;
-            }
         }
 
         private void CheckDevices_Tick(object sender, EventArgs e)    //定时检查devices
@@ -233,6 +241,7 @@ namespace scrcpy_gui
             }
             else    //单设备时
             {                              //开启投屏
+                SetArgs();
                 ToolBar toolBar = new ToolBar();
                 toolBar.device = devices[0];
                 toolBar.disableToolBar = disableToolBar.Checked;
@@ -292,6 +301,24 @@ namespace scrcpy_gui
         {
             Settings.Default["关闭工具栏"] = disableToolBar.Checked;
             Settings.Default.Save();
+        }
+
+        private void OTG_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default["用OTG"] = OTG.Checked;
+            Settings.Default.Save();
+        }
+
+        private void OTG_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip toolTip = new ToolTip();
+
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 100;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
+
+            toolTip.SetToolTip(this.OTG, "只有选择的设备处于有线连接时可用\n若是选择了无线连接的设备将会导致程序闪退");
         }
     }
 }

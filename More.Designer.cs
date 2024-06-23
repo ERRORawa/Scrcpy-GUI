@@ -34,13 +34,11 @@
             this.FileFolderLabel = new System.Windows.Forms.Label();
             this.Enter = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
-            this.Apply = new System.Windows.Forms.Button();
             this.FileFolder = new System.Windows.Forms.TextBox();
             this.WindowTitle = new System.Windows.Forms.TextBox();
             this.StandOn = new System.Windows.Forms.CheckBox();
             this.EnableAudio = new System.Windows.Forms.CheckBox();
             this.ScreenOff = new System.Windows.Forms.CheckBox();
-            this.OTGMode = new System.Windows.Forms.CheckBox();
             this.DisableControl = new System.Windows.Forms.CheckBox();
             this.CutpadSync = new System.Windows.Forms.CheckBox();
             this.DisableScreenProtect = new System.Windows.Forms.CheckBox();
@@ -83,7 +81,7 @@
             this.Enter.AutoSize = true;
             this.Enter.Enabled = false;
             this.Enter.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Enter.Location = new System.Drawing.Point(435, 454);
+            this.Enter.Location = new System.Drawing.Point(498, 454);
             this.Enter.Name = "Enter";
             this.Enter.Size = new System.Drawing.Size(57, 30);
             this.Enter.TabIndex = 12;
@@ -95,26 +93,13 @@
             // 
             this.Cancel.AutoSize = true;
             this.Cancel.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Cancel.Location = new System.Drawing.Point(498, 454);
+            this.Cancel.Location = new System.Drawing.Point(561, 454);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(57, 30);
             this.Cancel.TabIndex = 13;
             this.Cancel.Text = "取消";
             this.Cancel.UseVisualStyleBackColor = true;
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
-            // 
-            // Apply
-            // 
-            this.Apply.AutoSize = true;
-            this.Apply.Enabled = false;
-            this.Apply.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Apply.Location = new System.Drawing.Point(561, 454);
-            this.Apply.Name = "Apply";
-            this.Apply.Size = new System.Drawing.Size(57, 30);
-            this.Apply.TabIndex = 14;
-            this.Apply.Text = "应用";
-            this.Apply.UseVisualStyleBackColor = true;
-            this.Apply.Click += new System.EventHandler(this.Apply_Click);
             // 
             // FileFolder
             // 
@@ -147,7 +132,7 @@
             this.StandOn.AutoSize = true;
             this.StandOn.Checked = global::scrcpy_gui.Settings.Default.保持唤醒;
             this.StandOn.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.StandOn.Location = new System.Drawing.Point(331, 82);
+            this.StandOn.Location = new System.Drawing.Point(170, 61);
             this.StandOn.Name = "StandOn";
             this.StandOn.Size = new System.Drawing.Size(84, 31);
             this.StandOn.TabIndex = 5;
@@ -162,7 +147,7 @@
             this.EnableAudio.AutoSize = true;
             this.EnableAudio.Checked = global::scrcpy_gui.Settings.Default.音频流转;
             this.EnableAudio.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.EnableAudio.Location = new System.Drawing.Point(32, 82);
+            this.EnableAudio.Location = new System.Drawing.Point(472, 24);
             this.EnableAudio.Name = "EnableAudio";
             this.EnableAudio.Size = new System.Drawing.Size(84, 31);
             this.EnableAudio.TabIndex = 0;
@@ -177,7 +162,7 @@
             this.ScreenOff.AutoSize = true;
             this.ScreenOff.Checked = global::scrcpy_gui.Settings.Default.结束后关闭屏幕;
             this.ScreenOff.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.ScreenOff.Location = new System.Drawing.Point(176, 82);
+            this.ScreenOff.Location = new System.Drawing.Point(32, 61);
             this.ScreenOff.Name = "ScreenOff";
             this.ScreenOff.Size = new System.Drawing.Size(132, 31);
             this.ScreenOff.TabIndex = 4;
@@ -186,28 +171,13 @@
             this.ScreenOff.CheckedChanged += new System.EventHandler(this.ScreenOff_CheckedChanged);
             this.ScreenOff.MouseHover += new System.EventHandler(this.ScreenOff_MouseHover);
             // 
-            // OTGMode
-            // 
-            this.OTGMode.Appearance = System.Windows.Forms.Appearance.Button;
-            this.OTGMode.AutoSize = true;
-            this.OTGMode.Checked = global::scrcpy_gui.Settings.Default.用OTG;
-            this.OTGMode.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.OTGMode.Location = new System.Drawing.Point(464, 82);
-            this.OTGMode.Name = "OTGMode";
-            this.OTGMode.Size = new System.Drawing.Size(118, 31);
-            this.OTGMode.TabIndex = 3;
-            this.OTGMode.Text = "使用OTG连接";
-            this.OTGMode.UseVisualStyleBackColor = true;
-            this.OTGMode.CheckedChanged += new System.EventHandler(this.OTGMode_CheckedChanged);
-            this.OTGMode.MouseHover += new System.EventHandler(this.OTGMode_MouseHover);
-            // 
             // DisableControl
             // 
             this.DisableControl.Appearance = System.Windows.Forms.Appearance.Button;
             this.DisableControl.AutoSize = true;
             this.DisableControl.Checked = global::scrcpy_gui.Settings.Default.禁用控制;
             this.DisableControl.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.DisableControl.Location = new System.Drawing.Point(498, 24);
+            this.DisableControl.Location = new System.Drawing.Point(382, 24);
             this.DisableControl.Name = "DisableControl";
             this.DisableControl.Size = new System.Drawing.Size(84, 31);
             this.DisableControl.TabIndex = 2;
@@ -224,7 +194,7 @@
             this.CutpadSync.Checked = global::scrcpy_gui.Settings.Default.剪切板同步;
             this.CutpadSync.Cursor = System.Windows.Forms.Cursors.Default;
             this.CutpadSync.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.CutpadSync.Location = new System.Drawing.Point(351, 24);
+            this.CutpadSync.Location = new System.Drawing.Point(276, 24);
             this.CutpadSync.Name = "CutpadSync";
             this.CutpadSync.Size = new System.Drawing.Size(100, 31);
             this.CutpadSync.TabIndex = 1;
@@ -239,7 +209,7 @@
             this.DisableScreenProtect.AutoSize = true;
             this.DisableScreenProtect.Checked = global::scrcpy_gui.Settings.Default.禁用屏幕保护程序;
             this.DisableScreenProtect.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.DisableScreenProtect.Location = new System.Drawing.Point(160, 24);
+            this.DisableScreenProtect.Location = new System.Drawing.Point(122, 24);
             this.DisableScreenProtect.Name = "DisableScreenProtect";
             this.DisableScreenProtect.Size = new System.Drawing.Size(148, 31);
             this.DisableScreenProtect.TabIndex = 1;
@@ -267,13 +237,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(258, 233);
+            this.label1.ForeColor = System.Drawing.Color.Transparent;
+            this.label1.Location = new System.Drawing.Point(274, 235);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 12);
+            this.label1.TabIndex = 14;
             // 
             // More
             // 
@@ -281,7 +249,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 493);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Apply);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Enter);
             this.Controls.Add(this.FileFolder);
@@ -292,7 +259,6 @@
             this.Controls.Add(this.StandOn);
             this.Controls.Add(this.EnableAudio);
             this.Controls.Add(this.ScreenOff);
-            this.Controls.Add(this.OTGMode);
             this.Controls.Add(this.DisableControl);
             this.Controls.Add(this.CutpadSync);
             this.Controls.Add(this.DisableScreenProtect);
@@ -313,7 +279,6 @@
         private System.Windows.Forms.CheckBox DisableScreenProtect;
         private System.Windows.Forms.CheckBox EnableAudio;
         private System.Windows.Forms.CheckBox ScreenOff;
-        private System.Windows.Forms.CheckBox OTGMode;
         private System.Windows.Forms.CheckBox DisableControl;
         private System.Windows.Forms.CheckBox CutpadSync;
         private System.Windows.Forms.CheckBox StandOn;
@@ -324,7 +289,6 @@
         private System.Windows.Forms.TextBox FileFolder;
         private System.Windows.Forms.Button Enter;
         private System.Windows.Forms.Button Cancel;
-        private System.Windows.Forms.Button Apply;
         private System.Windows.Forms.Label label1;
     }
 }

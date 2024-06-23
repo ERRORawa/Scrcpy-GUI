@@ -164,7 +164,7 @@ namespace scrcpy_gui
         private void Port_TextChanged(object sender, EventArgs e)      //检测Port控件输入数字大小
         {
             int max = 65534;
-            if(Port.Text.Length != 0)
+            if(Port.Text.Length != 0 && Port.Text != "XXXXX")
             {
                 if(int.Parse(Port.Text) > max)
                 {
