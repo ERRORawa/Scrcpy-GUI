@@ -71,7 +71,7 @@ namespace scrcpy_gui
         {
             if (Settings.Default.用OTG)
             {
-                MessageBox.Show("使用OTG模式时\n所有功能将无法使用", "你莫得选择！", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("使用OTG模式时\n所有功能将无法使用\n按下Alt或切换窗口即可释放焦点", "你莫得选择！", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 command = " --otg";
             }
             else
@@ -300,12 +300,17 @@ namespace scrcpy_gui
         private void disableToolBar_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default["关闭工具栏"] = disableToolBar.Checked;
+            if (!disableToolBar.Checked)
+            {
+                OTG.Checked = false;
+            }
             Settings.Default.Save();
         }
 
         private void OTG_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default["用OTG"] = OTG.Checked;
+            disableToolBar.Checked = OTG.Checked;
             Settings.Default.Save();
         }
 
