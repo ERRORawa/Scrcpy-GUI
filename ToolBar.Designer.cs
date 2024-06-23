@@ -168,7 +168,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "ToolBar";
-            this.TopMost = true;
             this.Click += new System.EventHandler(this.ToolBar_Click);
             this.ResumeLayout(false);
 

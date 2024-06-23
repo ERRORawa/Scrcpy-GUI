@@ -80,9 +80,13 @@ namespace scrcpy_gui
 
         bool flag1 = false;     //执行一次异步，防止多次执行
 
+        bool isTop = true;
+
         string formTitle = Settings.Default.窗口标题;
 
         IntPtr hWnd = FindWindow(null, Settings.Default.窗口标题);       //获取Scrcpy的句柄
+
+        StringBuilder windowName = new StringBuilder(512);
 
         Point mousePoint = Control.MousePosition;       //获取鼠标的位置
 
@@ -97,17 +101,6 @@ namespace scrcpy_gui
             hWnd = FindWindow(null, formTitle);      //获取Scrcpy句柄
             RECT fx = new RECT();       //定义窗口位置
             GetWindowRect(hWnd, ref fx);        //获取窗口位置
-            IntPtr foregroundForm = GetForegroundWindow();      //获取活动窗口句柄
-            StringBuilder windowName = new StringBuilder(512);      //用来存放活动窗口标题的
-            GetWindowText(foregroundForm, windowName, windowName.Capacity);     //获取活动窗口标题
-            if (windowName.ToString() == "更多" || windowName.ToString() == "成功")       //如果当前活动窗口是 More ，禁止设置ToolBar为活动窗口
-            {
-                TopForm.Enabled = false;
-            }
-            else
-            {
-                TopForm.Enabled = true;
-            }
             if (fx.Left == 0 && fx.Top == 0 && flag && windowName.ToString() != "更多")        //如果成功获取过Scrcpy的位置并且Scrcpy已关闭
             {
                 Console.WriteLine("exit");
@@ -166,15 +159,23 @@ namespace scrcpy_gui
         private void TopForm_Tick(object sender, EventArgs e)
         {
             IntPtr foregroundForm = GetForegroundWindow();      //获取活动窗口句柄
-            StringBuilder windowName = new StringBuilder(512);      //用来存放活动窗口标题的
             GetWindowText(foregroundForm, windowName, windowName.Capacity);     //获取活动窗口标题
-            if (windowName.ToString() == formTitle)        //判断窗口标题是ToolBar或者Scrcpy
+            if (windowName.ToString() == formTitle || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
             {
-                this.TopMost = true;        //ToolBar窗口置顶
+                if (!isTop)
+                {
+                    isTop = true;
+                    IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
+                    SetForegroundWindow(toolBarhWnd);
+                    SetForegroundWindow(hWnd);
+                }
             }
             else
             {
-                this.TopMost = false;       //取消ToolBar的置顶
+                if (isTop)
+                {
+                    isTop = false;
+                }
             }
         }
 
