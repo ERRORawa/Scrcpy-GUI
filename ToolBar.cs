@@ -181,35 +181,35 @@ namespace scrcpy_gui
         private void Power_Click(object sender, EventArgs e)        //点击电源键
         {
             SetForegroundWindow(hWnd);
-            selectDevices.Cmd("adb -s " + device + " shell input keyevent 26");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell input keyevent 26");
         }
 
         private void VolumeUp_Click(object sender, EventArgs e)     //点击音量加
         {
             SetForegroundWindow(hWnd);
-            selectDevices.Cmd("adb -s " + device + " shell input keyevent 24");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell input keyevent 24");
         }
 
         private void VolumeDown_Click(object sender, EventArgs e)       //点击音量键
         {
             SetForegroundWindow(hWnd);
-            selectDevices.Cmd("adb -s " + device + " shell input keyevent 25");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell input keyevent 25");
         }
 
         private void Screenshot_Click(object sender, EventArgs e)       //点击截图键
         {
             SetForegroundWindow(hWnd);
             string time = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString();      //设置文件名
-            selectDevices.Cmd("adb -s " + device + " shell screencap /sdcard/" + time + ".png");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell screencap /sdcard/" + time + ".png");
             var task = Task.Run(async delegate
             {
                 await Task.Delay(1000);     //判断有没有把截图丢到桌面上
                 while (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + time + ".png"))
                 {
-                    selectDevices.Cmd("adb -s " + device + " pull /sdcard/" + time + ".png %USERPROFILE%\\Desktop\\" + time + ".png");
+                    selectDevices.Cmd("bin\\adb -s " + device + " pull /sdcard/" + time + ".png %USERPROFILE%\\Desktop\\" + time + ".png");
                     await Task.Delay(1000);
                 }
-                selectDevices.Cmd("adb -s " + device + " shell rm -rf /sdcard/" + time + ".png");
+                selectDevices.Cmd("bin\\adb -s " + device + " shell rm -rf /sdcard/" + time + ".png");
                 MessageBox.Show("成功将截图保存到桌面","截图成功",MessageBoxButtons.OK);
             });
 
@@ -218,19 +218,19 @@ namespace scrcpy_gui
         private void Back_Click(object sender, EventArgs e)     //点击返回键
         {
             SetForegroundWindow(hWnd);
-            selectDevices.Cmd("adb -s " + device + " shell input keyevent 4");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell input keyevent 4");
         }
 
         private void Home_Click(object sender, EventArgs e)      //点击主页键
         {
             SetForegroundWindow(hWnd);
-            selectDevices.Cmd("adb -s " + device + " shell input keyevent 3");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell input keyevent 3");
         }
 
         private void MuliTask_Click(object sender, EventArgs e)     //点击多任务视图键
         {
             SetForegroundWindow(hWnd);
-            selectDevices.Cmd("adb -s " + device + " shell input keyevent 187");
+            selectDevices.Cmd("bin\\adb -s " + device + " shell input keyevent 187");
         }
 
         private void More_Click(object sender, EventArgs e)         //点击更多键

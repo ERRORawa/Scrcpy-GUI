@@ -100,7 +100,7 @@ namespace scrcpy_gui
                 var task1 = Task.Run(async delegate         //异步执行连接设备
                 {
                     await Task.Delay(1000);     //延迟1秒
-                    string[] output = main.Cmd("adb connect " + IP.Text + ":" + Port.Text, "wireless");     //执行连接
+                    string[] output = main.Cmd("bin\\adb connect " + IP.Text + ":" + Port.Text, "wireless");     //执行连接
                     if (output[4].Substring(0, 6) == "cannot")      //判断连接失败
                     {
                         MessageBox.Show("无法连接到设备\n请检查是否已授权adb连接");

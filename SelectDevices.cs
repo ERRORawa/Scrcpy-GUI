@@ -77,7 +77,7 @@ namespace scrcpy_gui
                     ToolBar toolBar = new ToolBar();
                     toolBar.device = SelectDevice.SelectedItem.ToString();
                     toolBar.Show();
-                    Cmd("scrcpy -s " + SelectDevice.SelectedItem.ToString() + " --shortcut-mod lctrl,rctrl" + main.command);
+                    Cmd("bin\\scrcpy -s " + SelectDevice.SelectedItem.ToString() + " --shortcut-mod lctrl,rctrl" + main.command);
                     this.Hide();
                     break;
                 case 1:    //usb转wifi
@@ -85,7 +85,7 @@ namespace scrcpy_gui
                     string ip = "127.0.0.1";    //初始化ip
                     try
                     {
-                        string[] output = main.Cmd("adb -s " + SelectDevice.SelectedItem.ToString() + " shell ip addr show wlan0", "ip");    //获取设备ip信息
+                        string[] output = main.Cmd("bin\\adb -s " + SelectDevice.SelectedItem.ToString() + " shell ip addr show wlan0", "ip");    //获取设备ip信息
                         int start1 = output[6].LastIndexOf("inet ");    //获取inet位置
                         int end1 = output[6].LastIndexOf("/");    //获取/位置
                         ip = output[6].Substring(start1 + 5, end1 - start1 - 5);    //获取两个位置间的ip地址
@@ -97,9 +97,9 @@ namespace scrcpy_gui
                     }
                     if (flag)    //获取到ip时
                     {
-                        _ = main.Cmd("adb -s " + SelectDevice.SelectedItem.ToString() + " tcpip 1324", "command");    //设备监听1324端口
+                        _ = main.Cmd("bin\\adb -s " + SelectDevice.SelectedItem.ToString() + " tcpip 1324", "command");    //设备监听1324端口
                         MessageBox.Show("请拔出数据线\n若长时间未成功连接到设备，请不要使用无线调试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Cmd("adb connect " + ip + ":" + "1324");    //连接设备的1324端口
+                        Cmd("bin\\adb connect " + ip + ":" + "1324");    //连接设备的1324端口
                     }
                     break;
             }

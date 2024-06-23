@@ -12,7 +12,6 @@ namespace scrcpy_gui
 {
     public partial class More : Form
     {
-        ToolBar toolBar = new ToolBar();
 
         SelectDevices selectDevices = new SelectDevices();
 

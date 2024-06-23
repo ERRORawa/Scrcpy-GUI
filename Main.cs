@@ -6,9 +6,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace scrcpy_gui
 {
@@ -21,6 +23,8 @@ namespace scrcpy_gui
         string[] devices = null;    //初始化设备列表
 
         public string command = null;
+
+        string appPath = Directory.GetCurrentDirectory();
 
         public void WriteFile(string fileName,string content)    //写入文件（文件名，内容）
         {
@@ -70,10 +74,31 @@ namespace scrcpy_gui
 
         private void Main_Load(object sender, EventArgs e)    //窗体控件对齐，初始化设置项
         {
-            if (!File.Exists(Directory.GetCurrentDirectory() + "\\scrcpy.exe"))
+            if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))
             {
-                MessageBox.Show("未找到Scrcpy，该程序无法运行","致命错误",MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Environment.Exit(1);
+                DialogResult dialogResult = MessageBox.Show("首次启动需要下载环境配置，是否继续？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        WebClient webClient = new WebClient();
+                        webClient.DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("环境配置下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Environment.Exit(1);
+                    }
+                    ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);
+                    Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
+                    File.Delete(appPath + "scrcpy.zip");
+                    Process.Start(this.GetType().Assembly.Location);
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Environment.Exit(1);
+                }
             }
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;
             UsbToWifi.Left = this.ClientRectangle.Width / 3 / 2 - UsbToWifi.Width / 2;
@@ -140,7 +165,7 @@ namespace scrcpy_gui
         private void CheckDevices_Tick(object sender, EventArgs e)    //定时检查devices
         {
             CheckDevices.Interval = 2000;    //定时两秒执行
-            string[] output = Cmd("adb devices", "command");    //获取devices信息
+            string[] output = Cmd("bin\\adb devices", "command");    //获取devices信息
             ConnectedDevices.Text = "";
             UnauthDevices.Text = "";
             for (int i = 5;; i++)
@@ -186,7 +211,7 @@ namespace scrcpy_gui
             UnauthDevices.Text = "";
             ConnectedTitle.Text = "正在重置设备连接状态…\n重置时会无响应一小会";
             CheckDevices.Enabled = false;
-            _ = Cmd("adb kill-server", "reset");
+            _ = Cmd("bin\\adb kill-server", "reset");
             CheckDevices.Enabled = true;
         }
 
@@ -208,7 +233,7 @@ namespace scrcpy_gui
                 ToolBar toolBar = new ToolBar();
                 toolBar.device = devices[0];
                 toolBar.Show();
-                selectDevices.Cmd("scrcpy -s " + devices[0] + " --shortcut-mod lctrl,rctrl" + command);
+                selectDevices.Cmd("bin\\scrcpy -s " + devices[0] + " --shortcut-mod lctrl,rctrl" + command);
                 this.Hide();    //隐藏当前窗体
             }
         }
@@ -233,7 +258,7 @@ namespace scrcpy_gui
                 string ip = "127.0.0.1";    //初始化ip
                 try
                 {
-                    string[] output = Cmd("adb shell ip addr show wlan0", "ip");    //获取设备ip信息
+                    string[] output = Cmd("bin\\adb shell ip addr show wlan0", "ip");    //获取设备ip信息
                     int start1 = output[6].LastIndexOf("inet ");    //获取inet位置
                     int end1 = output[6].LastIndexOf("/");    //获取/位置
                     ip = output[6].Substring(start1 + 5, end1 - start1 - 5);    //获取两个位置间的ip地址
@@ -245,9 +270,9 @@ namespace scrcpy_gui
                 }
                 if (flag)    //获取到ip时
                 {
-                    _ = Cmd("adb tcpip 1324", "command");    //设备监听1324端口
+                    _ = Cmd("bin\\adb tcpip 1324", "command");    //设备监听1324端口
                     MessageBox.Show("请拔出数据线\n若长时间未成功连接到设备，请不要使用无线调试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    selectDevices.Cmd("adb connect " + ip + ":" + "1324");    //连接设备的1324端口
+                    selectDevices.Cmd("bin\\adb connect " + ip + ":" + "1324");    //连接设备的1324端口
                 }
             }
         }
