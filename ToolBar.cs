@@ -82,6 +82,8 @@ namespace scrcpy_gui
 
         bool isTop = true;
 
+        public bool disableToolBar = false;
+
         string formTitle = Settings.Default.窗口标题;
 
         IntPtr hWnd = FindWindow(null, Settings.Default.窗口标题);       //获取Scrcpy的句柄
@@ -134,6 +136,10 @@ namespace scrcpy_gui
             }
             else
             {
+                if (disableToolBar)
+                {
+                    Environment.Exit(0);
+                }
                 flag = true;        //设为已获取到Scrcpy
                 this.Left = fx.Left - this.Width + 87;          //跟随Scrcpy
                 this.Top = (fx.Bottom - fx.Top) / 2 + fx.Top - this.Height / 2;

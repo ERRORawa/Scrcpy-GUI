@@ -74,6 +74,7 @@ namespace scrcpy_gui
 
         private void Main_Load(object sender, EventArgs e)    //窗体控件对齐，初始化设置项
         {
+            disableToolBar.Checked = Settings.Default.关闭工具栏;
             if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))
             {
                 DialogResult dialogResult = MessageBox.Show("首次启动需要下载环境配置，是否继续？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -101,6 +102,7 @@ namespace scrcpy_gui
                 }
             }
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;
+            disableToolBar.Left = Start.Left + Start.Width / 2 - disableToolBar.Width /2;
             UsbToWifi.Left = this.ClientRectangle.Width / 3 / 2 - UsbToWifi.Width / 2;
             WirelessDebug.Left = this.ClientRectangle.Width / 3 / 2 - WirelessDebug.Width / 2;
             ConnectedTitle.Left = this.ClientRectangle.Width / 3 * 2 - this.ClientRectangle.Width / 3 / 2 - ConnectedTitle.Width / 2;
@@ -110,6 +112,7 @@ namespace scrcpy_gui
             Reset.Left = pictureBox1.Left - Reset.Width;
 
             Start.Top = this.ClientRectangle.Height / 3 / 2 - Start.Height / 2;
+            disableToolBar.Top = Start.Bottom + 5;
             UsbToWifi.Top = this.ClientRectangle.Height / 3 * 2 - this.ClientRectangle.Height / 3 / 2 - UsbToWifi.Height / 2;
             WirelessDebug.Top = this.ClientRectangle.Height - this.ClientRectangle.Height / 3 / 2 - WirelessDebug.Height / 2;
             ConnectedTitle.Top = this.ClientRectangle.Height / 3 / 2 - ConnectedTitle.Height / 2 - 10;
@@ -164,11 +167,11 @@ namespace scrcpy_gui
 
         private void CheckDevices_Tick(object sender, EventArgs e)    //定时检查devices
         {
-            CheckDevices.Interval = 2000;    //定时两秒执行
+            CheckDevices.Interval = 2000;
             string[] output = Cmd("bin\\adb devices", "command");    //获取devices信息
             ConnectedDevices.Text = "";
             UnauthDevices.Text = "";
-            for (int i = 5;; i++)
+            for (int i = 5; ; i++)
             {
                 if (output[i] == "")     //无设备
                 {
@@ -183,13 +186,13 @@ namespace scrcpy_gui
                     UnauthDevices.Text = UnauthDevices.Text + output[i].Substring(0, output[i].Length - 13) + Environment.NewLine;
                 }
             }
-            WriteFile("devices",ConnectedDevices.Text);    //写入文件
+            WriteFile("devices", ConnectedDevices.Text);    //写入文件
             devices = ReadFile("devices");    //获取devices
             if (ConnectedDevices.Text == "")
             {
                 ConnectedDevices.Text = "无设备";
             }
-            if(UnauthDevices.Text == "" )
+            if (UnauthDevices.Text == "")
             {
                 UnauthDevices.Text = "无设备";
             }
@@ -232,6 +235,7 @@ namespace scrcpy_gui
             {                              //开启投屏
                 ToolBar toolBar = new ToolBar();
                 toolBar.device = devices[0];
+                toolBar.disableToolBar = disableToolBar.Checked;
                 toolBar.Show();
                 selectDevices.Cmd("bin\\scrcpy -s " + devices[0] + " --shortcut-mod lctrl,rctrl" + command);
                 this.Hide();    //隐藏当前窗体
@@ -282,6 +286,12 @@ namespace scrcpy_gui
             CheckDevices.Enabled = false;
             wirelessDebugging.Show();
             this.Hide();
+        }
+
+        private void disableToolBar_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default["关闭工具栏"] = disableToolBar.Checked;
+            Settings.Default.Save();
         }
     }
 }

@@ -39,6 +39,7 @@
             this.UnauthTitle = new System.Windows.Forms.Label();
             this.UnauthDevices = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.disableToolBar = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,11 +142,23 @@
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
             // 
+            // disableToolBar
+            // 
+            this.disableToolBar.AutoSize = true;
+            this.disableToolBar.Location = new System.Drawing.Point(60, 81);
+            this.disableToolBar.Name = "disableToolBar";
+            this.disableToolBar.Size = new System.Drawing.Size(84, 16);
+            this.disableToolBar.TabIndex = 10;
+            this.disableToolBar.Text = "关闭工具栏";
+            this.disableToolBar.UseVisualStyleBackColor = true;
+            this.disableToolBar.CheckedChanged += new System.EventHandler(this.disableToolBar_CheckedChanged);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.disableToolBar);
             this.Controls.Add(this.UnauthDevices);
             this.Controls.Add(this.UnauthTitle);
             this.Controls.Add(this.ConnectedDevices);
@@ -182,6 +195,7 @@
         private System.Windows.Forms.Label UnauthTitle;
         private System.Windows.Forms.Label UnauthDevices;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox disableToolBar;
     }
 }
 

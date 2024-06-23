@@ -32,5 +32,8 @@
     <Setting Name="文件存放目录" Type="System.String" Scope="User">
       <Value Profile="(Default)">/sdcard/Download/</Value>
     </Setting>
+    <Setting Name="关闭工具栏" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
