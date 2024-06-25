@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 jobs:
   build-and-test:
-    name: build-and-test-windows
+    name: build-windows
     strategy:
       matrix:
         configuration: [Release]
