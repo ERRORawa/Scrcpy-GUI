@@ -151,7 +151,7 @@ namespace scrcpy_gui
                     }
                     ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);      //解压Scrcpy
                     Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
-                    File.Delete(appPath + "scrcpy.zip");
+                    File.Delete(appPath + "\\scrcpy.zip");
                     Process.Start(this.GetType().Assembly.Location);        //重启程序防止窗体错位
                     Environment.Exit(0);
                 }
