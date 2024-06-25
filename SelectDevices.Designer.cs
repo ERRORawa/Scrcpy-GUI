@@ -72,8 +72,9 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = global::scrcpy_gui.Resource.OIP_C__2_;
-            this.pictureBox1.Location = new System.Drawing.Point(284, 183);
+            this.pictureBox1.Location = new System.Drawing.Point(284, 182);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(138, 126);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -85,10 +86,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(419, 307);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.SelectDeviceTitle);
             this.Controls.Add(this.SelectDevice);
-            this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "SelectDevices";

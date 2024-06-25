@@ -118,6 +118,7 @@
             this.WindowTitle.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::scrcpy_gui.Settings.Default, "窗口标题", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.WindowTitle.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.WindowTitle.Location = new System.Drawing.Point(106, 189);
+            this.WindowTitle.MaxLength = 15;
             this.WindowTitle.Name = "WindowTitle";
             this.WindowTitle.Size = new System.Drawing.Size(100, 25);
             this.WindowTitle.TabIndex = 7;
@@ -237,10 +238,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.label1.ForeColor = System.Drawing.Color.Transparent;
             this.label1.Location = new System.Drawing.Point(274, 235);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 12);
+            this.label1.Size = new System.Drawing.Size(0, 20);
             this.label1.TabIndex = 14;
             // 
             // More

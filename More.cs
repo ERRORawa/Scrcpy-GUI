@@ -222,7 +222,7 @@ namespace scrcpy_gui
             label1.Text= FileFolder.Text;
             if(FileFolder.Right <= this.ClientRectangle.Right - 30)
             {
-                FileFolder.Width = label1.Width + 20;
+                FileFolder.Width = label1.Width + 10;
             }
             FileFolder.Left = FileFolderLabel.Left + FileFolderLabel.Width / 2 - FileFolder.Width / 2;
             Enter.Enabled = true;

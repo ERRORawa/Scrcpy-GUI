@@ -18,6 +18,8 @@ namespace scrcpy_gui
         public int arg;
 
         public string[] devices;
+
+        public string command;
  
         public void Cmd(string command)    //执行命令（异步），无输出
         {
@@ -77,7 +79,7 @@ namespace scrcpy_gui
                     ToolBar toolBar = new ToolBar();
                     toolBar.device = SelectDevice.SelectedItem.ToString();
                     toolBar.Show();
-                    Cmd("bin\\scrcpy -s " + SelectDevice.SelectedItem.ToString() + " --shortcut-mod lctrl,rctrl" + main.command);
+                    Cmd("bin\\scrcpy -s " + SelectDevice.SelectedItem.ToString() + " --shortcut-mod lctrl,rctrl" + command);
                     this.Hide();
                     break;
                 case 1:    //usb转wifi
@@ -98,8 +100,10 @@ namespace scrcpy_gui
                     if (flag)    //获取到ip时
                     {
                         _ = main.Cmd("bin\\adb -s " + SelectDevice.SelectedItem.ToString() + " tcpip 1324", "command");    //设备监听1324端口
-                        MessageBox.Show("请拔出数据线\n若长时间未成功连接到设备，请不要使用无线调试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("请拔出数据线\n若长时间未成功连接到设备，那你还是用有线连接吧。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Cmd("bin\\adb connect " + ip + ":" + "1324");    //连接设备的1324端口
+                        main.Show();
+                        this.Hide();
                     }
                     break;
             }

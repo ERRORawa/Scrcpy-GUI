@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -80,15 +81,17 @@ namespace scrcpy_gui
 
         bool flag1 = false;     //执行一次异步，防止多次执行
 
-        bool isTop = true;
+        bool isTop = false;     //判断是否置顶
 
-        public bool disableToolBar = false;
+        bool isFocus = true;    //判断活动窗口是否为Scrcpy
 
-        string formTitle = Settings.Default.窗口标题;
+        public bool disableToolBar = false;     //判断工具栏是否开启
+
+        string formTitle = Settings.Default.窗口标题;       //获取Scrcpy的标题
 
         IntPtr hWnd = FindWindow(null, Settings.Default.窗口标题);       //获取Scrcpy的句柄
 
-        StringBuilder windowName = new StringBuilder(512);
+        StringBuilder windowName = new StringBuilder(512);      //定义活动窗体名称
 
         Point mousePoint = Control.MousePosition;       //获取鼠标的位置
 
@@ -110,6 +113,22 @@ namespace scrcpy_gui
             }
             else if (fx.Left == -8 && fx.Top == -8)         //如果Scrcpy全屏了
             {
+                if(windowName.ToString() == formTitle)       //判断活动窗体是否Scrcpy
+                {
+                    if (!isTop)     //置顶工具栏
+                    {
+                        isTop = true;
+                        this.TopMost = true;
+                    }
+                }
+                else
+                {
+                    if(isTop)       //取消置顶
+                    {
+                        isTop = false;
+                        this.TopMost = false;
+                    }
+                }
                 this.Left = fx.Left + 20;       //ToolBar的位置设为屏幕左侧
                 this.Top = (fx.Bottom - fx.Top) / 2 + fx.Top - this.Height / 2;
             }
@@ -134,13 +153,18 @@ namespace scrcpy_gui
                     });
                 }
             }
-            else
+            else                //跟随Scrcpy
             {
-                if (disableToolBar)
+                if (disableToolBar)         //若设置了不开启工具栏 则退出程序
                 {
                     Environment.Exit(0);
                 }
                 flag = true;        //设为已获取到Scrcpy
+                if (isTop)      //从全屏还原时取消置顶
+                {
+                    isTop = false;
+                    this.TopMost = false;
+                }
                 this.Left = fx.Left - this.Width + 87;          //跟随Scrcpy
                 this.Top = (fx.Bottom - fx.Top) / 2 + fx.Top - this.Height / 2;
             }
@@ -168,9 +192,9 @@ namespace scrcpy_gui
             GetWindowText(foregroundForm, windowName, windowName.Capacity);     //获取活动窗口标题
             if (windowName.ToString() == formTitle || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
             {
-                if (!isTop)
+                if (!isFocus)       //显示工具栏
                 {
-                    isTop = true;
+                    isFocus = true;
                     IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
                     SetForegroundWindow(toolBarhWnd);
                     SetForegroundWindow(hWnd);
@@ -178,9 +202,9 @@ namespace scrcpy_gui
             }
             else
             {
-                if (isTop)
+                if (isFocus)        //重置判断
                 {
-                    isTop = false;
+                    isFocus = false;
                 }
             }
         }
