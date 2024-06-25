@@ -12,11 +12,18 @@ namespace scrcpy_gui
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            if (args.Length == 0)
+            {
+                Application.Run(new Main());
+            }
+            else
+            {
+                Application.Run(new Main(args));
+            }
         }
     }
 }

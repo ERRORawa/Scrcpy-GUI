@@ -26,6 +26,8 @@ namespace scrcpy_gui
 
         string appPath = Directory.GetCurrentDirectory();       //设置程序位置
 
+        string[] args = null;
+
         public void WriteFile(string fileName,string content)    //写入文件（文件名，内容）
         {
             StreamWriter sw = new StreamWriter(fileName, false, Encoding.GetEncoding("GB2312"));
@@ -105,25 +107,33 @@ namespace scrcpy_gui
                     command = command + " --stay-awake";
                 }
             }
-            if (Settings.Default.窗口标题 != "")
-            {
-                command = command + " --window-title=" + Settings.Default.窗口标题;
-            }
-            if (Settings.Default.文件存放目录 != "")
-            {
-                command = command + " --push-target=" + Settings.Default.文件存放目录;
-            }
+            command = command + " --window-title=" + Settings.Default.窗口标题;
+            command = command + " --push-target=" + Settings.Default.文件存放目录;
         }
 
         public Main()
         {
             InitializeComponent();
         }
+        public Main(string[] args)
+        {
+            InitializeComponent();
+            this.args = args;
+        }
 
         private void Main_Load(object sender, EventArgs e)    //窗体控件对齐，初始化设置项
         {
             disableToolBar.Checked = Settings.Default.关闭工具栏;    //初始化主菜单复选框
             OTG.Checked = Settings.Default.用OTG;
+            if (args != null)
+            {
+                SetArgs();      //应用Scrcpy参数
+                ToolBar toolBar = new ToolBar();
+                toolBar.device = args[0];
+                toolBar.disableToolBar = disableToolBar.Checked;        //显示工具栏
+                toolBar.Show();
+                selectDevices.Cmd("bin\\scrcpy -s " + args[0] + " --shortcut-mod lctrl,rctrl" + command);       //启动Scrcpy
+            }
             if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))        //检测Scrcpy是否存在
             {
                 DialogResult dialogResult = MessageBox.Show("首次启动需要下载环境配置，是否继续？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -176,6 +186,10 @@ namespace scrcpy_gui
         private void CheckDevices_Tick(object sender, EventArgs e)    //定时检查devices
         {
             CheckDevices.Interval = 2000;
+            if(args != null)
+            {
+                this.Hide();
+            }
             string[] output = Cmd("bin\\adb devices", "command");    //获取devices信息
             ConnectedDevices.Text = "";
             UnauthDevices.Text = "";

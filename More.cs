@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace scrcpy_gui
     {
 
         SelectDevices selectDevices = new SelectDevices();
+
+        public string device;
 
         public More()
         {
@@ -124,47 +127,18 @@ namespace scrcpy_gui
             {
                 Settings.Default["窗口标题"] = WindowTitle.Text;
             }
-            Settings.Default["文件存放目录"] = FileFolder.Text;
+            if (FileFolder.Text == "")
+            {
+                Settings.Default["文件存放目录"] = "/sdcard/Download/";
+            }
+            else
+            {
+                Settings.Default["文件存放目录"] = FileFolder.Text;
+            }
             Settings.Default.Save();
-            string command = null;
-            if (Settings.Default.置顶)
-            {
-                command = command + " --always-on-top";
-            }
-            if (Settings.Default.禁用屏幕保护程序)
-            {
-                command = command + " --disable-screensaver";
-            }
-            if (!Settings.Default.剪切板同步)
-            {
-                command = command + " --no-clipboard-autosync";
-            }
-            if (Settings.Default.禁用控制)
-            {
-                command = command + " --no-control";
-            }
-            if (!Settings.Default.音频流转)
-            {
-                command = command + " --no-audio";
-            }
-            if (Settings.Default.结束后关闭屏幕)
-            {
-                command = command + " --power-off-on-close";
-            }
-            if (Settings.Default.保持唤醒)
-            {
-                command = command + " --stay-awake";
-            }
-            if (Settings.Default.窗口标题 != "")
-            {
-                command = command + " --window-title=" + Settings.Default.窗口标题;
-            }
-            if (Settings.Default.文件存放目录 != "")
-            {
-                command = command + " --push-target=" + Settings.Default.文件存放目录;
-            }
-            this.Close();
-            MessageBox.Show("设置已更改！\n将在下一次开启投屏时生效", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Hide();
+            selectDevices.Cmd("taskkill /F /IM scrcpy.exe");
+            selectDevices.Cmd(this.GetType().Assembly.Location + " " + device);
         }
 
         private void OnTop_CheckedChanged(object sender, EventArgs e)

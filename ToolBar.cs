@@ -146,7 +146,7 @@ namespace scrcpy_gui
                             FollowScrcpy.Enabled = false;
                             CheckMouse.Enabled = false;
                             MessageBox.Show("长时间未投屏成功\n判断为手机已断开连接\n请重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            selectDevices.Cmd(this.GetType().Assembly.Location);        //再启动一个该程序
+                            Process.Start(this.GetType().Assembly.Location);       //再启动一个该程序
                             await Task.Delay(500);      //等待0.5秒
                             Environment.Exit(0);        //退出程序
                         }
@@ -270,6 +270,7 @@ namespace scrcpy_gui
             if (hasMore.ToString() == "0")
             {
                 More more = new More();
+                more.device = device;
                 more.Show();        //显示More
             }
             else
