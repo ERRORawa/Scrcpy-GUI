@@ -72,7 +72,6 @@ namespace scrcpy_gui
 
         private void SelectDevice_MouseDoubleClick(object sender, MouseEventArgs e)    //双击listBox内容
         {
-            Main main = new Main();
             switch (arg) 
             {
                 case 0:    //投屏
@@ -83,6 +82,7 @@ namespace scrcpy_gui
                     this.Hide();
                     break;
                 case 1:    //usb转wifi
+                    Main main = new Main();
                     bool flag = false;
                     string ip = "127.0.0.1";    //初始化ip
                     try

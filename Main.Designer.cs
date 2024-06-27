@@ -41,6 +41,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.disableToolBar = new System.Windows.Forms.CheckBox();
             this.OTG = new System.Windows.Forms.CheckBox();
+            this.MultiTaskMode = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,7 +70,7 @@
             // WirelessDebug
             // 
             this.WirelessDebug.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.WirelessDebug.Location = new System.Drawing.Point(21, 267);
+            this.WirelessDebug.Location = new System.Drawing.Point(21, 246);
             this.WirelessDebug.Name = "WirelessDebug";
             this.WirelessDebug.Size = new System.Drawing.Size(150, 60);
             this.WirelessDebug.TabIndex = 2;
@@ -89,7 +90,7 @@
             // 
             // Reset
             // 
-            this.Reset.Location = new System.Drawing.Point(285, 292);
+            this.Reset.Location = new System.Drawing.Point(286, 348);
             this.Reset.Name = "Reset";
             this.Reset.Size = new System.Drawing.Size(93, 35);
             this.Reset.TabIndex = 5;
@@ -117,7 +118,7 @@
             // 
             this.UnauthTitle.AutoSize = true;
             this.UnauthTitle.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.UnauthTitle.Location = new System.Drawing.Point(380, 60);
+            this.UnauthTitle.Location = new System.Drawing.Point(380, 50);
             this.UnauthTitle.Name = "UnauthTitle";
             this.UnauthTitle.Size = new System.Drawing.Size(122, 21);
             this.UnauthTitle.TabIndex = 7;
@@ -136,7 +137,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::scrcpy_gui.Resource._1;
-            this.pictureBox1.Location = new System.Drawing.Point(384, 176);
+            this.pictureBox1.Location = new System.Drawing.Point(396, 224);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(201, 186);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -166,11 +167,23 @@
             this.OTG.CheckedChanged += new System.EventHandler(this.OTG_CheckedChanged);
             this.OTG.MouseHover += new System.EventHandler(this.OTG_MouseHover);
             // 
+            // MultiTaskMode
+            // 
+            this.MultiTaskMode.Font = new System.Drawing.Font("微软雅黑", 15F);
+            this.MultiTaskMode.Location = new System.Drawing.Point(21, 331);
+            this.MultiTaskMode.Name = "MultiTaskMode";
+            this.MultiTaskMode.Size = new System.Drawing.Size(150, 60);
+            this.MultiTaskMode.TabIndex = 12;
+            this.MultiTaskMode.Text = "多任务模式";
+            this.MultiTaskMode.UseVisualStyleBackColor = true;
+            this.MultiTaskMode.Click += new System.EventHandler(this.MultiTaskMode_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.ClientSize = new System.Drawing.Size(597, 409);
+            this.Controls.Add(this.MultiTaskMode);
             this.Controls.Add(this.OTG);
             this.Controls.Add(this.disableToolBar);
             this.Controls.Add(this.UnauthDevices);
@@ -211,6 +224,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox disableToolBar;
         private System.Windows.Forms.CheckBox OTG;
+        private System.Windows.Forms.Button MultiTaskMode;
     }
 }
 

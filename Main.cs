@@ -163,8 +163,9 @@ namespace scrcpy_gui
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;      //设置窗体对齐
             disableToolBar.Left = Start.Left + Start.Width / 2 - disableToolBar.Width /2;
             OTG.Left = disableToolBar.Left + disableToolBar.Width / 2 - OTG.Width / 2;
-            UsbToWifi.Left = this.ClientRectangle.Width / 3 / 2 - UsbToWifi.Width / 2;
-            WirelessDebug.Left = this.ClientRectangle.Width / 3 / 2 - WirelessDebug.Width / 2;
+            UsbToWifi.Left = Start.Left;
+            WirelessDebug.Left = UsbToWifi.Left;
+            MultiTaskMode.Left = WirelessDebug.Left;
             ConnectedTitle.Left = this.ClientRectangle.Width / 3 * 2 - this.ClientRectangle.Width / 3 / 2 - ConnectedTitle.Width / 2;
             UnauthTitle.Left = this.ClientRectangle.Width - this.ClientRectangle.Width / 3 / 2 - UnauthTitle.Width / 2;
             ConnectedDevices.Left = ConnectedTitle.Left;
@@ -174,13 +175,14 @@ namespace scrcpy_gui
             Start.Top = this.ClientRectangle.Height / 3 / 2 - Start.Height / 2;
             disableToolBar.Top = Start.Bottom + 5;
             OTG.Top = disableToolBar.Bottom + 5;
-            UsbToWifi.Top = this.ClientRectangle.Height / 3 * 2 - this.ClientRectangle.Height / 3 / 2 - UsbToWifi.Height / 2;
-            WirelessDebug.Top = this.ClientRectangle.Height - this.ClientRectangle.Height / 3 / 2 - WirelessDebug.Height / 2;
+            UsbToWifi.Top = OTG.Bottom + 20;
+            WirelessDebug.Top = UsbToWifi.Bottom + 20;
+            MultiTaskMode.Top = WirelessDebug.Bottom + 20;
             ConnectedTitle.Top = this.ClientRectangle.Height / 3 / 2 - ConnectedTitle.Height / 2 - 10;
             UnauthTitle.Top = this.ClientRectangle.Height / 3 / 2 - UnauthTitle.Height / 2 - 10;
             ConnectedDevices.Top = ConnectedTitle.Bottom + 5;
             UnauthDevices.Top = UnauthTitle.Bottom + 5;
-            Reset.Top = WirelessDebug.Bottom - Reset.Height;
+            Reset.Top = MultiTaskMode.Bottom - Reset.Height;
         }
 
         private void CheckDevices_Tick(object sender, EventArgs e)    //定时检查devices
@@ -340,6 +342,32 @@ namespace scrcpy_gui
             toolTip.ShowAlways = true;
 
             toolTip.SetToolTip(this.OTG, "只有选择的设备处于有线连接时可用\n若是选择了无线连接的设备将会导致程序闪退");
+        }
+
+        private void MultiTaskMode_Click(object sender, EventArgs e)
+        {
+            if (devices.Length - 2 > 1)    //有多个设备时
+            {
+                SetArgs();
+                selectDevices.devices = devices;    //给予设备列表
+                selectDevices.arg = 2;    //选项为多任务模式
+                selectDevices.command = command;
+                selectDevices.Show();    //显示选择窗口
+                this.Hide();    //隐藏当前窗口
+            }
+            else if (devices.Length - 2 == 0)    //无设备时
+            {
+                MessageBox.Show("暂无已连接的设备\n请检查是否安装adb驱动或者连接到手机", "无设备连接", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else    //单设备时
+            {                              //开启投屏
+                SetArgs();      //应用Scrcpy参数
+                MultiTaskMode multiTaskMode = new MultiTaskMode();
+                multiTaskMode.device = devices[0];
+                multiTaskMode.command = command;
+                multiTaskMode.Show();
+                this.Hide();    //隐藏当前窗体
+            }
         }
     }
 }
