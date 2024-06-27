@@ -39,25 +39,21 @@
             this.x1 = new System.Windows.Forms.Label();
             this.dpi1 = new System.Windows.Forms.TextBox();
             this.ui1 = new System.Windows.Forms.Button();
-            this.app1 = new System.Windows.Forms.Button();
             this.r2 = new System.Windows.Forms.Label();
             this.r3 = new System.Windows.Forms.Label();
             this.r4 = new System.Windows.Forms.Label();
-            this.app2 = new System.Windows.Forms.Button();
             this.ui2 = new System.Windows.Forms.Button();
             this.dpi2 = new System.Windows.Forms.TextBox();
             this.x2 = new System.Windows.Forms.Label();
             this.res2r = new System.Windows.Forms.TextBox();
             this.res2l = new System.Windows.Forms.TextBox();
             this.d2 = new System.Windows.Forms.Label();
-            this.app3 = new System.Windows.Forms.Button();
             this.ui3 = new System.Windows.Forms.Button();
             this.dpi3 = new System.Windows.Forms.TextBox();
             this.x3 = new System.Windows.Forms.Label();
             this.res3r = new System.Windows.Forms.TextBox();
             this.res3l = new System.Windows.Forms.TextBox();
             this.d3 = new System.Windows.Forms.Label();
-            this.app4 = new System.Windows.Forms.Button();
             this.ui4 = new System.Windows.Forms.Button();
             this.dpi4 = new System.Windows.Forms.TextBox();
             this.x4 = new System.Windows.Forms.Label();
@@ -65,6 +61,10 @@
             this.res4l = new System.Windows.Forms.TextBox();
             this.d4 = new System.Windows.Forms.Label();
             this.Enter = new System.Windows.Forms.Button();
+            this.app1 = new System.Windows.Forms.ComboBox();
+            this.app2 = new System.Windows.Forms.ComboBox();
+            this.app3 = new System.Windows.Forms.ComboBox();
+            this.app4 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -182,16 +182,6 @@
             this.ui1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ui1.UseVisualStyleBackColor = true;
             // 
-            // app1
-            // 
-            this.app1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.app1.Location = new System.Drawing.Point(41, 155);
-            this.app1.Name = "app1";
-            this.app1.Size = new System.Drawing.Size(107, 23);
-            this.app1.TabIndex = 11;
-            this.app1.Text = "选择软件";
-            this.app1.UseVisualStyleBackColor = true;
-            // 
             // r2
             // 
             this.r2.AutoSize = true;
@@ -221,16 +211,6 @@
             this.r4.Size = new System.Drawing.Size(51, 20);
             this.r4.TabIndex = 14;
             this.r4.Text = "分辨率";
-            // 
-            // app2
-            // 
-            this.app2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.app2.Location = new System.Drawing.Point(238, 152);
-            this.app2.Name = "app2";
-            this.app2.Size = new System.Drawing.Size(107, 23);
-            this.app2.TabIndex = 21;
-            this.app2.Text = "选择软件";
-            this.app2.UseVisualStyleBackColor = true;
             // 
             // ui2
             // 
@@ -293,16 +273,6 @@
             this.d2.TabIndex = 15;
             this.d2.Text = "DPI";
             // 
-            // app3
-            // 
-            this.app3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.app3.Location = new System.Drawing.Point(487, 152);
-            this.app3.Name = "app3";
-            this.app3.Size = new System.Drawing.Size(107, 23);
-            this.app3.TabIndex = 28;
-            this.app3.Text = "选择软件";
-            this.app3.UseVisualStyleBackColor = true;
-            // 
             // ui3
             // 
             this.ui3.Font = new System.Drawing.Font("黑体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -363,16 +333,6 @@
             this.d3.Size = new System.Drawing.Size(33, 20);
             this.d3.TabIndex = 22;
             this.d3.Text = "DPI";
-            // 
-            // app4
-            // 
-            this.app4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.app4.Location = new System.Drawing.Point(676, 155);
-            this.app4.Name = "app4";
-            this.app4.Size = new System.Drawing.Size(107, 23);
-            this.app4.TabIndex = 35;
-            this.app4.Text = "选择软件";
-            this.app4.UseVisualStyleBackColor = true;
             // 
             // ui4
             // 
@@ -446,27 +406,72 @@
             this.Enter.UseVisualStyleBackColor = true;
             this.Enter.Click += new System.EventHandler(this.Enter_Click);
             // 
+            // app1
+            // 
+            this.app1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app1.FormattingEnabled = true;
+            this.app1.Items.AddRange(new object[] {
+            "选择软件"});
+            this.app1.Location = new System.Drawing.Point(38, 158);
+            this.app1.Name = "app1";
+            this.app1.Size = new System.Drawing.Size(121, 20);
+            this.app1.TabIndex = 37;
+            // 
+            // app2
+            // 
+            this.app2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app2.FormattingEnabled = true;
+            this.app2.Items.AddRange(new object[] {
+            "选择软件"});
+            this.app2.Location = new System.Drawing.Point(224, 158);
+            this.app2.Name = "app2";
+            this.app2.Size = new System.Drawing.Size(121, 20);
+            this.app2.TabIndex = 38;
+            // 
+            // app3
+            // 
+            this.app3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app3.FormattingEnabled = true;
+            this.app3.Items.AddRange(new object[] {
+            "选择软件"});
+            this.app3.Location = new System.Drawing.Point(459, 158);
+            this.app3.Name = "app3";
+            this.app3.Size = new System.Drawing.Size(121, 20);
+            this.app3.TabIndex = 39;
+            // 
+            // app4
+            // 
+            this.app4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app4.FormattingEnabled = true;
+            this.app4.Items.AddRange(new object[] {
+            "选择软件"});
+            this.app4.Location = new System.Drawing.Point(672, 158);
+            this.app4.Name = "app4";
+            this.app4.Size = new System.Drawing.Size(121, 20);
+            this.app4.TabIndex = 40;
+            // 
             // MultiTaskMode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 238);
-            this.Controls.Add(this.Enter);
             this.Controls.Add(this.app4);
+            this.Controls.Add(this.app3);
+            this.Controls.Add(this.app2);
+            this.Controls.Add(this.app1);
+            this.Controls.Add(this.Enter);
             this.Controls.Add(this.ui4);
             this.Controls.Add(this.dpi4);
             this.Controls.Add(this.x4);
             this.Controls.Add(this.res4r);
             this.Controls.Add(this.res4l);
             this.Controls.Add(this.d4);
-            this.Controls.Add(this.app3);
             this.Controls.Add(this.ui3);
             this.Controls.Add(this.dpi3);
             this.Controls.Add(this.x3);
             this.Controls.Add(this.res3r);
             this.Controls.Add(this.res3l);
             this.Controls.Add(this.d3);
-            this.Controls.Add(this.app2);
             this.Controls.Add(this.ui2);
             this.Controls.Add(this.dpi2);
             this.Controls.Add(this.x2);
@@ -476,7 +481,6 @@
             this.Controls.Add(this.r4);
             this.Controls.Add(this.r3);
             this.Controls.Add(this.r2);
-            this.Controls.Add(this.app1);
             this.Controls.Add(this.ui1);
             this.Controls.Add(this.dpi1);
             this.Controls.Add(this.x1);
@@ -514,25 +518,21 @@
         private System.Windows.Forms.Label x1;
         private System.Windows.Forms.TextBox dpi1;
         private System.Windows.Forms.Button ui1;
-        private System.Windows.Forms.Button app1;
         private System.Windows.Forms.Label r2;
         private System.Windows.Forms.Label r3;
         private System.Windows.Forms.Label r4;
-        private System.Windows.Forms.Button app2;
         private System.Windows.Forms.Button ui2;
         private System.Windows.Forms.TextBox dpi2;
         private System.Windows.Forms.Label x2;
         private System.Windows.Forms.TextBox res2r;
         private System.Windows.Forms.TextBox res2l;
         private System.Windows.Forms.Label d2;
-        private System.Windows.Forms.Button app3;
         private System.Windows.Forms.Button ui3;
         private System.Windows.Forms.TextBox dpi3;
         private System.Windows.Forms.Label x3;
         private System.Windows.Forms.TextBox res3r;
         private System.Windows.Forms.TextBox res3l;
         private System.Windows.Forms.Label d3;
-        private System.Windows.Forms.Button app4;
         private System.Windows.Forms.Button ui4;
         private System.Windows.Forms.TextBox dpi4;
         private System.Windows.Forms.Label x4;
@@ -540,5 +540,9 @@
         private System.Windows.Forms.TextBox res4l;
         private System.Windows.Forms.Label d4;
         private System.Windows.Forms.Button Enter;
+        private System.Windows.Forms.ComboBox app1;
+        private System.Windows.Forms.ComboBox app2;
+        private System.Windows.Forms.ComboBox app3;
+        private System.Windows.Forms.ComboBox app4;
     }
 }

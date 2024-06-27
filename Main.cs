@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Xml;
 
 namespace scrcpy_gui
 {
@@ -57,7 +58,8 @@ namespace scrcpy_gui
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardError = true;
             p.StartInfo.CreateNoWindow = true;
-            p.Start();
+            p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+            p.Start(); 
             p.StandardInput.WriteLine(command + " & exit");
             p.StandardInput.AutoFlush = true;
             string strOutput = p.StandardOutput.ReadToEnd();
