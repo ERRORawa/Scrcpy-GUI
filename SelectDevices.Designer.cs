@@ -52,10 +52,10 @@
             // SelectDeviceTitle
             // 
             this.SelectDeviceTitle.AutoSize = true;
-            this.SelectDeviceTitle.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SelectDeviceTitle.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SelectDeviceTitle.Location = new System.Drawing.Point(141, 21);
             this.SelectDeviceTitle.Name = "SelectDeviceTitle";
-            this.SelectDeviceTitle.Size = new System.Drawing.Size(129, 29);
+            this.SelectDeviceTitle.Size = new System.Drawing.Size(133, 38);
             this.SelectDeviceTitle.TabIndex = 1;
             this.SelectDeviceTitle.Text = "选择设备";
             // 

@@ -106,8 +106,14 @@ namespace scrcpy_gui
                         this.Hide();
                     }
                     break;
+                case 2:
+                    MultiTaskMode multiTaskMode = new MultiTaskMode();
+                    multiTaskMode.device = SelectDevice.SelectedItem.ToString();
+                    multiTaskMode.command = command;
+                    multiTaskMode.Show();
+                    this.Hide();    //隐藏当前窗体
+                    break;
             }
-
         }
     }
 }

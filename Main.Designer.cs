@@ -38,10 +38,10 @@
             this.ConnectedDevices = new System.Windows.Forms.Label();
             this.UnauthTitle = new System.Windows.Forms.Label();
             this.UnauthDevices = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.disableToolBar = new System.Windows.Forms.CheckBox();
             this.OTG = new System.Windows.Forms.CheckBox();
             this.MultiTaskMode = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,6 +90,7 @@
             // 
             // Reset
             // 
+            this.Reset.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Reset.Location = new System.Drawing.Point(286, 348);
             this.Reset.Name = "Reset";
             this.Reset.Size = new System.Drawing.Size(93, 35);
@@ -134,22 +135,13 @@
             this.UnauthDevices.TabIndex = 8;
             this.UnauthDevices.Text = "无设备";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::scrcpy_gui.Resource._1;
-            this.pictureBox1.Location = new System.Drawing.Point(396, 224);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(201, 186);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
-            // 
             // disableToolBar
             // 
             this.disableToolBar.AutoSize = true;
+            this.disableToolBar.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.disableToolBar.Location = new System.Drawing.Point(56, 105);
             this.disableToolBar.Name = "disableToolBar";
-            this.disableToolBar.Size = new System.Drawing.Size(84, 16);
+            this.disableToolBar.Size = new System.Drawing.Size(87, 21);
             this.disableToolBar.TabIndex = 10;
             this.disableToolBar.Text = "关闭工具栏";
             this.disableToolBar.UseVisualStyleBackColor = true;
@@ -158,9 +150,10 @@
             // OTG
             // 
             this.OTG.AutoSize = true;
+            this.OTG.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.OTG.Location = new System.Drawing.Point(56, 127);
             this.OTG.Name = "OTG";
-            this.OTG.Size = new System.Drawing.Size(66, 16);
+            this.OTG.Size = new System.Drawing.Size(77, 21);
             this.OTG.TabIndex = 11;
             this.OTG.Text = "启用OTG";
             this.OTG.UseVisualStyleBackColor = true;
@@ -177,6 +170,16 @@
             this.MultiTaskMode.Text = "多任务模式";
             this.MultiTaskMode.UseVisualStyleBackColor = true;
             this.MultiTaskMode.Click += new System.EventHandler(this.MultiTaskMode_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::scrcpy_gui.Resource._1;
+            this.pictureBox1.Location = new System.Drawing.Point(396, 224);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(201, 186);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
             // 
             // Main
             // 

@@ -125,6 +125,48 @@ namespace scrcpy_gui
         {
             disableToolBar.Checked = Settings.Default.关闭工具栏;    //初始化主菜单复选框
             OTG.Checked = Settings.Default.用OTG;
+            if (!File.Exists(appPath + "\\bin\\scrcpy.exe") || !File.Exists(appPath + "\\aapt"))        //检测Scrcpy是否存在
+            {
+                DialogResult dialogResult = MessageBox.Show("缺少环境配置文件，是否下载？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))
+                    {
+                        try         //使用WebClient下载Scrcpy
+                        {
+                            WebClient webClient = new WebClient();
+                            webClient.DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("环境配置下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Environment.Exit(1);
+                        }
+                        ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);      //解压Scrcpy
+                        Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
+                        File.Delete(appPath + "\\scrcpy.zip");
+                    }
+                    if(!File.Exists(appPath + "\\aapt"))
+                    {
+                        try         //使用WebClient下载Scrcpy
+                        {
+                            WebClient webClient = new WebClient();
+                            webClient.DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\aapt");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("环境配置下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Environment.Exit(1);
+                        }
+                    }
+                    Process.Start(this.GetType().Assembly.Location);        //重启程序防止窗体错位
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Environment.Exit(1);
+                }
+            }
             if (args != null)
             {
                 SetArgs();      //应用Scrcpy参数
@@ -133,32 +175,6 @@ namespace scrcpy_gui
                 toolBar.disableToolBar = disableToolBar.Checked;        //显示工具栏
                 toolBar.Show();
                 selectDevices.Cmd("bin\\scrcpy -s " + args[0] + " --shortcut-mod lctrl,rctrl" + command);       //启动Scrcpy
-            }
-            if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))        //检测Scrcpy是否存在
-            {
-                DialogResult dialogResult = MessageBox.Show("首次启动需要下载环境配置，是否继续？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    try         //使用WebClient下载Scrcpy
-                    {
-                        WebClient webClient = new WebClient();
-                        webClient.DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
-                    }
-                    catch
-                    {
-                        MessageBox.Show("环境配置下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Environment.Exit(1);
-                    }
-                    ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);      //解压Scrcpy
-                    Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
-                    File.Delete(appPath + "\\scrcpy.zip");
-                    Process.Start(this.GetType().Assembly.Location);        //重启程序防止窗体错位
-                    Environment.Exit(0);
-                }
-                else
-                {
-                    Environment.Exit(1);
-                }
             }
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;      //设置窗体对齐
             disableToolBar.Left = Start.Left + Start.Width / 2 - disableToolBar.Width /2;

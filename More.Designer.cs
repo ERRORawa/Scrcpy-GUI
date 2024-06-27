@@ -269,6 +269,7 @@
             this.MaximizeBox = false;
             this.Name = "More";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "更多";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.More_FormClosed);
             this.ResumeLayout(false);
