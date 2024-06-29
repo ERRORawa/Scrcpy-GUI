@@ -25,28 +25,30 @@ namespace scrcpy_gui
 
         public string command = null;   //初始化Scrcpy参数
 
-        string appPath = Directory.GetCurrentDirectory();       //设置程序位置
+        public string appPath = Directory.GetCurrentDirectory();       //设置程序位置
 
         string[] args = null;
 
+        bool multiTask = false;
+
         public void WriteFile(string fileName,string content)    //写入文件（文件名，内容）
         {
-            StreamWriter sw = new StreamWriter(fileName, false, Encoding.GetEncoding("GB2312"));
+            StreamWriter sw = new StreamWriter(fileName, false, Encoding.UTF8);
             sw.WriteLine(content);
             sw.Close();
         }
  
         public string[] ReadFile(string fileName)     //读取文件（文件名）
         {
-            StreamReader sr = new StreamReader(fileName,Encoding.GetEncoding("GB2312"));
+            StreamReader sr = new StreamReader(fileName,Encoding.UTF8);
             string str = string.Empty;
             string content = string.Empty;
             while ((str = sr.ReadLine()) != null)
             {
-                content = content + str + "·";
+                content = content + str + "ㅤ";
             }
             sr.Close();
-            return content.Split('·');
+            return content.Split('ㅤ');
         }
  
         public string[] Cmd(string command,string fileName)    //执行命令（命令，输出文件名）   需等待程序退出
@@ -70,7 +72,7 @@ namespace scrcpy_gui
 
             return ReadFile(fileName);
         }
-        
+
         private void SetArgs()      //设置Scrcpy参数
         {
             if (Settings.Default.用OTG)
@@ -109,7 +111,10 @@ namespace scrcpy_gui
                     command = command + " --stay-awake";
                 }
             }
-            command = command + " --window-title=" + Settings.Default.窗口标题;
+            if (!multiTask)
+            {
+                command = command + " --window-title=" + Settings.Default.窗口标题;
+            }
             command = command + " --push-target=" + Settings.Default.文件存放目录;
         }
 
@@ -378,7 +383,8 @@ namespace scrcpy_gui
                 MessageBox.Show("暂无已连接的设备\n请检查是否安装adb驱动或者连接到手机", "无设备连接", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else    //单设备时
-            {                              //开启投屏
+            {
+                multiTask = true;
                 SetArgs();      //应用Scrcpy参数
                 MultiTaskMode multiTaskMode = new MultiTaskMode();
                 multiTaskMode.device = devices[0];

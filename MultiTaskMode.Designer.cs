@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -65,6 +66,7 @@
             this.app2 = new System.Windows.Forms.ComboBox();
             this.app3 = new System.Windows.Forms.ComboBox();
             this.app4 = new System.Windows.Forms.ComboBox();
+            this.check = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // checkBox1
@@ -181,6 +183,7 @@
             this.ui1.Text = "↱";
             this.ui1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ui1.UseVisualStyleBackColor = true;
+            this.ui1.Click += new System.EventHandler(this.ui1_Click);
             // 
             // r2
             // 
@@ -409,46 +412,55 @@
             // app1
             // 
             this.app1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.app1.FormattingEnabled = true;
             this.app1.Items.AddRange(new object[] {
-            "选择软件"});
+            "正在获取应用列表"});
             this.app1.Location = new System.Drawing.Point(38, 158);
             this.app1.Name = "app1";
-            this.app1.Size = new System.Drawing.Size(121, 20);
+            this.app1.Size = new System.Drawing.Size(150, 28);
             this.app1.TabIndex = 37;
             // 
             // app2
             // 
             this.app2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.app2.FormattingEnabled = true;
             this.app2.Items.AddRange(new object[] {
-            "选择软件"});
+            "正在获取应用列表"});
             this.app2.Location = new System.Drawing.Point(224, 158);
             this.app2.Name = "app2";
-            this.app2.Size = new System.Drawing.Size(121, 20);
+            this.app2.Size = new System.Drawing.Size(150, 28);
             this.app2.TabIndex = 38;
             // 
             // app3
             // 
             this.app3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.app3.FormattingEnabled = true;
             this.app3.Items.AddRange(new object[] {
-            "选择软件"});
+            "正在获取应用列表"});
             this.app3.Location = new System.Drawing.Point(459, 158);
             this.app3.Name = "app3";
-            this.app3.Size = new System.Drawing.Size(121, 20);
+            this.app3.Size = new System.Drawing.Size(150, 28);
             this.app3.TabIndex = 39;
             // 
             // app4
             // 
             this.app4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.app4.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.app4.FormattingEnabled = true;
             this.app4.Items.AddRange(new object[] {
-            "选择软件"});
+            "正在获取应用列表"});
             this.app4.Location = new System.Drawing.Point(672, 158);
             this.app4.Name = "app4";
-            this.app4.Size = new System.Drawing.Size(121, 20);
+            this.app4.Size = new System.Drawing.Size(150, 28);
             this.app4.TabIndex = 40;
+            // 
+            // check
+            // 
+            this.check.Interval = 3000;
+            this.check.Tick += new System.EventHandler(this.check_Tick);
             // 
             // MultiTaskMode
             // 
@@ -544,5 +556,6 @@
         private System.Windows.Forms.ComboBox app2;
         private System.Windows.Forms.ComboBox app3;
         private System.Windows.Forms.ComboBox app4;
+        private System.Windows.Forms.Timer check;
     }
 }
