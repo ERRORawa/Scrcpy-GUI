@@ -20,6 +20,19 @@ namespace scrcpy_gui
         [DllImport("user32.dll", EntryPoint = "FindWindow")]             //调用DLL —— 查找窗口 句柄
         static extern IntPtr FindWindow(string lpClassName, string lpWindowName);   //查找窗口 句柄（Class,窗体标题）
 
+        [DllImport("user32.dll")]       //调用DLL
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);     //获取句柄窗口位置（句柄，存窗口位置的变量）
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT      //定义窗口位置
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+            public bool Focused;
+        }
+
         Main main = new Main();
 
         public string device;
@@ -28,7 +41,7 @@ namespace scrcpy_gui
 
         ArrayList packNameAr = new ArrayList();
 
-        Preview1 preview1 = new Preview1();
+        ArrayList packActivityAr = new ArrayList();
 
         string[] packName;
 
@@ -38,7 +51,13 @@ namespace scrcpy_gui
 
         int idx;
 
-        ArrayList packActivityAr = new ArrayList();
+        Preview1 preview1 = new Preview1();
+
+        Preview2 preview2 = new Preview2();
+
+        Preview3 preview3 = new Preview3();
+
+        Preview4 preview4 = new Preview4();
 
         string[] packActivity;
         public MultiTaskMode()
@@ -298,7 +317,6 @@ namespace scrcpy_gui
 
         private void ui1_Click(object sender, EventArgs e)
         {
-            Preview1 preview1 = new Preview1();
             preview1.Show();
             getResolution.Enabled = true;
         }
@@ -363,17 +381,72 @@ namespace scrcpy_gui
 
         private void getResolution_Tick(object sender, EventArgs e)
         {
+            getResolution.Interval = 10;
             bool flag = false;
             IntPtr hWnd = FindWindow(null, "预览窗口#1");
             if (hWnd != IntPtr.Zero)
             {
-                res1l.Text = preview1.Width.ToString();
-                res1r.Text = preview1.Height.ToString();
+                RECT fx = new RECT();       //定义窗口位置
+                GetWindowRect(hWnd, ref fx);        //获取窗口位置
+                res1l.Text = Convert.ToString((fx.Right - fx.Left - preview1.vWidth) * 3);
+                res1r.Text = Convert.ToString((fx.Bottom - fx.Top - preview1.vHeight) * 3);
+                preview1.SetLabel();
+                flag = true;
+            }
+            hWnd = FindWindow(null, "预览窗口#2");
+            if (hWnd != IntPtr.Zero)
+            {
+                RECT fx = new RECT();       //定义窗口位置
+                GetWindowRect(hWnd, ref fx);        //获取窗口位置
+                res2l.Text = Convert.ToString((fx.Right - fx.Left - preview2.vWidth) * 3);
+                res2r.Text = Convert.ToString((fx.Bottom - fx.Top - preview2.vHeight) * 3);
+                preview2.SetLabel();
+                flag = true;
+            }
+            hWnd = FindWindow(null, "预览窗口#3");
+            if (hWnd != IntPtr.Zero)
+            {
+                RECT fx = new RECT();       //定义窗口位置
+                GetWindowRect(hWnd, ref fx);        //获取窗口位置
+                res3l.Text = Convert.ToString((fx.Right - fx.Left - preview3.vWidth) * 3);
+                res3r.Text = Convert.ToString((fx.Bottom - fx.Top - preview3.vHeight) * 3);
+                preview3.SetLabel();
+                flag = true;
+            }
+            hWnd = FindWindow(null, "预览窗口#4");
+            if (hWnd != IntPtr.Zero)
+            {
+                RECT fx = new RECT();       //定义窗口位置
+                GetWindowRect(hWnd, ref fx);        //获取窗口位置
+                res4l.Text = Convert.ToString((fx.Right - fx.Left - preview4.vWidth) * 3);
+                res4r.Text = Convert.ToString((fx.Bottom - fx.Top - preview4.vHeight) * 3);
+                preview4.SetLabel();
+                flag = true;
             }
             if (!flag)
             {
+                getResolution.Interval = 300;
                 getResolution.Enabled = false;
+                Debug.Print("disable");
             }
+        }
+
+        private void ui2_Click(object sender, EventArgs e)
+        {
+            preview2.Show();
+            getResolution.Enabled = true;
+        }
+
+        private void ui3_Click(object sender, EventArgs e)
+        {
+            preview3.Show();
+            getResolution.Enabled = true;
+        }
+
+        private void ui4_Click(object sender, EventArgs e)
+        {
+            preview4.Show();
+            getResolution.Enabled = true;
         }
     }
 }

@@ -226,6 +226,7 @@
             this.ui2.Text = "↱";
             this.ui2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ui2.UseVisualStyleBackColor = true;
+            this.ui2.Click += new System.EventHandler(this.ui2_Click);
             // 
             // dpi2
             // 
@@ -287,6 +288,7 @@
             this.ui3.Text = "↱";
             this.ui3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ui3.UseVisualStyleBackColor = true;
+            this.ui3.Click += new System.EventHandler(this.ui3_Click);
             // 
             // dpi3
             // 
@@ -348,6 +350,7 @@
             this.ui4.Text = "↱";
             this.ui4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ui4.UseVisualStyleBackColor = true;
+            this.ui4.Click += new System.EventHandler(this.ui4_Click);
             // 
             // dpi4
             // 
@@ -465,6 +468,7 @@
             // 
             // getResolution
             // 
+            this.getResolution.Interval = 300;
             this.getResolution.Tick += new System.EventHandler(this.getResolution_Tick);
             // 
             // MultiTaskMode

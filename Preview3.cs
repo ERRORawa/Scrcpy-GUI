@@ -11,13 +11,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace scrcpy_gui
 {
-    public partial class Preview1 : Form
+    public partial class Preview3 : Form
     {
         public int vWidth;
 
         public int vHeight;
 
-        public Preview1()
+        public Preview3()
         {
             InitializeComponent();
         }
@@ -33,7 +33,7 @@ namespace scrcpy_gui
         {
             this.Size = new Size(300, 600);
         }
-        private void Preview1_Load(object sender, EventArgs e)
+        private void Preview3_Load(object sender, EventArgs e)
         {
             vHeight = this.Height - this.ClientRectangle.Height;
             vWidth = this.Width - this.ClientRectangle.Width;

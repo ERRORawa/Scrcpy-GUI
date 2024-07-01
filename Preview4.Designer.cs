@@ -1,6 +1,6 @@
 ﻿namespace scrcpy_gui
 {
-    partial class Preview1
+    partial class Preview4
     {
         /// <summary>
         /// Required designer variable.
@@ -41,7 +41,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(243, 56);
             this.label1.TabIndex = 0;
-            this.label1.Text = "          预览窗口#1\r\n直接拉动窗口更改分辨率";
+            this.label1.Text = "          预览窗口#4\r\n直接拉动窗口更改分辨率";
             // 
             // button1
             // 
@@ -54,7 +54,7 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Preview1
+            // Preview3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -63,11 +63,11 @@
             this.Controls.Add(this.label1);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 300);
-            this.Name = "Preview1";
+            this.Name = "Preview3";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "预览窗口#1";
-            this.Load += new System.EventHandler(this.Preview1_Load);
+            this.Text = "预览窗口#4";
+            this.Load += new System.EventHandler(this.Preview4_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
