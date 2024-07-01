@@ -237,8 +237,8 @@ namespace scrcpy_gui
                 await Task.Delay(1000);     //判断有没有把截图丢到桌面上
                 while (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + time + ".png"))
                 {
-                    selectDevices.Cmd("bin\\adb -s " + device + " pull /sdcard/" + time + ".png %USERPROFILE%\\Desktop\\" + time + ".png");
-                    await Task.Delay(1000);
+                    selectDevices.Cmd("bin\\adb -s " + device + " pull /sdcard/" + time + ".png " + Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + time + ".png");
+                    await Task.Delay(100);
                 }
                 selectDevices.Cmd("bin\\adb -s " + device + " shell rm -rf /sdcard/" + time + ".png");
                 MessageBox.Show("成功将截图保存到桌面","截图成功",MessageBoxButtons.OK);

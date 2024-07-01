@@ -28,6 +28,8 @@ namespace scrcpy_gui
 
         ArrayList packNameAr = new ArrayList();
 
+        Preview1 preview1 = new Preview1();
+
         string[] packName;
 
         string[] appLabel;
@@ -296,7 +298,9 @@ namespace scrcpy_gui
 
         private void ui1_Click(object sender, EventArgs e)
         {
-
+            Preview1 preview1 = new Preview1();
+            preview1.Show();
+            getResolution.Enabled = true;
         }
 
         private void check_Tick(object sender, EventArgs e)
@@ -310,10 +314,9 @@ namespace scrcpy_gui
                 {
                     flag = false;
                 }
-                    string[] appActivity = packActivity[app1.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                    Cmd1("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command + " > multi1");
-                
+                string[] appActivity = packActivity[app1.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
+                Cmd1("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command + " > multi1");
                 idx++;
             }
             if (checkBox2.Checked)
@@ -323,10 +326,9 @@ namespace scrcpy_gui
                 {
                     flag = false;
                 }
-                    string[] appActivity = packActivity[app2.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                    Cmd2("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command + " > multi2");
-                
+                string[] appActivity = packActivity[app2.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
+                Cmd2("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command + " > multi2");
                 idx++;
             }
             if (checkBox3.Checked)
@@ -336,10 +338,9 @@ namespace scrcpy_gui
                 {
                     flag = false;
                 }
-                    string[] appActivity = packActivity[app3.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                    Cmd3("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command + " > multi3");
-                
+                string[] appActivity = packActivity[app3.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
+                Cmd3("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command + " > multi3");
                 idx++;
             }
             if (checkBox4.Checked)
@@ -349,16 +350,30 @@ namespace scrcpy_gui
                 {
                     flag = false;
                 }
-                    string[] appActivity = packActivity[app4.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                    Cmd4("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command + " > multi4");
-                
+                string[] appActivity = packActivity[app4.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
+                Cmd4("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command + " > multi4");
             }
             if (flag)
             {
                 check.Enabled = false;
             }
             idx = idxx;
+        }
+
+        private void getResolution_Tick(object sender, EventArgs e)
+        {
+            bool flag = false;
+            IntPtr hWnd = FindWindow(null, "预览窗口#1");
+            if (hWnd != IntPtr.Zero)
+            {
+                res1l.Text = preview1.Width.ToString();
+                res1r.Text = preview1.Height.ToString();
+            }
+            if (!flag)
+            {
+                getResolution.Enabled = false;
+            }
         }
     }
 }

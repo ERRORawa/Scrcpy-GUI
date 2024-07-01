@@ -75,7 +75,7 @@ namespace scrcpy_gui
 
         private void SetArgs()      //设置Scrcpy参数
         {
-            if (Settings.Default.用OTG)
+            if (Settings.Default.用OTG && !multiTask)
             {
                 MessageBox.Show("使用OTG模式时\n所有功能将无法使用\n按下Alt或切换窗口即可释放焦点", "你莫得选择！", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 command = " --otg";
@@ -94,7 +94,7 @@ namespace scrcpy_gui
                 {
                     command = command + " --no-clipboard-autosync";
                 }
-                if (Settings.Default.禁用控制)
+                if (Settings.Default.禁用控制 && !multiTask)
                 {
                     command = command + " --no-control";
                 }

@@ -67,6 +67,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Preview1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Preview1.Designer.cs">
+      <DependentUpon>Preview1.cs</DependentUpon>
+    </Compile>
     <Compile Include="More.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
     <Compile Include="WirelessDebugging.Designer.cs">
       <DependentUpon>WirelessDebugging.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Preview1.resx">
+      <DependentUpon>Preview1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

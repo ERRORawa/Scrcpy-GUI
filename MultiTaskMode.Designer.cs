@@ -67,6 +67,7 @@
             this.app3 = new System.Windows.Forms.ComboBox();
             this.app4 = new System.Windows.Forms.ComboBox();
             this.check = new System.Windows.Forms.Timer(this.components);
+            this.getResolution = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // checkBox1
@@ -462,6 +463,10 @@
             this.check.Interval = 3000;
             this.check.Tick += new System.EventHandler(this.check_Tick);
             // 
+            // getResolution
+            // 
+            this.getResolution.Tick += new System.EventHandler(this.getResolution_Tick);
+            // 
             // MultiTaskMode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -557,5 +562,6 @@
         private System.Windows.Forms.ComboBox app3;
         private System.Windows.Forms.ComboBox app4;
         private System.Windows.Forms.Timer check;
+        private System.Windows.Forms.Timer getResolution;
     }
 }
