@@ -143,6 +143,7 @@
             this.res1l.Size = new System.Drawing.Size(61, 23);
             this.res1l.TabIndex = 6;
             this.res1l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res1l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // res1r
             // 
@@ -153,6 +154,7 @@
             this.res1r.Size = new System.Drawing.Size(61, 23);
             this.res1r.TabIndex = 7;
             this.res1r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res1r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // x1
             // 
@@ -173,6 +175,7 @@
             this.dpi1.Size = new System.Drawing.Size(61, 23);
             this.dpi1.TabIndex = 9;
             this.dpi1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dpi1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // ui1
             // 
@@ -237,6 +240,7 @@
             this.dpi2.Size = new System.Drawing.Size(61, 23);
             this.dpi2.TabIndex = 19;
             this.dpi2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dpi2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // x2
             // 
@@ -257,6 +261,7 @@
             this.res2r.Size = new System.Drawing.Size(61, 23);
             this.res2r.TabIndex = 17;
             this.res2r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res2r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // res2l
             // 
@@ -267,6 +272,7 @@
             this.res2l.Size = new System.Drawing.Size(61, 23);
             this.res2l.TabIndex = 16;
             this.res2l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res2l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // d2
             // 
@@ -299,6 +305,7 @@
             this.dpi3.Size = new System.Drawing.Size(61, 23);
             this.dpi3.TabIndex = 26;
             this.dpi3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dpi3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // x3
             // 
@@ -319,6 +326,7 @@
             this.res3r.Size = new System.Drawing.Size(61, 23);
             this.res3r.TabIndex = 24;
             this.res3r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res3r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // res3l
             // 
@@ -329,6 +337,7 @@
             this.res3l.Size = new System.Drawing.Size(61, 23);
             this.res3l.TabIndex = 23;
             this.res3l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res3l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // d3
             // 
@@ -361,6 +370,7 @@
             this.dpi4.Size = new System.Drawing.Size(61, 23);
             this.dpi4.TabIndex = 33;
             this.dpi4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dpi4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // x4
             // 
@@ -381,6 +391,7 @@
             this.res4r.Size = new System.Drawing.Size(61, 23);
             this.res4r.TabIndex = 31;
             this.res4r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res4r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // res4l
             // 
@@ -391,6 +402,7 @@
             this.res4l.Size = new System.Drawing.Size(61, 23);
             this.res4l.TabIndex = 30;
             this.res4l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.res4l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
             // 
             // d4
             // 

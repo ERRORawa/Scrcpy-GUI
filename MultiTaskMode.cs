@@ -448,5 +448,13 @@ namespace scrcpy_gui
             preview4.Show();
             getResolution.Enabled = true;
         }
+
+        private void Input_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar < 48 || e.KeyChar > 57) && (e.KeyChar != 8 && e.KeyChar != 46 && e.KeyChar != 13 && e.KeyChar != 27))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
