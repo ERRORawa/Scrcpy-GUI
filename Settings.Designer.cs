@@ -154,5 +154,77 @@ namespace scrcpy_gui {
                 this["关闭工具栏"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>false</string>
+  <string>1050</string>
+  <string>2300</string>
+  <string>350</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection 多开1 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["多开1"]));
+            }
+            set {
+                this["多开1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>false</string>
+  <string>1050</string>
+  <string>2300</string>
+  <string>350</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection 多开2 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["多开2"]));
+            }
+            set {
+                this["多开2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>false</string>
+  <string>1050</string>
+  <string>2300</string>
+  <string>350</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection 多开3 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["多开3"]));
+            }
+            set {
+                this["多开3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+  <string>false</string>
+  <string>1050</string>
+  <string>2300</string>
+  <string>350</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection 多开4 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["多开4"]));
+            }
+            set {
+                this["多开4"] = value;
+            }
+        }
     }
 }

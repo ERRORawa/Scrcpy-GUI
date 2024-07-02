@@ -68,6 +68,7 @@
             this.app4 = new System.Windows.Forms.ComboBox();
             this.check = new System.Windows.Forms.Timer(this.components);
             this.getResolution = new System.Windows.Forms.Timer(this.components);
+            this.waitScrcpy = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // checkBox1
@@ -80,6 +81,7 @@
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "#1";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.Checked_Changed);
             // 
             // checkBox2
             // 
@@ -91,6 +93,7 @@
             this.checkBox2.TabIndex = 1;
             this.checkBox2.Text = "#2";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.Checked_Changed);
             // 
             // checkBox3
             // 
@@ -102,6 +105,7 @@
             this.checkBox3.TabIndex = 2;
             this.checkBox3.Text = "#3";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.Checked_Changed);
             // 
             // checkBox4
             // 
@@ -113,6 +117,7 @@
             this.checkBox4.TabIndex = 3;
             this.checkBox4.Text = "#4";
             this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.Checked_Changed);
             // 
             // r1
             // 
@@ -144,6 +149,7 @@
             this.res1l.TabIndex = 6;
             this.res1l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res1l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res1l.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // res1r
             // 
@@ -155,6 +161,7 @@
             this.res1r.TabIndex = 7;
             this.res1r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res1r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res1r.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // x1
             // 
@@ -176,6 +183,7 @@
             this.dpi1.TabIndex = 9;
             this.dpi1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.dpi1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.dpi1.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // ui1
             // 
@@ -241,6 +249,7 @@
             this.dpi2.TabIndex = 19;
             this.dpi2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.dpi2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.dpi2.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // x2
             // 
@@ -262,6 +271,7 @@
             this.res2r.TabIndex = 17;
             this.res2r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res2r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res2r.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // res2l
             // 
@@ -273,6 +283,7 @@
             this.res2l.TabIndex = 16;
             this.res2l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res2l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res2l.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // d2
             // 
@@ -306,6 +317,7 @@
             this.dpi3.TabIndex = 26;
             this.dpi3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.dpi3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.dpi3.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // x3
             // 
@@ -327,6 +339,7 @@
             this.res3r.TabIndex = 24;
             this.res3r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res3r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res3r.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // res3l
             // 
@@ -338,6 +351,7 @@
             this.res3l.TabIndex = 23;
             this.res3l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res3l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res3l.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // d3
             // 
@@ -371,6 +385,7 @@
             this.dpi4.TabIndex = 33;
             this.dpi4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.dpi4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.dpi4.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // x4
             // 
@@ -392,6 +407,7 @@
             this.res4r.TabIndex = 31;
             this.res4r.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res4r.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res4r.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // res4l
             // 
@@ -403,6 +419,7 @@
             this.res4l.TabIndex = 30;
             this.res4l.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.res4l.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Input_KeyPress);
+            this.res4l.Leave += new System.EventHandler(this.Input_Leave);
             // 
             // d4
             // 
@@ -475,13 +492,16 @@
             // 
             // check
             // 
-            this.check.Interval = 3000;
             this.check.Tick += new System.EventHandler(this.check_Tick);
             // 
             // getResolution
             // 
             this.getResolution.Interval = 300;
             this.getResolution.Tick += new System.EventHandler(this.getResolution_Tick);
+            // 
+            // waitScrcpy
+            // 
+            this.waitScrcpy.Tick += new System.EventHandler(this.waitScrcpy_Tick);
             // 
             // MultiTaskMode
             // 
@@ -579,5 +599,6 @@
         private System.Windows.Forms.ComboBox app4;
         private System.Windows.Forms.Timer check;
         private System.Windows.Forms.Timer getResolution;
+        private System.Windows.Forms.Timer waitScrcpy;
     }
 }

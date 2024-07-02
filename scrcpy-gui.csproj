@@ -103,6 +103,7 @@
     <Compile Include="MultiTaskMode.Designer.cs">
       <DependentUpon>MultiTaskMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

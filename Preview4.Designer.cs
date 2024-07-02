@@ -54,7 +54,7 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Preview3
+            // Preview4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -63,10 +63,11 @@
             this.Controls.Add(this.label1);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 300);
-            this.Name = "Preview3";
+            this.Name = "Preview4";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "预览窗口#4";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Preview4_FormClosing);
             this.Load += new System.EventHandler(this.Preview4_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

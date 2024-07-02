@@ -163,12 +163,11 @@ namespace scrcpy_gui
 
         private void Port_TextChanged(object sender, EventArgs e)      //检测Port控件输入数字大小
         {
-            int max = 65534;
             if(Port.Text.Length != 0 && Port.Text != "XXXXX")
             {
-                if(int.Parse(Port.Text) > max)
+                if(int.Parse(Port.Text) > 65534)
                 {
-                    Port.Text = max.ToString();
+                    Port.Text = "65534";
                     CheckPortLabel.Text = "端口超过上限";
                     CheckPortTimer.Enabled= true;
                     color = 36;

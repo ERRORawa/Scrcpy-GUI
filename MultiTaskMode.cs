@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,6 +52,10 @@ namespace scrcpy_gui
 
         int idx;
 
+        int wait = 0;
+
+        string nowApp;
+
         Preview1 preview1 = new Preview1();
 
         Preview2 preview2 = new Preview2();
@@ -75,7 +80,12 @@ namespace scrcpy_gui
             p.StartInfo.RedirectStandardError = true;
             p.StartInfo.CreateNoWindow = true;
             p.Start();
-            p.StandardInput.WriteLine(command);
+            p.StandardInput.WriteLine(command + " & exit");
+            p.StandardInput.AutoFlush = true;
+            string strOutput = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            p.Close();
+            main.WriteFile("multi1", strOutput);
         }
         public void Cmd2(string command)    //执行命令（异步），无输出
         {
@@ -87,7 +97,12 @@ namespace scrcpy_gui
             p.StartInfo.RedirectStandardError = true;
             p.StartInfo.CreateNoWindow = true;
             p.Start();
-            p.StandardInput.WriteLine(command);
+            p.StandardInput.WriteLine(command + " & exit");
+            p.StandardInput.AutoFlush = true;
+            string strOutput = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            p.Close();
+            main.WriteFile("multi2", strOutput);
         }
         public void Cmd3(string command)    //执行命令（异步），无输出
         {
@@ -99,7 +114,12 @@ namespace scrcpy_gui
             p.StartInfo.RedirectStandardError = true;
             p.StartInfo.CreateNoWindow = true;
             p.Start();
-            p.StandardInput.WriteLine(command);
+            p.StandardInput.WriteLine(command + " & exit");
+            p.StandardInput.AutoFlush = true;
+            string strOutput = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            p.Close();
+            main.WriteFile("multi3", strOutput);
         }
         public void Cmd4(string command)    //执行命令（异步），无输出
         {
@@ -111,20 +131,26 @@ namespace scrcpy_gui
             p.StartInfo.RedirectStandardError = true;
             p.StartInfo.CreateNoWindow = true;
             p.Start();
-            p.StandardInput.WriteLine(command);
+            p.StandardInput.WriteLine(command + " & exit");
+            p.StandardInput.AutoFlush = true;
+            string strOutput = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+            p.Close();
+            main.WriteFile("multi4", strOutput);
         }
         private void Enter_Click(object sender, EventArgs e)
         {
+            if (app1.Items[0].ToString() == "正在获取应用列表")
+            {
+                return;
+            }
             string displayInfo = "";
             bool flag = false;
             int num = 0;
             if (checkBox1.Checked)
             {
-                if(res1l.Text != "" && res1r.Text != "" && dpi1.Text != "" && app1.SelectedItem.ToString() != "选择软件")
-                {
-                    displayInfo = displayInfo + res1l.Text + "x" + res1r.Text + "/" + dpi1.Text;
-                    flag = true;
-                }
+                displayInfo = displayInfo + res1l.Text + "x" + res1r.Text + "/" + dpi1.Text;
+                flag = true;
                 num++;
             }
             if (checkBox2.Checked)
@@ -133,11 +159,8 @@ namespace scrcpy_gui
                 {
                     displayInfo = displayInfo + "\\;";
                 }
-                if (res2l.Text != "" && res2r.Text != "" && dpi2.Text != "" && app2.SelectedItem.ToString() != "选择软件")
-                {
-                    displayInfo = displayInfo + res2l.Text + "x" + res2r.Text + "/" + dpi2.Text;
-                    flag = true;
-                }
+                displayInfo = displayInfo + res2l.Text + "x" + res2r.Text + "/" + dpi2.Text;
+                flag = true;
                 num++;
             }
             if (checkBox3.Checked)
@@ -146,11 +169,8 @@ namespace scrcpy_gui
                 {
                     displayInfo = displayInfo + "\\;";
                 }
-                if (res3l.Text != "" && res3r.Text != "" && dpi3.Text != "" && app3.SelectedItem.ToString() != "选择软件")
-                {
-                    displayInfo = displayInfo + res3l.Text + "x" + res3r.Text + "/" + dpi3.Text;
-                    flag = true;
-                }
+                displayInfo = displayInfo + res3l.Text + "x" + res3r.Text + "/" + dpi3.Text;
+                flag = true;
                 num++;
             }
             if (checkBox4.Checked)
@@ -159,38 +179,92 @@ namespace scrcpy_gui
                 {
                     displayInfo = displayInfo + "\\;";
                 }
-                if (res4l.Text != "" && res4r.Text != "" && dpi4.Text != "" && app4.SelectedItem.ToString() != "选择软件")
-                {
-                    displayInfo = displayInfo + res4l.Text + "x" + res4r.Text + "/" + dpi4.Text;
-                    flag = true;
-                }
+                displayInfo = displayInfo + res4l.Text + "x" + res4r.Text + "/" + dpi4.Text;
+                flag = true;
                 num++;
             }
-            Debug.Print(displayInfo);
             _ = main.Cmd("bin\\adb -s " + device + " shell settings put global overlay_display_devices \"" + displayInfo + "\"", "createDisplay");
             Thread.Sleep(200);
             string[] displayID = main.Cmd("bin\\adb -s " + device + " shell dumpsys display ^| grep \"\\ \\ \\ \\ mDisplayId=\"", "displayID");
             ArrayList idAr = new ArrayList();
-            for (int i = 4; ; i++)
+            for (int k = 4; ; k++)
             {
-                if (displayID[i] == "")
+                if (displayID[k] == "")
                 {
                     break;
                 }
                 else
                 {
-                    Debug.Print(displayID[i].ToString());
-                    idAr.Add(int.Parse(displayID[i].Substring(15, displayID[i].Length - 15)));
+                    Debug.Print(displayID[k].ToString());
+                    idAr.Add(int.Parse(displayID[k].Substring(15, displayID[k].Length - 15)));
                 }
             }
             id = (int[])idAr.ToArray(typeof(int));
             idx = id.Length - num;
+            int[] ida = new int[4];
+            int i = 0;
+            Debug.Print(id[idx] + " " + id[idx + 1] + " " + id[idx + 2] + " " + id[idx + 3]);
+            if (checkBox1.Checked)
+            {
+                ida[0] = id[idx];
+                i++;
+            }
+            if (checkBox2.Checked)
+            {
+                ida[1] = id[idx + i];
+                i++;
+            }
+            if (checkBox3.Checked)
+            {
+                ida[2] = id[idx + i];
+                i++;
+            }
+            if (checkBox4.Checked)
+            {
+                ida[3] = id[idx + i];
+            }
+            id = ida;
             check.Enabled = true;
+            Settings.Default.多开1[0] = checkBox1.Checked.ToString();
+            Settings.Default.多开2[0] = checkBox2.Checked.ToString();
+            Settings.Default.多开3[0] = checkBox3.Checked.ToString();
+            Settings.Default.多开4[0] = checkBox4.Checked.ToString();
+            Settings.Default.多开1[1] = res1l.Text;
+            Settings.Default.多开2[1] = res2l.Text;
+            Settings.Default.多开3[1] = res3l.Text;
+            Settings.Default.多开4[1] = res4l.Text;
+            Settings.Default.多开1[2] = res1r.Text;
+            Settings.Default.多开2[2] = res2r.Text;
+            Settings.Default.多开3[2] = res3r.Text;
+            Settings.Default.多开4[2] = res4r.Text;
+            Settings.Default.多开1[3] = dpi1.Text;
+            Settings.Default.多开2[3] = dpi2.Text;
+            Settings.Default.多开3[3] = dpi3.Text;
+            Settings.Default.多开4[3] = dpi4.Text;
+            Settings.Default.Save();
         }
 
         private void MultiTaskMode_Load(object sender, EventArgs e)
         {
+            checkBox1.Checked = Convert.ToBoolean(Settings.Default.多开1[0]);
+            checkBox2.Checked = Convert.ToBoolean(Settings.Default.多开2[0]);
+            checkBox3.Checked = Convert.ToBoolean(Settings.Default.多开3[0]);
+            checkBox4.Checked = Convert.ToBoolean(Settings.Default.多开4[0]);
+            res1l.Text = Settings.Default.多开1[1];
+            res2l.Text = Settings.Default.多开2[1];
+            res3l.Text = Settings.Default.多开3[1];
+            res4l.Text = Settings.Default.多开4[1];
+            res1r.Text = Settings.Default.多开1[2];
+            res2r.Text = Settings.Default.多开2[2];
+            res3r.Text = Settings.Default.多开3[2];
+            res4r.Text = Settings.Default.多开4[2];
+            dpi1.Text = Settings.Default.多开1[3];
+            dpi2.Text = Settings.Default.多开2[3];
+            dpi3.Text = Settings.Default.多开3[3];
+            dpi4.Text = Settings.Default.多开4[3];
+            Checked_Changed(this, new EventArgs());
             _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "command");
+            _ = main.Cmd("taskkill /F /IM scrcpy.exe","command");
             app1.SelectedItem = app1.Items[0];
             app2.SelectedItem = app2.Items[0];
             app3.SelectedItem = app3.Items[0];
@@ -227,6 +301,7 @@ namespace scrcpy_gui
                 app3.SelectedItem = app3.Items[0];
                 app4.SelectedItem = app4.Items[0];
             });
+
             int mid1 = this.ClientRectangle.Width / 4 / 2 - 10;
             int mid2 = this.ClientRectangle.Width / 4 + this.ClientRectangle.Width / 4 / 2;
             int mid3 = this.ClientRectangle.Width / 4 * 2 + this.ClientRectangle.Width / 4 / 2;
@@ -318,65 +393,123 @@ namespace scrcpy_gui
         private void ui1_Click(object sender, EventArgs e)
         {
             preview1.Show();
+            preview1.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
+            getResolution.Enabled = true;
+        }
+
+        private void ui2_Click(object sender, EventArgs e)
+        {
+            preview2.Show();
+            preview2.SetForm(new Size(int.Parse(res2l.Text), int.Parse(res2r.Text)));
+            getResolution.Enabled = true;
+        }
+
+        private void ui3_Click(object sender, EventArgs e)
+        {
+            preview3.Show();
+            preview3.SetForm(new Size(int.Parse(res3l.Text), int.Parse(res3r.Text)));
+            getResolution.Enabled = true;
+        }
+
+        private void ui4_Click(object sender, EventArgs e)
+        {
+            preview4.Show();
+            preview4.SetForm(new Size(int.Parse(res4l.Text), int.Parse(res4r.Text)));
             getResolution.Enabled = true;
         }
 
         private void check_Tick(object sender, EventArgs e)
         {
-            int idxx = idx;
             bool flag = true;
-            if (checkBox1.Checked)
+            wait++;
+            if (wait == 5)
+            {
+                wait = 1;
+            }
+            if (checkBox1.Checked && wait == 1)
             {
                 IntPtr hWnd = FindWindow(null, app1.SelectedItem.ToString());
                 if (hWnd == IntPtr.Zero)
                 {
                     flag = false;
+                    string[] appActivity = packActivity[app1.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[0] + " --windowingMode 1 " + appActivity[1], "displayApp1");
+                    Task task1 = Task.Run(() =>
+                    {
+                        Cmd1("bin\\scrcpy -s " + device + " --display-id=" + id[0] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command);
+                    });
+                    nowApp = app1.SelectedItem.ToString();
+                    waitScrcpy.Enabled = true;
+                    Debug.Print(app1.SelectedItem.ToString() + " " + id[0] + " " + appActivity[1]);
+                    check.Enabled = false;
+                    return;
                 }
-                string[] appActivity = packActivity[app1.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                Cmd1("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command + " > multi1");
-                idx++;
             }
-            if (checkBox2.Checked)
+            if (checkBox2.Checked && wait == 2)
             {
                 IntPtr hWnd = FindWindow(null, app2.SelectedItem.ToString());
                 if (hWnd == IntPtr.Zero)
                 {
                     flag = false;
+                    string[] appActivity = packActivity[app2.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[1] + " --windowingMode 1 " + appActivity[1], "displayApp2");
+                    Task task2 = Task.Run(() =>
+                    {
+                        Cmd2("bin\\scrcpy -s " + device + " --display-id=" + id[1] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command);
+                    });
+                    nowApp = app2.SelectedItem.ToString();
+                    waitScrcpy.Enabled = true;
+                    Debug.Print(app2.SelectedItem.ToString() + " " + id[1] + " " + appActivity[1]);
+                    check.Enabled = false;
+                    return;
                 }
-                string[] appActivity = packActivity[app2.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                Cmd2("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command + " > multi2");
-                idx++;
             }
-            if (checkBox3.Checked)
+            if (checkBox3.Checked && wait == 3)
             {
                 IntPtr hWnd = FindWindow(null, app3.SelectedItem.ToString());
                 if (hWnd == IntPtr.Zero)
                 {
                     flag = false;
+                    string[] appActivity = packActivity[app3.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[2] + " --windowingMode 1 " + appActivity[1], "displayApp3");
+                    Task task3 = Task.Run(() =>
+                    {
+                        Cmd3("bin\\scrcpy -s " + device + " --display-id=" + id[2] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command);
+                    });
+                    nowApp = app3.SelectedItem.ToString();
+                    waitScrcpy.Enabled = true;
+                    Debug.Print(app3.SelectedItem.ToString() + " " + id[2] + " " + appActivity[1]);
+                    check.Enabled = false;
+                    return;
                 }
-                string[] appActivity = packActivity[app3.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                Cmd3("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command + " > multi3");
-                idx++;
             }
-            if (checkBox4.Checked)
+            if (checkBox4.Checked && wait == 4)
             {
                 IntPtr hWnd = FindWindow(null, app4.SelectedItem.ToString());
                 if (hWnd == IntPtr.Zero)
                 {
                     flag = false;
+                    string[] appActivity = packActivity[app4.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[3] + " --windowingMode 1 " + appActivity[1], "displayApp4");
+                    Task task4 = Task.Run(() =>
+                    {
+                        Cmd4("bin\\scrcpy -s " + device + " --display-id=" + id[3] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command);
+                    });
+                    nowApp = app4.SelectedItem.ToString();
+                    waitScrcpy.Enabled = true;
+                    Debug.Print(app4.SelectedItem.ToString() + " " + id[3] + " " + appActivity[1]);
+                    check.Enabled = false;
+                    return;
                 }
-                string[] appActivity = packActivity[app4.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[idx] + " --windowingMode 1 " + appActivity[1], "displayApp");
-                Cmd4("bin\\scrcpy -s " + device + " --display-id=" + id[idx] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command + " > multi4");
             }
             if (flag)
             {
                 check.Enabled = false;
             }
-            idx = idxx;
+            else
+            {
+                check.Enabled = true;
+            }
         }
 
         private void getResolution_Tick(object sender, EventArgs e)
@@ -427,26 +560,7 @@ namespace scrcpy_gui
             {
                 getResolution.Interval = 300;
                 getResolution.Enabled = false;
-                Debug.Print("disable");
             }
-        }
-
-        private void ui2_Click(object sender, EventArgs e)
-        {
-            preview2.Show();
-            getResolution.Enabled = true;
-        }
-
-        private void ui3_Click(object sender, EventArgs e)
-        {
-            preview3.Show();
-            getResolution.Enabled = true;
-        }
-
-        private void ui4_Click(object sender, EventArgs e)
-        {
-            preview4.Show();
-            getResolution.Enabled = true;
         }
 
         private void Input_KeyPress(object sender, KeyPressEventArgs e)
@@ -454,6 +568,232 @@ namespace scrcpy_gui
             if ((e.KeyChar < 48 || e.KeyChar > 57) && (e.KeyChar != 8 && e.KeyChar != 46 && e.KeyChar != 13 && e.KeyChar != 27))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void Input_Leave(object sender, EventArgs e)
+        {
+            if (res1l.Text.Length == 0)
+            {
+                res1l.Text = "300";
+            }
+            if (int.Parse(res1l.Text) < 300)
+            {
+                res1l.Text = "300";
+            }
+            if (int.Parse(res1l.Text) > 4096)
+            {
+                res1l.Text = "4096";
+            }
+            if (res2l.Text.Length == 0)
+            {
+                res2l.Text = "300";
+            }
+            if (int.Parse(res2l.Text) < 300)
+            {
+                res2l.Text = "300";
+            }
+            if (int.Parse(res2l.Text) > 4096)
+            {
+                res2l.Text = "4096";
+            }
+            if (res3l.Text.Length == 0)
+            {
+                res3l.Text = "300";
+            }
+            if (int.Parse(res3l.Text) < 300)
+            {
+                res3l.Text = "300";
+            }
+            if (int.Parse(res3l.Text) > 4096)
+            {
+                res3l.Text = "4096";
+            }
+            if (res4l.Text.Length == 0)
+            {
+                res4l.Text = "300";
+            }
+            if (int.Parse(res4l.Text) < 300)
+            {
+                res4l.Text = "300";
+            }
+            if (int.Parse(res4l.Text) > 4096)
+            {
+                res4l.Text = "4096";
+            }
+            if (res1r.Text.Length == 0)
+            {
+                res1r.Text = "300";
+            }
+            if (int.Parse(res1r.Text) < 300)
+            {
+                res1r.Text = "300";
+            }
+            if (int.Parse(res1r.Text) > 4096)
+            {
+                res1r.Text = "4096";
+            }
+            if (res2r.Text.Length == 0)
+            {
+                res2r.Text = "300";
+            }
+            if (int.Parse(res2r.Text) < 300)
+            {
+                res2r.Text = "300";
+            }
+            if (int.Parse(res2r.Text) > 4096)
+            {
+                res2r.Text = "4096";
+            }
+            if (res3r.Text.Length == 0)
+            {
+                res3r.Text = "300";
+            }
+            if (int.Parse(res3r.Text) < 300)
+            {
+                res3r.Text = "300";
+            }
+            if (int.Parse(res3r.Text) > 4096)
+            {
+                res3r.Text = "4096";
+            }
+            if (res4r.Text.Length == 0)
+            {
+                res4r.Text = "300";
+            }
+            if (int.Parse(res4r.Text) < 300)
+            {
+                res4r.Text = "300";
+            }
+            if (int.Parse(res4r.Text) > 4096)
+            {
+                res4r.Text = "4096";
+            }
+            if (dpi1.Text.Length == 0)
+            {
+                dpi1.Text = "120";
+            }
+            if (int.Parse(dpi1.Text) < 300)
+            {
+                dpi1.Text = "120";
+            }
+            if (int.Parse(dpi1.Text) > 640)
+            {
+                dpi1.Text = "640";
+            }
+            if (dpi2.Text.Length == 0)
+            {
+                dpi2.Text = "120";
+            }
+            if (int.Parse(dpi2.Text) < 300)
+            {
+                dpi2.Text = "120";
+            }
+            if (int.Parse(dpi2.Text) > 640)
+            {
+                dpi2.Text = "640";
+            }
+            if (dpi3.Text.Length == 0)
+            {
+                dpi3.Text = "120";
+            }
+            if (int.Parse(dpi3.Text) < 300)
+            {
+                dpi3.Text = "120";
+            }
+            if (int.Parse(dpi3.Text) > 640)
+            {
+                dpi3.Text = "640";
+            }
+            if (dpi4.Text.Length == 0)
+            {
+                dpi4.Text = "120";
+            }
+            if (int.Parse(dpi4.Text) < 300)
+            {
+                dpi4.Text = "120";
+            }
+            if (int.Parse(dpi4.Text) > 640)
+            {
+                dpi4.Text = "640";
+            }
+        }
+
+        private void Checked_Changed(object sender, EventArgs e)
+        {
+            if (!checkBox1.Checked)
+            {
+                res1l.Enabled = false;
+                res1r.Enabled = false;
+                dpi1.Enabled = false;
+                app1.Enabled = false;
+                ui1.Enabled = false;
+            }
+            else
+            {
+                res1l.Enabled = true;
+                res1r.Enabled = true;
+                dpi1.Enabled = true;
+                app1.Enabled = true;
+                ui1.Enabled = true;
+            }
+            if (!checkBox2.Checked)
+            {
+                res2l.Enabled = false;
+                res2r.Enabled = false;
+                dpi2.Enabled = false;
+                app2.Enabled = false;
+                ui2.Enabled = false;
+            }
+            else
+            {
+                res2l.Enabled = true;
+                res2r.Enabled = true;
+                dpi2.Enabled = true;
+                app2.Enabled = true;
+                ui2.Enabled = true;
+            }
+            if (!checkBox3.Checked)
+            {
+                res3l.Enabled = false;
+                res3r.Enabled = false;
+                dpi3.Enabled = false;
+                app3.Enabled = false;
+                ui3.Enabled = false;
+            }
+            else
+            {
+                res3l.Enabled = true;
+                res3r.Enabled = true;
+                dpi3.Enabled = true;
+                app3.Enabled = true;
+                ui3.Enabled = true;
+            }
+            if (!checkBox4.Checked)
+            {
+                res4l.Enabled = false;
+                res4r.Enabled = false;
+                dpi4.Enabled = false;
+                app4.Enabled = false;
+                ui4.Enabled = false;
+            }
+            else
+            {
+                res4l.Enabled = true;
+                res4r.Enabled = true;
+                dpi4.Enabled = true;
+                app4.Enabled = true;
+                ui4.Enabled = true;
+            }
+        }
+
+        private void waitScrcpy_Tick(object sender, EventArgs e)
+        {
+            IntPtr hWnd = FindWindow(null, nowApp);
+            if (hWnd != IntPtr.Zero)
+            {
+                waitScrcpy.Enabled = false;
+                check.Enabled = true;
             }
         }
     }

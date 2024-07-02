@@ -82,11 +82,11 @@ namespace scrcpy_gui
             }
             else
             {
-                if (Settings.Default.置顶)
+                if (Settings.Default.置顶 && !multiTask)
                 {
                     command = command + " --always-on-top";
                 }
-                if (Settings.Default.禁用屏幕保护程序)
+                if (Settings.Default.禁用屏幕保护程序 && !multiTask)
                 {
                     command = command + " --disable-screensaver";
                 }
@@ -102,11 +102,11 @@ namespace scrcpy_gui
                 {
                     command = command + " --no-audio";
                 }
-                if (Settings.Default.结束后关闭屏幕)
+                if (Settings.Default.结束后关闭屏幕 && !multiTask)
                 {
                     command = command + " --power-off-on-close";
                 }
-                if (Settings.Default.保持唤醒)
+                if (Settings.Default.保持唤醒 && !multiTask)
                 {
                     command = command + " --stay-awake";
                 }
