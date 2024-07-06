@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,7 +64,7 @@ namespace scrcpy_gui
             path.AddArc(arcRect, 0, 90);
             arcRect.X = rect.Left;
             path.AddArc(arcRect, 90, 90);
-            path.CloseFigure();
+            path.CloseFigure(); 
             return path;
         }
         public void SetWindowRegion()       //开始绘制窗体
@@ -84,6 +85,8 @@ namespace scrcpy_gui
         bool isTop = false;     //判断是否置顶
 
         bool isFocus = true;    //判断活动窗口是否为Scrcpy
+
+        public bool alwaysOnTop = false;
 
         public bool disableToolBar = false;     //判断工具栏是否开启
 
@@ -113,7 +116,11 @@ namespace scrcpy_gui
             }
             else if (fx.Left == -8 && fx.Top == -8)         //如果Scrcpy全屏了
             {
-                if(windowName.ToString() == formTitle)       //判断活动窗体是否Scrcpy
+                if (alwaysOnTop)
+                {
+                    return;
+                }
+                if (windowName.ToString() == formTitle)       //判断活动窗体是否Scrcpy
                 {
                     if (!isTop)     //置顶工具栏
                     {
@@ -160,7 +167,7 @@ namespace scrcpy_gui
                     Environment.Exit(0);
                 }
                 flag = true;        //设为已获取到Scrcpy
-                if (isTop)      //从全屏还原时取消置顶
+                if (isTop && !alwaysOnTop)      //从全屏还原时取消置顶
                 {
                     isTop = false;
                     this.TopMost = false;
@@ -188,6 +195,10 @@ namespace scrcpy_gui
 
         private void TopForm_Tick(object sender, EventArgs e)
         {
+            if (alwaysOnTop)
+            {
+                return;
+            }
             IntPtr foregroundForm = GetForegroundWindow();      //获取活动窗口句柄
             GetWindowText(foregroundForm, windowName, windowName.Capacity);     //获取活动窗口标题
             if (windowName.ToString() == formTitle || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
@@ -282,6 +293,14 @@ namespace scrcpy_gui
         private void ToolBar_Click(object sender, EventArgs e)      //点击ToolBar窗体
         {
             SetForegroundWindow(hWnd);      //设置Scrcpy为活动窗口
+        }
+
+        private void ToolBar_Load(object sender, EventArgs e)
+        {
+            if(alwaysOnTop)
+            {
+                this.TopMost = true;
+            }
         }
     }
 }

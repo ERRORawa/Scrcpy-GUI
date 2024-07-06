@@ -29,6 +29,8 @@ namespace scrcpy_gui
 
         string[] args = null;
 
+        bool alwaysOnTop = false;
+
         bool multiTask = false;
 
         public void WriteFile(string fileName,string content)    //写入文件（文件名，内容）
@@ -85,6 +87,7 @@ namespace scrcpy_gui
                 if (Settings.Default.置顶 && !multiTask)
                 {
                     command = command + " --always-on-top";
+                    alwaysOnTop = true;
                 }
                 if (Settings.Default.禁用屏幕保护程序 && !multiTask)
                 {
@@ -178,6 +181,7 @@ namespace scrcpy_gui
             {
                 SetArgs();      //应用Scrcpy参数
                 ToolBar toolBar = new ToolBar();
+                toolBar.alwaysOnTop = alwaysOnTop;
                 toolBar.device = args[0];
                 toolBar.disableToolBar = disableToolBar.Checked;        //显示工具栏
                 toolBar.Show();
@@ -284,6 +288,7 @@ namespace scrcpy_gui
             {                              //开启投屏
                 SetArgs();      //应用Scrcpy参数
                 ToolBar toolBar = new ToolBar();
+                toolBar.alwaysOnTop = alwaysOnTop;
                 toolBar.device = devices[0];
                 toolBar.disableToolBar = disableToolBar.Checked;        //显示工具栏
                 toolBar.Show();

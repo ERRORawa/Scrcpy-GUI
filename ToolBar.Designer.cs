@@ -133,13 +133,14 @@
             // 
             // Power
             // 
+            this.Power.BackColor = System.Drawing.Color.White;
             this.Power.BackgroundImage = global::scrcpy_gui.Resource.power;
             this.Power.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Power.Location = new System.Drawing.Point(5, 5);
             this.Power.Name = "Power";
             this.Power.Size = new System.Drawing.Size(40, 40);
             this.Power.TabIndex = 0;
-            this.Power.UseVisualStyleBackColor = true;
+            this.Power.UseVisualStyleBackColor = false;
             this.Power.Click += new System.EventHandler(this.Power_Click);
             // 
             // TopForm
@@ -152,6 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(243)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(50, 365);
             this.Controls.Add(this.More);
             this.Controls.Add(this.MuliTask);
@@ -168,6 +170,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "ToolBar";
+            this.Load += new System.EventHandler(this.ToolBar_Load);
             this.Click += new System.EventHandler(this.ToolBar_Click);
             this.ResumeLayout(false);
 

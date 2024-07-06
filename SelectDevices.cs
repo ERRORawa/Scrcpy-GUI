@@ -20,7 +20,8 @@ namespace scrcpy_gui
         public string[] devices;
 
         public string command;
- 
+
+        public bool alwaysOnTop = false;
         public void Cmd(string command)    //执行命令（异步），无输出
         {
             Process p = new Process();
@@ -76,6 +77,7 @@ namespace scrcpy_gui
             {
                 case 0:    //投屏
                     ToolBar toolBar = new ToolBar();
+                    toolBar.alwaysOnTop = alwaysOnTop;
                     toolBar.device = SelectDevice.SelectedItem.ToString();
                     toolBar.Show();
                     Cmd("bin\\scrcpy -s " + SelectDevice.SelectedItem.ToString() + " --shortcut-mod lctrl,rctrl" + command);

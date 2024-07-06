@@ -453,6 +453,7 @@
             this.app1.Name = "app1";
             this.app1.Size = new System.Drawing.Size(150, 28);
             this.app1.TabIndex = 37;
+            this.app1.SelectedIndexChanged += new System.EventHandler(this.app_SelectedIndexChanged);
             // 
             // app2
             // 
@@ -465,6 +466,7 @@
             this.app2.Name = "app2";
             this.app2.Size = new System.Drawing.Size(150, 28);
             this.app2.TabIndex = 38;
+            this.app2.SelectedIndexChanged += new System.EventHandler(this.app_SelectedIndexChanged);
             // 
             // app3
             // 
@@ -477,6 +479,7 @@
             this.app3.Name = "app3";
             this.app3.Size = new System.Drawing.Size(150, 28);
             this.app3.TabIndex = 39;
+            this.app3.SelectedIndexChanged += new System.EventHandler(this.app_SelectedIndexChanged);
             // 
             // app4
             // 
@@ -489,6 +492,7 @@
             this.app4.Name = "app4";
             this.app4.Size = new System.Drawing.Size(150, 28);
             this.app4.TabIndex = 40;
+            this.app4.SelectedIndexChanged += new System.EventHandler(this.app_SelectedIndexChanged);
             // 
             // check
             // 

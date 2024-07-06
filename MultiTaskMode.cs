@@ -56,6 +56,10 @@ namespace scrcpy_gui
 
         string nowApp;
 
+        bool flag = true;
+
+        bool success = false;
+
         Preview1 preview1 = new Preview1();
 
         Preview2 preview2 = new Preview2();
@@ -144,6 +148,7 @@ namespace scrcpy_gui
             {
                 return;
             }
+            this.Hide();
             string displayInfo = "";
             bool flag = false;
             int num = 0;
@@ -203,25 +208,28 @@ namespace scrcpy_gui
             idx = id.Length - num;
             int[] ida = new int[4];
             int i = 0;
-            Debug.Print(id[idx] + " " + id[idx + 1] + " " + id[idx + 2] + " " + id[idx + 3]);
             if (checkBox1.Checked)
             {
                 ida[0] = id[idx];
+                Debug.Print(id[idx + i].ToString());
                 i++;
             }
             if (checkBox2.Checked)
             {
                 ida[1] = id[idx + i];
+                Debug.Print(id[idx + i].ToString());
                 i++;
             }
             if (checkBox3.Checked)
             {
                 ida[2] = id[idx + i];
+                Debug.Print(id[idx + i].ToString());
                 i++;
             }
             if (checkBox4.Checked)
             {
                 ida[3] = id[idx + i];
+                Debug.Print(id[idx + i].ToString());
             }
             id = ida;
             check.Enabled = true;
@@ -297,9 +305,9 @@ namespace scrcpy_gui
                 packName = (string[])packNameAr.ToArray(typeof(string));
                 packActivity = (string[])packActivityAr.ToArray(typeof(string));
                 app1.SelectedItem = app1.Items[0];
-                app2.SelectedItem = app2.Items[0];
-                app3.SelectedItem = app3.Items[0];
-                app4.SelectedItem = app4.Items[0];
+                app2.SelectedItem = app2.Items[1];
+                app3.SelectedItem = app3.Items[2];
+                app4.SelectedItem = app4.Items[3];
             });
 
             int mid1 = this.ClientRectangle.Width / 4 / 2 - 10;
@@ -420,16 +428,29 @@ namespace scrcpy_gui
 
         private void check_Tick(object sender, EventArgs e)
         {
-            bool flag = true;
             wait++;
             if (wait == 5)
             {
+                if (flag)
+                {
+                    if (success)
+                    {
+                        _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "command");
+                        Environment.Exit(0);
+                    }
+                    success = true;
+                }
+                else
+                {
+                    check.Enabled = true;
+                }
                 wait = 1;
+                flag = true;
             }
             if (checkBox1.Checked && wait == 1)
             {
                 IntPtr hWnd = FindWindow(null, app1.SelectedItem.ToString());
-                if (hWnd == IntPtr.Zero)
+                if (hWnd == IntPtr.Zero && !success)
                 {
                     flag = false;
                     string[] appActivity = packActivity[app1.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -444,11 +465,15 @@ namespace scrcpy_gui
                     check.Enabled = false;
                     return;
                 }
+                if (hWnd != IntPtr.Zero && success)
+                {
+                    flag = false;
+                }
             }
             if (checkBox2.Checked && wait == 2)
             {
                 IntPtr hWnd = FindWindow(null, app2.SelectedItem.ToString());
-                if (hWnd == IntPtr.Zero)
+                if (hWnd == IntPtr.Zero && !success)
                 {
                     flag = false;
                     string[] appActivity = packActivity[app2.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -463,11 +488,15 @@ namespace scrcpy_gui
                     check.Enabled = false;
                     return;
                 }
+                if (hWnd != IntPtr.Zero && success)
+                {
+                    flag = false;
+                }
             }
             if (checkBox3.Checked && wait == 3)
             {
                 IntPtr hWnd = FindWindow(null, app3.SelectedItem.ToString());
-                if (hWnd == IntPtr.Zero)
+                if (hWnd == IntPtr.Zero && !success)
                 {
                     flag = false;
                     string[] appActivity = packActivity[app3.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -482,11 +511,15 @@ namespace scrcpy_gui
                     check.Enabled = false;
                     return;
                 }
+                if (hWnd != IntPtr.Zero && success)
+                {
+                    flag = false;
+                }
             }
             if (checkBox4.Checked && wait == 4)
             {
                 IntPtr hWnd = FindWindow(null, app4.SelectedItem.ToString());
-                if (hWnd == IntPtr.Zero)
+                if (hWnd == IntPtr.Zero && !success)
                 {
                     flag = false;
                     string[] appActivity = packActivity[app4.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -501,14 +534,10 @@ namespace scrcpy_gui
                     check.Enabled = false;
                     return;
                 }
-            }
-            if (flag)
-            {
-                check.Enabled = false;
-            }
-            else
-            {
-                check.Enabled = true;
+                if (hWnd != IntPtr.Zero && success)
+                {
+                    flag = false;
+                }
             }
         }
 
@@ -726,7 +755,6 @@ namespace scrcpy_gui
                 res1l.Enabled = false;
                 res1r.Enabled = false;
                 dpi1.Enabled = false;
-                app1.Enabled = false;
                 ui1.Enabled = false;
             }
             else
@@ -734,7 +762,6 @@ namespace scrcpy_gui
                 res1l.Enabled = true;
                 res1r.Enabled = true;
                 dpi1.Enabled = true;
-                app1.Enabled = true;
                 ui1.Enabled = true;
             }
             if (!checkBox2.Checked)
@@ -742,7 +769,6 @@ namespace scrcpy_gui
                 res2l.Enabled = false;
                 res2r.Enabled = false;
                 dpi2.Enabled = false;
-                app2.Enabled = false;
                 ui2.Enabled = false;
             }
             else
@@ -750,7 +776,6 @@ namespace scrcpy_gui
                 res2l.Enabled = true;
                 res2r.Enabled = true;
                 dpi2.Enabled = true;
-                app2.Enabled = true;
                 ui2.Enabled = true;
             }
             if (!checkBox3.Checked)
@@ -758,7 +783,6 @@ namespace scrcpy_gui
                 res3l.Enabled = false;
                 res3r.Enabled = false;
                 dpi3.Enabled = false;
-                app3.Enabled = false;
                 ui3.Enabled = false;
             }
             else
@@ -766,7 +790,6 @@ namespace scrcpy_gui
                 res3l.Enabled = true;
                 res3r.Enabled = true;
                 dpi3.Enabled = true;
-                app3.Enabled = true;
                 ui3.Enabled = true;
             }
             if (!checkBox4.Checked)
@@ -774,7 +797,6 @@ namespace scrcpy_gui
                 res4l.Enabled = false;
                 res4r.Enabled = false;
                 dpi4.Enabled = false;
-                app4.Enabled = false;
                 ui4.Enabled = false;
             }
             else
@@ -782,7 +804,6 @@ namespace scrcpy_gui
                 res4l.Enabled = true;
                 res4r.Enabled = true;
                 dpi4.Enabled = true;
-                app4.Enabled = true;
                 ui4.Enabled = true;
             }
         }
@@ -794,6 +815,41 @@ namespace scrcpy_gui
             {
                 waitScrcpy.Enabled = false;
                 check.Enabled = true;
+            }
+        }
+
+        private void app_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (app4.Items[0].ToString() == "正在获取应用列表" || app4.Text.Length == 0)
+            {
+                return;
+            }
+            if (app2.SelectedItem == app1.SelectedItem) 
+            {
+                checkBox2.Enabled = false;
+                checkBox2.Checked = false;
+            }
+            else
+            {
+                checkBox2.Enabled= true;
+            }
+            if (app3.SelectedItem == app1.SelectedItem || app3.SelectedItem == app2.SelectedItem)
+            {
+                checkBox3.Enabled = false;
+                checkBox3.Checked = false;
+            }
+            else
+            {
+                checkBox3.Enabled = true;
+            }
+            if (app4.SelectedItem == app1.SelectedItem || app4.SelectedItem == app2.SelectedItem || app4.SelectedItem == app3.SelectedItem)
+            {
+                checkBox4.Enabled = false;
+                checkBox4.Checked = false;
+            }
+            else
+            {
+                checkBox4.Enabled = true;
             }
         }
     }
