@@ -1,4 +1,4 @@
-name: .NET Build
+name: Build
 on:
   push:
     tags:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 jobs:
   build:
-    name: build-windows
+    name: Build
     strategy:
       matrix:
         configuration: [Release]
@@ -38,3 +38,4 @@ jobs:
       with:
         files:  bin\Release\scrcpy-gui.exe
         draft: true
+        fail_on_unmatched_files: true
