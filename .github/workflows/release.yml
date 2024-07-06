@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  build-and-test:
+  build:
     name: build-windows
     strategy:
       matrix:
@@ -25,7 +25,7 @@ jobs:
       run: msbuild /p:Configuration=$env:Configuration -restore
       env:
         Configuration: ${{ matrix.configuration }}
-    - name: Upload Scrcpy-GUI
+    - name: Upload
       uses: actions/upload-artifact@v4
       with:
         name: Scrcpy-GUI
@@ -34,5 +34,3 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files:  bin\Release\scrcpy-gui.exe
-        draft: true
-        fail_on_unmatched_files: true
