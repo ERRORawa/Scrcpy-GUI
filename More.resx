@@ -127,6 +127,6 @@ Ctrl + Shift + O：恢复设备屏幕
 Ctrl + C/Ctrl + V/Ctrl + X：不用说了吧
 Ctrl + 鼠标左键：从屏幕中间进行缩放
 拖放APK文件：安装APK
-拖放其它文件：上传到设备中，上传目录为自定义</value>
+拖放其它文件：上传到设备</value>
   </data>
 </root>

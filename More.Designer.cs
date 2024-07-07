@@ -32,7 +32,7 @@
             this.WindowTitleLabel = new System.Windows.Forms.Label();
             this.Key = new System.Windows.Forms.Label();
             this.FileFolderLabel = new System.Windows.Forms.Label();
-            this.Enter = new System.Windows.Forms.Button();
+            this.Source = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.FileFolder = new System.Windows.Forms.TextBox();
             this.WindowTitle = new System.Windows.Forms.TextBox();
@@ -63,7 +63,7 @@
             this.Key.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Key.Location = new System.Drawing.Point(12, 274);
             this.Key.Name = "Key";
-            this.Key.Size = new System.Drawing.Size(362, 210);
+            this.Key.Size = new System.Drawing.Size(299, 210);
             this.Key.TabIndex = 9;
             this.Key.Text = resources.GetString("Key.Text");
             // 
@@ -77,18 +77,18 @@
             this.FileFolderLabel.TabIndex = 10;
             this.FileFolderLabel.Text = "更改文件存放目录";
             // 
-            // Enter
+            // Source
             // 
-            this.Enter.AutoSize = true;
-            this.Enter.Enabled = false;
-            this.Enter.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Enter.Location = new System.Drawing.Point(498, 454);
-            this.Enter.Name = "Enter";
-            this.Enter.Size = new System.Drawing.Size(57, 30);
-            this.Enter.TabIndex = 12;
-            this.Enter.Text = "确定";
-            this.Enter.UseVisualStyleBackColor = true;
-            this.Enter.Click += new System.EventHandler(this.Enter_Click);
+            this.Source.AutoSize = true;
+            this.Source.Enabled = false;
+            this.Source.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Source.Location = new System.Drawing.Point(498, 454);
+            this.Source.Name = "Source";
+            this.Source.Size = new System.Drawing.Size(57, 30);
+            this.Source.TabIndex = 12;
+            this.Source.Text = "确定";
+            this.Source.UseVisualStyleBackColor = true;
+            this.Source.Click += new System.EventHandler(this.Enter_Click);
             // 
             // Cancel
             // 
@@ -270,7 +270,7 @@
             this.Controls.Add(this.AlwaysShowToolBar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.Enter);
+            this.Controls.Add(this.Source);
             this.Controls.Add(this.FileFolder);
             this.Controls.Add(this.FileFolderLabel);
             this.Controls.Add(this.Key);
@@ -308,7 +308,7 @@
         private System.Windows.Forms.Label Key;
         private System.Windows.Forms.Label FileFolderLabel;
         private System.Windows.Forms.TextBox FileFolder;
-        private System.Windows.Forms.Button Enter;
+        private System.Windows.Forms.Button Source;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox AlwaysShowToolBar;

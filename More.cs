@@ -139,17 +139,17 @@ namespace Scrcpy_GUI
 
         private void OnTop_CheckedChanged(object sender, EventArgs e)
         {
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void DisableScreenProtect_CheckedChanged(object sender, EventArgs e)
         {
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void CutpadSync_CheckedChanged(object sender, EventArgs e)
         {
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void DisableControl_CheckedChanged(object sender, EventArgs e)
@@ -158,17 +158,17 @@ namespace Scrcpy_GUI
             {
                 StandOn.Checked = false;
             }
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void EnableAudio_CheckedChanged(object sender, EventArgs e)
         {
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void ScreenOff_CheckedChanged(object sender, EventArgs e)
         {
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void StandOn_CheckedChanged(object sender, EventArgs e)
@@ -177,18 +177,18 @@ namespace Scrcpy_GUI
             {
                 DisableControl.Checked = false;
             }
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
         private void AlwaysShowToolBar_CheckedChanged(object sender, EventArgs e)
         {
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
         private void WindowTitle_TextChanged(object sender, EventArgs e)
         {
             label1.Text = WindowTitle.Text;
             WindowTitle.Width = label1.Width + 10;
             WindowTitle.Left = WindowTitleLabel.Left + WindowTitleLabel.Width / 2 - WindowTitle.Width / 2;
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void FileFolder_TextChanged(object sender, EventArgs e)
@@ -199,7 +199,7 @@ namespace Scrcpy_GUI
                 FileFolder.Width = label1.Width + 10;
             }
             FileFolder.Left = FileFolderLabel.Left + FileFolderLabel.Width / 2 - FileFolder.Width / 2;
-            Enter.Enabled = true;
+            Source.Enabled = true;
         }
 
         private void Cancel_Click(object sender, EventArgs e)
