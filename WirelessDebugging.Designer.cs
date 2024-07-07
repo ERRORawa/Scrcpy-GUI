@@ -118,7 +118,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::scrcpy_gui.Resource.e06a4bb27b4416f;
+            this.pictureBox1.Image = global::scrcpy_gui.Resource.WDBG;
             this.pictureBox1.Location = new System.Drawing.Point(301, 27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(128, 132);

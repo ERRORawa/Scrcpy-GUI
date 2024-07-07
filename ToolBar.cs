@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,7 +24,7 @@ namespace scrcpy_gui
 
         [DllImport("user32.dll")]       //调用DLL
         static extern IntPtr GetForegroundWindow();     //获取当前活动窗口 句柄
-        
+
         [DllImport("user32.dll")]       //调用DLL
         static extern void GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);     //获取句柄标题（句柄，存标题用的变量，存标题用的变量.Capacity）
 
@@ -33,8 +34,9 @@ namespace scrcpy_gui
         [DllImport("user32.dll")]       //调用DLL
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);     //获取句柄窗口位置（句柄，存窗口位置的变量）
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct RECT      //定义窗口位置
+        struct RECT      //定义窗口位置
         {
             public int Left;
             public int Top;
@@ -67,7 +69,7 @@ namespace scrcpy_gui
             path.CloseFigure(); 
             return path;
         }
-        public void SetWindowRegion()       //开始绘制窗体
+        private void SetWindowRegion()       //开始绘制窗体
         {
             Rectangle rect = new Rectangle(0, 0, this.Width - 87, this.Height);     //绘制窗体大小
             GraphicsPath FormPath = GetRoundedRectPath(rect, 30);       //设置圆角
@@ -97,7 +99,6 @@ namespace scrcpy_gui
         StringBuilder windowName = new StringBuilder(512);      //定义活动窗体名称
 
         Point mousePoint = Control.MousePosition;       //获取鼠标的位置
-
 
         public ToolBar()
         {
@@ -300,6 +301,35 @@ namespace scrcpy_gui
             if(alwaysOnTop)
             {
                 this.TopMost = true;
+            }
+        }
+
+        private void ScreenOn_CheckedChanged(object sender, EventArgs e)
+        {
+            SetForegroundWindow(hWnd);
+            IntPtr SO = FindWindow(null, "ScrcpyScreenOff");
+            if (SO.ToString() == "0")
+            {
+                Process p = new Process();
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                p.StartInfo.FileName = "bin\\scrcpy.exe";
+                p.StartInfo.Arguments = "-s " + device + " -S --window-title=ScrcpyScreenOff";
+                p.Start();
+            }
+            CheckScreenOn.Enabled = true;
+        }
+
+        private void CheckScreenOn_Tick(object sender, EventArgs e)
+        {
+            IntPtr SO = FindWindow(null, "ScrcpyScreenOff");
+            if (SO.ToString() != "0")
+            {
+                if (ScreenOn.Checked)
+                {
+                    selectDevices.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"");
+                    SetForegroundWindow(hWnd);
+                }
+                CheckScreenOn.Enabled = false;
             }
         }
     }

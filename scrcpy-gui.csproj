@@ -103,6 +103,11 @@
     <Compile Include="MultiTaskMode.Designer.cs">
       <DependentUpon>MultiTaskMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -114,11 +119,6 @@
     </Compile>
     <Compile Include="ToolBar.Designer.cs">
       <DependentUpon>ToolBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="SelectDevices.cs">
       <SubType>Form</SubType>
@@ -226,7 +226,7 @@
     <None Include="Resources\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\home.png" />
+    <None Include="Resources\Home.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\task.png" />
@@ -245,6 +245,27 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ScreenOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ScreenOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Home.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ScreenShot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VolumeDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VolumeUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Power.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

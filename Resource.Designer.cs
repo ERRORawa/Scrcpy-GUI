@@ -63,9 +63,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap _1 {
+        internal static System.Drawing.Bitmap Back {
             get {
-                object obj = ResourceManager.GetObject("_1", resourceCulture);
+                object obj = ResourceManager.GetObject("Back", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap back {
+        internal static System.Drawing.Bitmap Home {
             get {
-                object obj = ResourceManager.GetObject("back", resourceCulture);
+                object obj = ResourceManager.GetObject("Home", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap e06a4bb27b4416f {
+        internal static System.Drawing.Bitmap MBG {
             get {
-                object obj = ResourceManager.GetObject("e06a4bb27b4416f", resourceCulture);
+                object obj = ResourceManager.GetObject("MBG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap home {
+        internal static System.Drawing.Bitmap More {
             get {
-                object obj = ResourceManager.GetObject("home", resourceCulture);
+                object obj = ResourceManager.GetObject("More", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap more {
+        internal static System.Drawing.Bitmap Power {
             get {
-                object obj = ResourceManager.GetObject("more", resourceCulture);
+                object obj = ResourceManager.GetObject("Power", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap OIP_C__2_ {
+        internal static System.Drawing.Bitmap ScreenOff {
             get {
-                object obj = ResourceManager.GetObject("OIP_C__2_", resourceCulture);
+                object obj = ResourceManager.GetObject("ScreenOff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap power {
+        internal static System.Drawing.Bitmap ScreenOn {
             get {
-                object obj = ResourceManager.GetObject("power", resourceCulture);
+                object obj = ResourceManager.GetObject("ScreenOn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap screenshot {
+        internal static System.Drawing.Bitmap ScreenShot {
             get {
-                object obj = ResourceManager.GetObject("screenshot", resourceCulture);
+                object obj = ResourceManager.GetObject("ScreenShot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap task {
+        internal static System.Drawing.Bitmap SDBG {
             get {
-                object obj = ResourceManager.GetObject("task", resourceCulture);
+                object obj = ResourceManager.GetObject("SDBG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap volumeDown {
+        internal static System.Drawing.Bitmap Task {
             get {
-                object obj = ResourceManager.GetObject("volumeDown", resourceCulture);
+                object obj = ResourceManager.GetObject("Task", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,29 @@ namespace scrcpy_gui {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap volumeUp {
+        internal static System.Drawing.Bitmap VolumeDown {
             get {
-                object obj = ResourceManager.GetObject("volumeUp", resourceCulture);
+                object obj = ResourceManager.GetObject("VolumeDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap VolumeUp {
+            get {
+                object obj = ResourceManager.GetObject("VolumeUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap WDBG {
+            get {
+                object obj = ResourceManager.GetObject("WDBG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
