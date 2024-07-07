@@ -42,6 +42,7 @@
             this.OTG = new System.Windows.Forms.CheckBox();
             this.MultiTaskMode = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.version = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,11 +182,27 @@
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
             // 
+            // version
+            // 
+            this.version.AutoSize = true;
+            this.version.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.version.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.version.ForeColor = System.Drawing.Color.DarkGray;
+            this.version.Location = new System.Drawing.Point(531, 9);
+            this.version.Name = "version";
+            this.version.Size = new System.Drawing.Size(54, 20);
+            this.version.TabIndex = 13;
+            this.version.Text = "Ver 3.3";
+            this.version.Click += new System.EventHandler(this.version_Click);
+            this.version.MouseLeave += new System.EventHandler(this.version_MouseLeave);
+            this.version.MouseMove += new System.Windows.Forms.MouseEventHandler(this.version_MouseMove);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(597, 409);
+            this.Controls.Add(this.version);
             this.Controls.Add(this.MultiTaskMode);
             this.Controls.Add(this.OTG);
             this.Controls.Add(this.disableToolBar);
@@ -228,6 +245,7 @@
         private System.Windows.Forms.CheckBox disableToolBar;
         private System.Windows.Forms.CheckBox OTG;
         private System.Windows.Forms.Button MultiTaskMode;
+        private System.Windows.Forms.Label version;
     }
 }
 

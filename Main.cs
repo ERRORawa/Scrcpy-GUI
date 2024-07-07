@@ -398,5 +398,21 @@ namespace scrcpy_gui
                 this.Hide();    //隐藏当前窗体
             }
         }
+        private void version_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/ERRORawa/Scrcpy-GUI");
+        }
+
+        private void version_MouseMove(object sender, MouseEventArgs e)
+        {
+            version.ForeColor = Color.Black;
+            version.Font = new Font("微软雅黑",10.5f, FontStyle.Bold);
+        }
+
+        private void version_MouseLeave(object sender, EventArgs e)
+        {
+            version.ForeColor = Color.DarkGray;
+            version.Font = new Font("微软雅黑", 10.5f,FontStyle.Regular);
+        }
     }
 }
