@@ -112,7 +112,8 @@ namespace Scrcpy_GUI
             GetWindowRect(hWnd, ref fx);        //获取窗口位置
             if (fx.Left == 0 && fx.Top == 0 && flag && windowName.ToString() != "更多")        //如果成功获取过Scrcpy的位置并且Scrcpy已关闭
             {
-                Console.WriteLine("exit");
+                Main main = new Main();
+                _ = main.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"", "quit");
                 Environment.Exit(0);        //退出程序
             }
             else if (fx.Left == -8 && fx.Top == -8)         //如果Scrcpy全屏了
@@ -319,6 +320,14 @@ namespace Scrcpy_GUI
                 p.Start();
             }
             CheckScreenOn.Enabled = true;
+            if (ScreenOn.Checked)
+            {
+                ScreenOn.BackgroundImage = Resource.ScreenOn;
+            }
+            else
+            {
+                ScreenOn.BackgroundImage = Resource.ScreenOff;
+            }
         }
 
         private void CheckScreenOn_Tick(object sender, EventArgs e)

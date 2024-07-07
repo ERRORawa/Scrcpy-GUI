@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolBar));
             this.FollowScrcpy = new System.Windows.Forms.Timer(this.components);
             this.CheckMouse = new System.Windows.Forms.Timer(this.components);
             this.TopForm = new System.Windows.Forms.Timer(this.components);
@@ -70,7 +69,7 @@
             // ScreenOn
             // 
             this.ScreenOn.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ScreenOn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ScreenOn.BackgroundImage")));
+            this.ScreenOn.BackgroundImage = global::Scrcpy_GUI.Resource.ScreenOn;
             this.ScreenOn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ScreenOn.Checked = true;
             this.ScreenOn.CheckState = System.Windows.Forms.CheckState.Checked;

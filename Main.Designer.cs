@@ -139,6 +139,8 @@
             // disableToolBar
             // 
             this.disableToolBar.AutoSize = true;
+            this.disableToolBar.Checked = global::Scrcpy_GUI.Settings.Default.关闭工具栏;
+            this.disableToolBar.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Scrcpy_GUI.Settings.Default, "关闭工具栏", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.disableToolBar.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.disableToolBar.Location = new System.Drawing.Point(56, 105);
             this.disableToolBar.Name = "disableToolBar";
@@ -151,6 +153,8 @@
             // OTG
             // 
             this.OTG.AutoSize = true;
+            this.OTG.Checked = global::Scrcpy_GUI.Settings.Default.用OTG;
+            this.OTG.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Scrcpy_GUI.Settings.Default, "用OTG", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.OTG.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.OTG.Location = new System.Drawing.Point(56, 127);
             this.OTG.Name = "OTG";

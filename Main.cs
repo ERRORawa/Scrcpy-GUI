@@ -152,8 +152,6 @@ namespace Scrcpy_GUI
                 {
                 }
             }
-            disableToolBar.Checked = Settings.Default.关闭工具栏;    //初始化主菜单复选框
-            OTG.Checked = Settings.Default.用OTG;
             if (!File.Exists(appPath + "\\bin\\scrcpy.exe") || !Directory.Exists(appPath + "\\MultiModeSh"))        //检查文件完整性
             {
                 DialogResult dialogResult = MessageBox.Show("缺少环境配置文件，是否下载？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);

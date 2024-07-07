@@ -250,7 +250,8 @@
             // 
             this.AlwaysShowToolBar.Appearance = System.Windows.Forms.Appearance.Button;
             this.AlwaysShowToolBar.AutoSize = true;
-            this.AlwaysShowToolBar.Checked = global::Scrcpy_GUI.Settings.Default.保持唤醒;
+            this.AlwaysShowToolBar.Checked = global::Scrcpy_GUI.Settings.Default.始终显示工具栏;
+            this.AlwaysShowToolBar.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Scrcpy_GUI.Settings.Default, "始终显示工具栏", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AlwaysShowToolBar.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.AlwaysShowToolBar.Location = new System.Drawing.Point(260, 61);
             this.AlwaysShowToolBar.Name = "AlwaysShowToolBar";
