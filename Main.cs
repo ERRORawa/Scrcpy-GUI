@@ -144,12 +144,13 @@ namespace Scrcpy_GUI
 
         private void Main_Load(object sender, EventArgs e)
         {
-            if (Path.GetFileName(Application.ExecutablePath) != "Scrcpy-GUI.exe")       //修正App名字
+            if (Path.GetFileName(Application.ExecutablePath) != "Scrcpy-GUI.exe" && Path.GetFileName(Application.ExecutablePath) != "scrcpy-gui.exe")       //修正App名字
             {
                 Debug.Print("程序名错误：" + Path.GetFileName(Application.ExecutablePath) + "  正在修正");
                 try
                 {
                     File.Delete(appPath + "Scrcpy-GUI.exe");
+                    File.Delete(appPath + "scrcpy-gui.exe");
                     File.Copy(appPath + "\\" + Path.GetFileName(Application.ExecutablePath), appPath + "\\Scrcpy-GUI.exe");
                     Process rename = new Process();
                     rename.StartInfo.FileName = appPath + "\\Scrcpy-GUI.exe";
