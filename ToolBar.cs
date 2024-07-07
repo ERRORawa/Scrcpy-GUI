@@ -151,8 +151,6 @@ namespace scrcpy_gui
                         await Task.Delay(8000);     //等待8秒
                         if (!flag)      //若还未获取到Scrcpy，当作投屏失败
                         {
-                            FollowScrcpy.Enabled = false;
-                            CheckMouse.Enabled = false;
                             MessageBox.Show("长时间未投屏成功\n判断为手机已断开连接\n请重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Process.Start(this.GetType().Assembly.Location);       //再启动一个该程序
                             await Task.Delay(500);      //等待0.5秒
@@ -301,6 +299,10 @@ namespace scrcpy_gui
             if(alwaysOnTop)
             {
                 this.TopMost = true;
+            }
+            if (Settings.Default.始终显示工具栏)
+            {
+                CheckMouse.Enabled = false;
             }
         }
 

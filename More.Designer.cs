@@ -44,6 +44,7 @@
             this.DisableScreenProtect = new System.Windows.Forms.CheckBox();
             this.OnTop = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.AlwaysShowToolBar = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // WindowTitleLabel
@@ -245,11 +246,27 @@
             this.label1.Size = new System.Drawing.Size(0, 20);
             this.label1.TabIndex = 14;
             // 
+            // AlwaysShowToolBar
+            // 
+            this.AlwaysShowToolBar.Appearance = System.Windows.Forms.Appearance.Button;
+            this.AlwaysShowToolBar.AutoSize = true;
+            this.AlwaysShowToolBar.Checked = global::scrcpy_gui.Settings.Default.保持唤醒;
+            this.AlwaysShowToolBar.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.AlwaysShowToolBar.Location = new System.Drawing.Point(260, 61);
+            this.AlwaysShowToolBar.Name = "AlwaysShowToolBar";
+            this.AlwaysShowToolBar.Size = new System.Drawing.Size(132, 31);
+            this.AlwaysShowToolBar.TabIndex = 15;
+            this.AlwaysShowToolBar.Text = "始终显示工具栏";
+            this.AlwaysShowToolBar.UseVisualStyleBackColor = true;
+            this.AlwaysShowToolBar.CheckedChanged += new System.EventHandler(this.AlwaysShowToolBar_CheckedChanged);
+            this.AlwaysShowToolBar.MouseHover += new System.EventHandler(this.AlwaysShowToolBar_MouseHover);
+            // 
             // More
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 493);
+            this.Controls.Add(this.AlwaysShowToolBar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Enter);
@@ -293,5 +310,6 @@
         private System.Windows.Forms.Button Enter;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox AlwaysShowToolBar;
     }
 }

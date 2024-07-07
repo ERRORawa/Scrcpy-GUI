@@ -226,5 +226,17 @@ namespace scrcpy_gui {
                 this["多开4"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool 始终显示工具栏 {
+            get {
+                return ((bool)(this["始终显示工具栏"]));
+            }
+            set {
+                this["始终显示工具栏"] = value;
+            }
+        }
     }
 }
