@@ -72,8 +72,9 @@ namespace Scrcpy_GUI
             p.Close();
 
             WriteFile(fileName, strOutput);
-
-            return ReadFile(fileName);
+            string[] fileContent = ReadFile(fileName);
+            File.Delete(appPath + "\\" + fileName);
+            return fileContent;
         }
 
         private void SetArgs()      //设置Scrcpy参数

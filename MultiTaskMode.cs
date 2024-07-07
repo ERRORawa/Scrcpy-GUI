@@ -308,6 +308,7 @@ namespace Scrcpy_GUI
                 app2.SelectedItem = app2.Items[1];
                 app3.SelectedItem = app3.Items[2];
                 app4.SelectedItem = app4.Items[3];
+                _ = main.Cmd("rmdir /S /Q packageInfo", "shell");
                 _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/MultiModeSh", "shell");
             });
 
