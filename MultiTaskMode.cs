@@ -279,10 +279,11 @@ namespace Scrcpy_GUI
             app4.SelectedItem = app4.Items[0];
             _ = main.Cmd("bin\\adb -s " + device + " push aapt /data/local/tmp/aapt","command");
             _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/aapt", "command");
+            _ = main.Cmd("bin\\adb -s " + device + " push MultiModeSh /data/local/tmp", "command");
             Task task = Task.Run(() =>
             {
-                _ = main.Cmd("bin\\adb -s " + device + " shell sh /data/local/tmp/div.sh", "shell");
-                _ = main.Cmd("bin\\adb -s " + device + " pull /data/local/tmp/packageInfo " + main.appPath,"shell");
+                _ = main.Cmd("bin\\adb -s " + device + " shell sh /data/local/tmp/MultiModeSh/div.sh", "shell");
+                _ = main.Cmd("bin\\adb -s " + device + " pull /data/local/tmp/MultiModeSh/packageInfo " + main.appPath,"shell");
                 appLabel = main.ReadFile("packageInfo\\appLabel");
                 string[] activity = main.ReadFile("packageInfo\\activitys");
                 string[] name = main.ReadFile("packageInfo\\packName");
@@ -308,6 +309,8 @@ namespace Scrcpy_GUI
                 app2.SelectedItem = app2.Items[1];
                 app3.SelectedItem = app3.Items[2];
                 app4.SelectedItem = app4.Items[3];
+                _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/MultiModeSh", "shell");
+                _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/aapt", "shell");
             });
 
             int mid1 = this.ClientRectangle.Width / 4 / 2 - 10;
