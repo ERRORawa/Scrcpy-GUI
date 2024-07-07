@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace scrcpy_gui
+namespace Scrcpy_GUI
 {
     public partial class SelectDevices : Form
     {

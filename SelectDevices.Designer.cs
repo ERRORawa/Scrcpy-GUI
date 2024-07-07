@@ -1,4 +1,4 @@
-﻿namespace scrcpy_gui
+﻿namespace Scrcpy_GUI
 {
     partial class SelectDevices
     {
@@ -73,7 +73,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::scrcpy_gui.Resource.SDBG;
+            this.pictureBox1.Image = global::Scrcpy_GUI.Resource.SDBG;
             this.pictureBox1.Location = new System.Drawing.Point(284, 182);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(138, 126);

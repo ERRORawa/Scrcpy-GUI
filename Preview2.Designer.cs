@@ -1,4 +1,4 @@
-﻿namespace scrcpy_gui
+﻿namespace Scrcpy_GUI
 {
     partial class Preview2
     {

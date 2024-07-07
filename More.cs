@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace scrcpy_gui
+namespace Scrcpy_GUI
 {
     public partial class More : Form
     {

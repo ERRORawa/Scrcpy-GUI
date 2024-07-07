@@ -1,4 +1,4 @@
-﻿namespace scrcpy_gui
+﻿namespace Scrcpy_GUI
 {
     partial class Main
     {
@@ -174,7 +174,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::scrcpy_gui.Resource.MBG;
+            this.pictureBox1.Image = global::Scrcpy_GUI.Resource.MBG;
             this.pictureBox1.Location = new System.Drawing.Point(396, 224);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(201, 186);

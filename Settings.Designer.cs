@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace scrcpy_gui {
+namespace Scrcpy_GUI {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

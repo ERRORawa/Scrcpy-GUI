@@ -1,4 +1,4 @@
-﻿namespace scrcpy_gui {
+﻿namespace Scrcpy_GUI {
     
     
     // 通过此类可以处理设置类的特定事件: 

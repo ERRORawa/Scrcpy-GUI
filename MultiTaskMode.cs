@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace scrcpy_gui
+namespace Scrcpy_GUI
 {
     public partial class MultiTaskMode : Form
     {

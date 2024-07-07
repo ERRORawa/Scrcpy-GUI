@@ -1,4 +1,4 @@
-﻿namespace scrcpy_gui
+﻿namespace Scrcpy_GUI
 {
     partial class More
     {
@@ -104,26 +104,26 @@
             // 
             // FileFolder
             // 
-            this.FileFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::scrcpy_gui.Settings.Default, "文件存放目录", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FileFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Scrcpy_GUI.Settings.Default, "文件存放目录", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.FileFolder.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FileFolder.Location = new System.Drawing.Point(381, 189);
             this.FileFolder.Name = "FileFolder";
             this.FileFolder.Size = new System.Drawing.Size(141, 25);
             this.FileFolder.TabIndex = 11;
-            this.FileFolder.Text = global::scrcpy_gui.Settings.Default.文件存放目录;
+            this.FileFolder.Text = global::Scrcpy_GUI.Settings.Default.文件存放目录;
             this.FileFolder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.FileFolder.TextChanged += new System.EventHandler(this.FileFolder_TextChanged);
             // 
             // WindowTitle
             // 
-            this.WindowTitle.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::scrcpy_gui.Settings.Default, "窗口标题", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.WindowTitle.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Scrcpy_GUI.Settings.Default, "窗口标题", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.WindowTitle.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.WindowTitle.Location = new System.Drawing.Point(106, 189);
             this.WindowTitle.MaxLength = 15;
             this.WindowTitle.Name = "WindowTitle";
             this.WindowTitle.Size = new System.Drawing.Size(100, 25);
             this.WindowTitle.TabIndex = 7;
-            this.WindowTitle.Text = global::scrcpy_gui.Settings.Default.窗口标题;
+            this.WindowTitle.Text = global::Scrcpy_GUI.Settings.Default.窗口标题;
             this.WindowTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.WindowTitle.TextChanged += new System.EventHandler(this.WindowTitle_TextChanged);
             this.WindowTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WindowTitle_KeyPress);
@@ -132,7 +132,7 @@
             // 
             this.StandOn.Appearance = System.Windows.Forms.Appearance.Button;
             this.StandOn.AutoSize = true;
-            this.StandOn.Checked = global::scrcpy_gui.Settings.Default.保持唤醒;
+            this.StandOn.Checked = global::Scrcpy_GUI.Settings.Default.保持唤醒;
             this.StandOn.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.StandOn.Location = new System.Drawing.Point(170, 61);
             this.StandOn.Name = "StandOn";
@@ -147,7 +147,7 @@
             // 
             this.EnableAudio.Appearance = System.Windows.Forms.Appearance.Button;
             this.EnableAudio.AutoSize = true;
-            this.EnableAudio.Checked = global::scrcpy_gui.Settings.Default.音频流转;
+            this.EnableAudio.Checked = global::Scrcpy_GUI.Settings.Default.音频流转;
             this.EnableAudio.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.EnableAudio.Location = new System.Drawing.Point(472, 24);
             this.EnableAudio.Name = "EnableAudio";
@@ -162,7 +162,7 @@
             // 
             this.ScreenOff.Appearance = System.Windows.Forms.Appearance.Button;
             this.ScreenOff.AutoSize = true;
-            this.ScreenOff.Checked = global::scrcpy_gui.Settings.Default.结束后关闭屏幕;
+            this.ScreenOff.Checked = global::Scrcpy_GUI.Settings.Default.结束后关闭屏幕;
             this.ScreenOff.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.ScreenOff.Location = new System.Drawing.Point(32, 61);
             this.ScreenOff.Name = "ScreenOff";
@@ -177,7 +177,7 @@
             // 
             this.DisableControl.Appearance = System.Windows.Forms.Appearance.Button;
             this.DisableControl.AutoSize = true;
-            this.DisableControl.Checked = global::scrcpy_gui.Settings.Default.禁用控制;
+            this.DisableControl.Checked = global::Scrcpy_GUI.Settings.Default.禁用控制;
             this.DisableControl.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.DisableControl.Location = new System.Drawing.Point(382, 24);
             this.DisableControl.Name = "DisableControl";
@@ -193,7 +193,7 @@
             this.CutpadSync.Appearance = System.Windows.Forms.Appearance.Button;
             this.CutpadSync.AutoSize = true;
             this.CutpadSync.BackColor = System.Drawing.SystemColors.Control;
-            this.CutpadSync.Checked = global::scrcpy_gui.Settings.Default.剪切板同步;
+            this.CutpadSync.Checked = global::Scrcpy_GUI.Settings.Default.剪切板同步;
             this.CutpadSync.Cursor = System.Windows.Forms.Cursors.Default;
             this.CutpadSync.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.CutpadSync.Location = new System.Drawing.Point(276, 24);
@@ -209,7 +209,7 @@
             // 
             this.DisableScreenProtect.Appearance = System.Windows.Forms.Appearance.Button;
             this.DisableScreenProtect.AutoSize = true;
-            this.DisableScreenProtect.Checked = global::scrcpy_gui.Settings.Default.禁用屏幕保护程序;
+            this.DisableScreenProtect.Checked = global::Scrcpy_GUI.Settings.Default.禁用屏幕保护程序;
             this.DisableScreenProtect.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.DisableScreenProtect.Location = new System.Drawing.Point(122, 24);
             this.DisableScreenProtect.Name = "DisableScreenProtect";
@@ -225,7 +225,7 @@
             this.OnTop.Appearance = System.Windows.Forms.Appearance.Button;
             this.OnTop.AutoSize = true;
             this.OnTop.BackColor = System.Drawing.SystemColors.Control;
-            this.OnTop.Checked = global::scrcpy_gui.Settings.Default.置顶;
+            this.OnTop.Checked = global::Scrcpy_GUI.Settings.Default.置顶;
             this.OnTop.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.OnTop.Location = new System.Drawing.Point(32, 24);
             this.OnTop.Name = "OnTop";
@@ -250,7 +250,7 @@
             // 
             this.AlwaysShowToolBar.Appearance = System.Windows.Forms.Appearance.Button;
             this.AlwaysShowToolBar.AutoSize = true;
-            this.AlwaysShowToolBar.Checked = global::scrcpy_gui.Settings.Default.保持唤醒;
+            this.AlwaysShowToolBar.Checked = global::Scrcpy_GUI.Settings.Default.保持唤醒;
             this.AlwaysShowToolBar.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.AlwaysShowToolBar.Location = new System.Drawing.Point(260, 61);
             this.AlwaysShowToolBar.Name = "AlwaysShowToolBar";

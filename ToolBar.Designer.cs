@@ -1,4 +1,4 @@
-﻿namespace scrcpy_gui
+﻿namespace Scrcpy_GUI
 {
     partial class ToolBar
     {
@@ -83,7 +83,7 @@
             // 
             // More
             // 
-            this.More.BackgroundImage = global::scrcpy_gui.Resource.More;
+            this.More.BackgroundImage = global::Scrcpy_GUI.Resource.More;
             this.More.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.More.Location = new System.Drawing.Point(5, 365);
             this.More.Name = "More";
@@ -94,7 +94,7 @@
             // 
             // MuliTask
             // 
-            this.MuliTask.BackgroundImage = global::scrcpy_gui.Resource.Task;
+            this.MuliTask.BackgroundImage = global::Scrcpy_GUI.Resource.Task;
             this.MuliTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.MuliTask.Location = new System.Drawing.Point(5, 320);
             this.MuliTask.Name = "MuliTask";
@@ -105,7 +105,7 @@
             // 
             // Home
             // 
-            this.Home.BackgroundImage = global::scrcpy_gui.Resource.Home;
+            this.Home.BackgroundImage = global::Scrcpy_GUI.Resource.Home;
             this.Home.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Home.Location = new System.Drawing.Point(5, 275);
             this.Home.Name = "Home";
@@ -116,7 +116,7 @@
             // 
             // Back
             // 
-            this.Back.BackgroundImage = global::scrcpy_gui.Resource.Back;
+            this.Back.BackgroundImage = global::Scrcpy_GUI.Resource.Back;
             this.Back.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Back.Location = new System.Drawing.Point(5, 230);
             this.Back.Name = "Back";
@@ -127,7 +127,7 @@
             // 
             // Screenshot
             // 
-            this.Screenshot.BackgroundImage = global::scrcpy_gui.Resource.ScreenShot;
+            this.Screenshot.BackgroundImage = global::Scrcpy_GUI.Resource.ScreenShot;
             this.Screenshot.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Screenshot.Location = new System.Drawing.Point(5, 140);
             this.Screenshot.Name = "Screenshot";
@@ -138,7 +138,7 @@
             // 
             // VolumeDown
             // 
-            this.VolumeDown.BackgroundImage = global::scrcpy_gui.Resource.VolumeDown;
+            this.VolumeDown.BackgroundImage = global::Scrcpy_GUI.Resource.VolumeDown;
             this.VolumeDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.VolumeDown.Location = new System.Drawing.Point(5, 95);
             this.VolumeDown.Name = "VolumeDown";
@@ -150,7 +150,7 @@
             // VolumeUp
             // 
             this.VolumeUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(243)))), ((int)(((byte)(249)))));
-            this.VolumeUp.BackgroundImage = global::scrcpy_gui.Resource.VolumeUp;
+            this.VolumeUp.BackgroundImage = global::Scrcpy_GUI.Resource.VolumeUp;
             this.VolumeUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.VolumeUp.Location = new System.Drawing.Point(5, 50);
             this.VolumeUp.Name = "VolumeUp";
@@ -162,7 +162,7 @@
             // Power
             // 
             this.Power.BackColor = System.Drawing.Color.White;
-            this.Power.BackgroundImage = global::scrcpy_gui.Resource.Power;
+            this.Power.BackgroundImage = global::Scrcpy_GUI.Resource.Power;
             this.Power.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.Power.Location = new System.Drawing.Point(5, 5);
             this.Power.Name = "Power";

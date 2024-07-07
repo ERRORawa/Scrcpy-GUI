@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.Xml;
+using System.Reflection;
 
-namespace scrcpy_gui
+namespace Scrcpy_GUI
 {
     public partial class Main : Form
     {
@@ -133,6 +134,23 @@ namespace scrcpy_gui
 
         private void Main_Load(object sender, EventArgs e)    //窗体控件对齐，初始化设置项
         {
+            if (Path.GetFileName(Application.ExecutablePath) != "Scrcpy-GUI.exe")
+            {
+                Debug.Print(Path.GetFileName(Application.ExecutablePath));
+                try
+                {
+                    File.Delete(appPath + "Scrcpy-GUI.exe");
+                    File.Copy(appPath + "\\" + Path.GetFileName(Application.ExecutablePath), appPath + "\\Scrcpy-GUI.exe");
+                    Process rename = new Process();
+                    rename.StartInfo.FileName = appPath + "\\Scrcpy-GUI.exe";
+                    rename.StartInfo.Arguments = " -D " + Path.GetFileName(Application.ExecutablePath);
+                    rename.Start();
+                    Environment.Exit(0);
+                }
+                catch
+                {
+                }
+            }
             disableToolBar.Checked = Settings.Default.关闭工具栏;    //初始化主菜单复选框
             OTG.Checked = Settings.Default.用OTG;
             if (!File.Exists(appPath + "\\bin\\scrcpy.exe") || !File.Exists(appPath + "\\aapt"))        //检测Scrcpy是否存在
@@ -144,8 +162,7 @@ namespace scrcpy_gui
                     {
                         try         //使用WebClient下载Scrcpy
                         {
-                            WebClient webClient = new WebClient();
-                            webClient.DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
+                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
                         }
                         catch
                         {
@@ -158,10 +175,9 @@ namespace scrcpy_gui
                     }
                     if(!File.Exists(appPath + "\\aapt"))
                     {
-                        try         //使用WebClient下载Scrcpy
+                        try         //使用WebClient下载aapt
                         {
-                            WebClient webClient = new WebClient();
-                            webClient.DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\aapt");
+                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\aapt");
                         }
                         catch
                         {
@@ -177,8 +193,41 @@ namespace scrcpy_gui
                     Environment.Exit(1);
                 }
             }
+            Task task = Task.Run(() =>
+            {
+                try
+                {
+                    new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
+                    if (ReadFile("ver")[0] != Application.ProductVersion)
+                    {
+                        DialogResult update = MessageBox.Show("检查到新版本：v" + ReadFile("ver")[0] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (update == DialogResult.Yes)
+                        {
+                            try         //使用WebClient下载aapt
+                            {
+                                new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
+                                Process.Start(appPath + "\\updated.exe");
+                                Environment.Exit(1);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                }
+            });
             if (args != null)
             {
+                if (args[0] == "-D")
+                {
+                    File.Delete(appPath + "\\" + args[1]);
+                    Process.Start(this.GetType().Assembly.Location);        //重启程序防止窗体错位
+                    Environment.Exit(0);
+                }
                 SetArgs();      //应用Scrcpy参数
                 ToolBar toolBar = new ToolBar();
                 toolBar.alwaysOnTop = alwaysOnTop;

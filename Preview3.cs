@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
-namespace scrcpy_gui
+namespace Scrcpy_GUI
 {
     public partial class Preview3 : Form
     {
