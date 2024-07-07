@@ -293,7 +293,7 @@ namespace Scrcpy_GUI
             {
                 this.Hide();
             }
-            string[] output = Cmd("bin\\adb devices", "command");    //获取设备信息
+            string[] output = Cmd("bin\\adb devices", "devicesInfo");    //获取设备信息
             ConnectedDevices.Text = "";
             UnauthDevices.Text = "";
             Debug.Print("识别到的设备：");
@@ -437,7 +437,7 @@ namespace Scrcpy_GUI
                 }
                 if (flag)    //若获取到ip
                 {
-                    _ = Cmd("bin\\adb tcpip 1324", "command");    //设备监听1324端口
+                    _ = Cmd("bin\\adb tcpip 1324", "tcpip");    //设备监听1324端口
                     MessageBox.Show("请拔出数据线\n若长时间未成功连接到设备，那你还是用有线连接吧。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     selectDevices.Cmd("bin\\adb connect " + ip + ":" + "1324");    //连接设备的1324端口
                 }

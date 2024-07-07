@@ -271,18 +271,18 @@ namespace Scrcpy_GUI
             dpi3.Text = Settings.Default.多开3[3];
             dpi4.Text = Settings.Default.多开4[3];
             Checked_Changed(this, new EventArgs());
-            _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "command");
-            _ = main.Cmd("taskkill /F /IM scrcpy.exe","command");
+            _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "deleteDisplay");
+            _ = main.Cmd("taskkill /F /IM scrcpy.exe","killScrcpy");
             app1.SelectedItem = app1.Items[0];
             app2.SelectedItem = app2.Items[0];
             app3.SelectedItem = app3.Items[0];
             app4.SelectedItem = app4.Items[0];
-            _ = main.Cmd("bin\\adb -s " + device + " push MultiModeSh /data/local/tmp", "command");
-            _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/MultiModeSh/aapt", "command");
+            _ = main.Cmd("bin\\adb -s " + device + " push MultiModeSh /data/local/tmp", "pushShFile");
+            _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/MultiModeSh/aapt", "pushaapt");
             Task task = Task.Run(() =>
             {
-                _ = main.Cmd("bin\\adb -s " + device + " shell sh /data/local/tmp/MultiModeSh/div.sh", "shell");
-                _ = main.Cmd("bin\\adb -s " + device + " pull /data/local/tmp/MultiModeSh/packageInfo " + main.appPath,"shell");
+                _ = main.Cmd("bin\\adb -s " + device + " shell sh /data/local/tmp/MultiModeSh/div.sh", "shdiv");
+                _ = main.Cmd("bin\\adb -s " + device + " pull /data/local/tmp/MultiModeSh/packageInfo " + Directory.GetCurrentDirectory(), "pullPackInfo");
                 appLabel = main.ReadFile("packageInfo\\appLabel");
                 string[] activity = main.ReadFile("packageInfo\\activitys");
                 string[] name = main.ReadFile("packageInfo\\packName");
@@ -308,8 +308,8 @@ namespace Scrcpy_GUI
                 app2.SelectedItem = app2.Items[1];
                 app3.SelectedItem = app3.Items[2];
                 app4.SelectedItem = app4.Items[3];
-                _ = main.Cmd("rmdir /S /Q packageInfo", "shell");
-                _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/MultiModeSh", "shell");
+                _ = main.Cmd("rmdir /S /Q packageInfo", "delPackInfo");
+                _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/MultiModeSh", "rmShFile");
             });
 
             int mid1 = this.ClientRectangle.Width / 4 / 2 - 10;
@@ -437,7 +437,7 @@ namespace Scrcpy_GUI
                 {
                     if (success)
                     {
-                        _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "command");
+                        _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "deleteDisplay");
                         Environment.Exit(0);
                     }
                     success = true;

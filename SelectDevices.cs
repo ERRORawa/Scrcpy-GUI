@@ -101,7 +101,7 @@ namespace Scrcpy_GUI
                     }
                     if (flag)    //获取到ip时
                     {
-                        _ = main.Cmd("bin\\adb -s " + SelectDevice.SelectedItem.ToString() + " tcpip 1324", "command");    //设备监听1324端口
+                        _ = main.Cmd("bin\\adb -s " + SelectDevice.SelectedItem.ToString() + " tcpip 1324", "tcpip");    //设备监听1324端口
                         MessageBox.Show("请拔出数据线\n若长时间未成功连接到设备，那你还是用有线连接吧。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Cmd("bin\\adb connect " + ip + ":" + "1324");    //连接设备的1324端口
                         main.Show();
