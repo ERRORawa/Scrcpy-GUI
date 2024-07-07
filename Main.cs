@@ -153,7 +153,7 @@ namespace Scrcpy_GUI
             }
             disableToolBar.Checked = Settings.Default.关闭工具栏;    //初始化主菜单复选框
             OTG.Checked = Settings.Default.用OTG;
-            if (!File.Exists(appPath + "\\bin\\scrcpy.exe") || !File.Exists(appPath + "\\aapt") || !Directory.Exists(appPath + "\\MultiModeSh"))        //检查文件完整性
+            if (!File.Exists(appPath + "\\bin\\scrcpy.exe") || !Directory.Exists(appPath + "\\MultiModeSh"))        //检查文件完整性
             {
                 DialogResult dialogResult = MessageBox.Show("缺少环境配置文件，是否下载？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialogResult == DialogResult.Yes)
@@ -173,23 +173,12 @@ namespace Scrcpy_GUI
                         Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
                         File.Delete(appPath + "\\scrcpy.zip");
                     }
-                    if (!File.Exists(appPath + "\\aapt"))
-                    {
-                        try         //使用WebClient下载aapt
-                        {
-                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\aapt");
-                        }
-                        catch
-                        {
-                            MessageBox.Show("aapt下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Environment.Exit(1);
-                        }
-                    }
                     if (!Directory.Exists(appPath + "\\MultiModeSh"))
                     {
                         Directory.CreateDirectory(appPath + "\\MultiModeSh");
                         try
                         {
+                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
@@ -220,7 +209,6 @@ namespace Scrcpy_GUI
                         {
                             try         //使用WebClient下载aapt
                             {
-                                File.Delete(appPath + "\\ver");
                                 new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                 Process.Start(appPath + "\\updated.exe");
                                 Environment.Exit(1);
@@ -231,6 +219,7 @@ namespace Scrcpy_GUI
                             }
                         }
                     }
+                    File.Delete(appPath + "\\ver");
                 }
                 catch
                 {
@@ -318,8 +307,6 @@ namespace Scrcpy_GUI
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)    //关闭窗口
         {
-            selectDevices.Close();
-            wirelessDebugging.Close();
             Environment.Exit(0);    //退出程序
         }
 

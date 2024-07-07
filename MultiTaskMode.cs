@@ -277,9 +277,8 @@ namespace Scrcpy_GUI
             app2.SelectedItem = app2.Items[0];
             app3.SelectedItem = app3.Items[0];
             app4.SelectedItem = app4.Items[0];
-            _ = main.Cmd("bin\\adb -s " + device + " push aapt /data/local/tmp/aapt","command");
-            _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/aapt", "command");
             _ = main.Cmd("bin\\adb -s " + device + " push MultiModeSh /data/local/tmp", "command");
+            _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/MultiModeSh/aapt", "command");
             Task task = Task.Run(() =>
             {
                 _ = main.Cmd("bin\\adb -s " + device + " shell sh /data/local/tmp/MultiModeSh/div.sh", "shell");
@@ -310,7 +309,6 @@ namespace Scrcpy_GUI
                 app3.SelectedItem = app3.Items[2];
                 app4.SelectedItem = app4.Items[3];
                 _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/MultiModeSh", "shell");
-                _ = main.Cmd("bin\\adb -s " + device + " shell rm -rf /data/local/tmp/aapt", "shell");
             });
 
             int mid1 = this.ClientRectangle.Width / 4 / 2 - 10;
