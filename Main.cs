@@ -187,6 +187,7 @@ namespace Scrcpy_GUI
                     }
                     if (!Directory.Exists(appPath + "\\MultiModeSh"))
                     {
+                        Directory.CreateDirectory(appPath + "\\MultiModeSh");
                         try
                         {
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
