@@ -173,7 +173,7 @@ namespace Scrcpy_GUI
                     {
                         try         //下载Scrcpy
                         {
-                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
+                            new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
                         }
                         catch
                         {
@@ -190,10 +190,10 @@ namespace Scrcpy_GUI
                         Directory.CreateDirectory(appPath + "\\MultiModeSh");
                         try         //下载多任务模式所需配置文件
                         {
-                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
-                            new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
-                            new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
-                            new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
+                            new WebClient().DownloadFile("https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
+                            new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
+                            new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
+                            new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
                         }
                         catch
                         {
@@ -215,7 +215,7 @@ namespace Scrcpy_GUI
             {
                 try
                 {
-                    new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
+                    new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
                     if (ReadFile("ver")[0] != Application.ProductVersion)
                     {
                         Debug.Print("发现新版本：" + ReadFile("ver")[0]);
@@ -224,7 +224,7 @@ namespace Scrcpy_GUI
                         {
                             try         //更新程序
                             {
-                                new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
+                                new WebClient().DownloadFile("https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                 Process.Start(appPath + "\\updated.exe");
                                 Debug.Print("更新完毕，重启程序");
                                 Environment.Exit(1);
