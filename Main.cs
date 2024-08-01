@@ -173,7 +173,7 @@ namespace Scrcpy_GUI
                     {
                         try         //下载Scrcpy
                         {
-                            new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
+                            new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v2.5/scrcpy-win64-v2.5.zip", appPath + "\\scrcpy.zip");
                         }
                         catch
                         {
@@ -181,7 +181,7 @@ namespace Scrcpy_GUI
                             Environment.Exit(1);
                         }
                         ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);      //解压Scrcpy
-                        Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
+                        Directory.Move(appPath + "\\scrcpy-win64-v2.5", appPath + "\\bin");
                         File.Delete(appPath + "\\scrcpy.zip");
                         Debug.Print("Scrcpy下载完成");
                     }
