@@ -196,7 +196,7 @@
             this.version.Name = "version";
             this.version.Size = new System.Drawing.Size(54, 20);
             this.version.TabIndex = 13;
-            this.version.Text = "Ver 3.3";
+            this.version.Text = "Ver 3.4";
             this.version.Click += new System.EventHandler(this.version_Click);
             this.version.MouseLeave += new System.EventHandler(this.version_MouseLeave);
             this.version.MouseMove += new System.Windows.Forms.MouseEventHandler(this.version_MouseMove);
