@@ -228,29 +228,42 @@ namespace Scrcpy_GUI
                         Directory.CreateDirectory(appPath + "\\MultiModeSh");
                         try         //gitdl代理下载多任务模式所需配置文件
                         {
-                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
+                            new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/aapt-armeabi-v7a", appPath + "\\MultiModeSh\\aapt-armeabi-v7a");
+                            new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/aapt-arm64-v8a", appPath + "\\MultiModeSh\\aapt-arm64-v8a");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
                         }
                         catch
                         {
-                            try         //直连下载多任务模式所需配置文件
+                            try         //staticdn代理下载多任务模式所需配置文件
                             {
-                                new WebClient().DownloadFile("https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
-                                new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
-                                new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
-                                new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
+                                new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/aapt-armeabi-v7a", appPath + "\\MultiModeSh\\aapt-armeabi-v7a");
+                                new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/aapt-arm64-v8a", appPath + "\\MultiModeSh\\aapt-arm64-v8a");
+                                new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
+                                new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
+                                new WebClient().DownloadFile("https://raw.staticdn.net/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
                             }
                             catch
                             {
-                                Directory.Delete(appPath + "\\MultiModeSh");
-                                MessageBox.Show("多任务模式配置下载失败，该功能将被禁用", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                Process disableMulti = new Process();
-                                disableMulti.StartInfo.FileName = appPath + "\\" + Path.GetFileName(Application.ExecutablePath);
-                                disableMulti.StartInfo.Arguments = "--disableMulti";
-                                disableMulti.Start();
-                                Environment.Exit(1);
+                                try         //直连下载多任务模式所需配置文件
+                                {
+                                    new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/aapt-armeabi-v7a", appPath + "\\MultiModeSh\\aapt-armeabi-v7a");
+                                    new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/aapt-arm64-v8a", appPath + "\\MultiModeSh\\aapt-arm64-v8a");
+                                    new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
+                                    new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
+                                    new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
+                                }
+                                catch
+                                {
+                                    Directory.Delete(appPath + "\\MultiModeSh");
+                                    MessageBox.Show("多任务模式配置下载失败，该功能将被禁用", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    Process disableMulti = new Process();
+                                    disableMulti.StartInfo.FileName = appPath + "\\" + Path.GetFileName(Application.ExecutablePath);
+                                    disableMulti.StartInfo.Arguments = "--disableMulti";
+                                    disableMulti.Start();
+                                    Environment.Exit(1);
+                                }
                             }
                         }
                         Debug.Print("多任务模式环境配置下载完成");
