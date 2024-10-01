@@ -164,31 +164,69 @@ namespace Scrcpy_GUI
                     Debug.Print("修正失败");
                 }
             }
-            if (!File.Exists(appPath + "\\bin\\scrcpy.exe") || !Directory.Exists(appPath + "\\MultiModeSh"))        //检查文件完整性
+            bool disableMultiMode = false;
+            if (args != null)       //获取到参数
+            {
+                if (args[0] == "-D")     //更新App使用的参数
+                {
+                    Debug.Print("更新中");
+                    File.Delete(appPath + "\\" + args[1]);
+                    Process.Start(this.GetType().Assembly.Location);
+                    Environment.Exit(0);
+                }
+                else if (args[0] == "--disableMulti")
+                {
+                    Debug.Print("禁用多任务模式");
+                    disableMultiMode = true;
+                    MultiTaskMode.Enabled = false;
+                }
+                else
+                {
+                    Debug.Print("进入投屏");
+                    disableMultiMode = true;
+                    SetArgs();      //应用Scrcpy参数
+                    ToolBar toolBar = new ToolBar
+                    {
+                        alwaysOnTop = alwaysOnTop,
+                        device = args[0],
+                        disableToolBar = disableToolBar.Checked    //启动投屏
+                    };
+                    toolBar.Show();
+                    selectDevices.Cmd("bin\\scrcpy -s " + args[0] + " --shortcut-mod lctrl,rctrl" + command);
+                }
+            }
+            if ((!File.Exists(appPath + "\\bin\\scrcpy.exe") || !Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh")) && !disableMultiMode)        //检查文件完整性
             {
                 DialogResult dialogResult = MessageBox.Show("缺少环境配置文件，是否下载？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialogResult == DialogResult.Yes)
                 {
                     if (!File.Exists(appPath + "\\bin\\scrcpy.exe"))
                     {
-                        try         //下载Scrcpy
+                        try         //gitdl代理下载Scrcpy
                         {
                             new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
                         }
                         catch
                         {
-                            MessageBox.Show("Scrcpy下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Environment.Exit(1);
+                            try         //直连下载Scrcpy
+                            {
+                                new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-win64-v2.4.zip", appPath + "\\scrcpy.zip");
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Scrcpy下载失败！\n\n你可以尝试自己配置Scrcpy：\n1、在该程序所在的位置新建个bin文件夹\n2、把scrcpy内容复制到bin文件夹内", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Environment.Exit(1);
+                            }
                         }
                         ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);      //解压Scrcpy
                         Directory.Move(appPath + "\\scrcpy-win64-v2.4", appPath + "\\bin");
                         File.Delete(appPath + "\\scrcpy.zip");
                         Debug.Print("Scrcpy下载完成");
                     }
-                    if (!Directory.Exists(appPath + "\\MultiModeSh"))
+                    if (!Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh"))
                     {
                         Directory.CreateDirectory(appPath + "\\MultiModeSh");
-                        try         //下载多任务模式所需配置文件
+                        try         //gitdl代理下载多任务模式所需配置文件
                         {
                             new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
                             new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
@@ -197,8 +235,23 @@ namespace Scrcpy_GUI
                         }
                         catch
                         {
-                            MessageBox.Show("多任务模式配置下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Environment.Exit(1);
+                            try         //直连下载多任务模式所需配置文件
+                            {
+                                new WebClient().DownloadFile("https://github.com/Calsign/APDE/raw/fdc22eb31048862e1484f4b6eca229accda61466/APDE/src/main/assets/aapt-binaries/aapt-arm-pie", appPath + "\\MultiModeSh\\aapt");
+                                new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pA.sh", appPath + "\\MultiModeSh\\pA.sh");
+                                new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/pL.sh", appPath + "\\MultiModeSh\\pL.sh");
+                                new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/MultiModeSh/div.sh", appPath + "\\MultiModeSh\\div.sh");
+                            }
+                            catch
+                            {
+                                Directory.Delete(appPath + "\\MultiModeSh");
+                                MessageBox.Show("多任务模式配置下载失败，该功能将被禁用", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                Process disableMulti = new Process();
+                                disableMulti.StartInfo.FileName = appPath + "\\" + Path.GetFileName(Application.ExecutablePath);
+                                disableMulti.StartInfo.Arguments = "--disableMulti";
+                                disableMulti.Start();
+                                Environment.Exit(1);
+                            }
                         }
                         Debug.Print("多任务模式环境配置下载完成");
                     }
@@ -213,16 +266,30 @@ namespace Scrcpy_GUI
             }
             Task task = Task.Run(() =>      //检查App更新
             {
-                try
+                try         //从gitdl代理获取版本
                 {
                     new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
+                }
+                catch
+                {
+                    try         //直连获取版本
+                    {
+                        new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
+                    }
+                    catch
+                    {
+                        Debug.Print("无法检查更新");
+                    }
+                }
+                if (File.Exists(appPath + "\\ver"))
+                {
                     if (ReadFile("ver")[0] != Application.ProductVersion)
                     {
                         Debug.Print("发现新版本：" + ReadFile("ver")[0]);
                         DialogResult update = MessageBox.Show("检查到新版本：v" + ReadFile("ver")[0] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (update == DialogResult.Yes)
                         {
-                            try         //更新程序
+                            try         //从gitdl代理下载更新程序
                             {
                                 new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                 Process.Start(appPath + "\\updated.exe");
@@ -231,36 +298,24 @@ namespace Scrcpy_GUI
                             }
                             catch
                             {
-                                Debug.Print("下载失败");
-                                MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                try         //直连下载更新程序
+                                {
+                                    new WebClient().DownloadFile("https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
+                                    Process.Start(appPath + "\\updated.exe");
+                                    Debug.Print("更新完毕，重启程序");
+                                    Environment.Exit(1);
+                                }
+                                catch
+                                {
+                                    Debug.Print("下载失败");
+                                    MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
                         }
+                        File.Delete(appPath + "\\ver");
                     }
-                    File.Delete(appPath + "\\ver");
-                }
-                catch
-                {
-                    Debug.Print("无法检查更新");
                 }
             });
-            if (args != null)       //获取到参数
-            {
-                if (args[0] == "-D")     //更新App使用的参数
-                {
-                    File.Delete(appPath + "\\" + args[1]);
-                    Process.Start(this.GetType().Assembly.Location);
-                    Environment.Exit(0);
-                }
-                SetArgs();      //应用Scrcpy参数
-                ToolBar toolBar = new ToolBar
-                {
-                    alwaysOnTop = alwaysOnTop,
-                    device = args[0],
-                    disableToolBar = disableToolBar.Checked    //启动投屏
-                };
-                toolBar.Show();
-                selectDevices.Cmd("bin\\scrcpy -s " + args[0] + " --shortcut-mod lctrl,rctrl" + command);
-            }
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;        //窗体对齐
             disableToolBar.Left = Start.Left + Start.Width / 2 - disableToolBar.Width /2;
             OTG.Left = disableToolBar.Left + disableToolBar.Width / 2 - OTG.Width / 2;
@@ -291,7 +346,10 @@ namespace Scrcpy_GUI
             CheckDevices.Interval = 2000;
             if(args != null)    //获取到参数时隐藏主菜单
             {
-                this.Hide();
+                if (args[0] != "--disableMulti")
+                {
+                    this.Hide();
+                }
             }
             string[] output = Cmd("bin\\adb devices", "devicesInfo");    //获取设备信息
             ConnectedDevices.Text = "";
@@ -447,6 +505,10 @@ namespace Scrcpy_GUI
         private void WirelessDebug_Click(object sender, EventArgs e)    //跳转无线调试窗体
         {
             CheckDevices.Enabled = false;
+            if (!MultiTaskMode.Enabled)
+            {
+                wirelessDebugging.disableMulti = true;
+            }
             wirelessDebugging.Show();
             this.Hide();
         }

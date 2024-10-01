@@ -37,6 +37,9 @@
             this.CheckPortLabel = new System.Windows.Forms.Label();
             this.CheckPortTimer = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PairingCode = new System.Windows.Forms.TextBox();
+            this.PairingPort = new System.Windows.Forms.TextBox();
+            this.PairingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +47,7 @@
             // 
             this.EnterIP.AutoSize = true;
             this.EnterIP.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.EnterIP.Location = new System.Drawing.Point(91, 27);
+            this.EnterIP.Location = new System.Drawing.Point(153, 28);
             this.EnterIP.Name = "EnterIP";
             this.EnterIP.Size = new System.Drawing.Size(204, 31);
             this.EnterIP.TabIndex = 0;
@@ -54,7 +57,7 @@
             // 
             this.IP.Font = new System.Drawing.Font("微软雅黑", 16F);
             this.IP.ForeColor = System.Drawing.Color.Silver;
-            this.IP.Location = new System.Drawing.Point(12, 86);
+            this.IP.Location = new System.Drawing.Point(75, 71);
             this.IP.Name = "IP";
             this.IP.Size = new System.Drawing.Size(183, 36);
             this.IP.TabIndex = 1;
@@ -68,7 +71,8 @@
             // 
             this.Port.Font = new System.Drawing.Font("微软雅黑", 16F);
             this.Port.ForeColor = System.Drawing.Color.Silver;
-            this.Port.Location = new System.Drawing.Point(224, 86);
+            this.Port.Location = new System.Drawing.Point(287, 75);
+            this.Port.MaxLength = 6;
             this.Port.Name = "Port";
             this.Port.Size = new System.Drawing.Size(91, 36);
             this.Port.TabIndex = 2;
@@ -83,7 +87,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(201, 95);
+            this.label1.Location = new System.Drawing.Point(264, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(17, 27);
             this.label1.TabIndex = 3;
@@ -92,7 +96,7 @@
             // Enter
             // 
             this.Enter.Font = new System.Drawing.Font("微软雅黑", 14.25F);
-            this.Enter.Location = new System.Drawing.Point(156, 175);
+            this.Enter.Location = new System.Drawing.Point(199, 242);
             this.Enter.Name = "Enter";
             this.Enter.Size = new System.Drawing.Size(100, 40);
             this.Enter.TabIndex = 4;
@@ -105,7 +109,7 @@
             this.CheckPortLabel.AutoSize = true;
             this.CheckPortLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CheckPortLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.CheckPortLabel.Location = new System.Drawing.Point(220, 125);
+            this.CheckPortLabel.Location = new System.Drawing.Point(195, 209);
             this.CheckPortLabel.Name = "CheckPortLabel";
             this.CheckPortLabel.Size = new System.Drawing.Size(106, 21);
             this.CheckPortLabel.TabIndex = 5;
@@ -119,18 +123,62 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Scrcpy_GUI.Resource.WDBG;
-            this.pictureBox1.Location = new System.Drawing.Point(301, 27);
+            this.pictureBox1.Location = new System.Drawing.Point(365, 186);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(128, 132);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
+            // PairingCode
+            // 
+            this.PairingCode.Font = new System.Drawing.Font("微软雅黑", 16F);
+            this.PairingCode.ForeColor = System.Drawing.Color.Silver;
+            this.PairingCode.Location = new System.Drawing.Point(134, 170);
+            this.PairingCode.MaxLength = 6;
+            this.PairingCode.Name = "PairingCode";
+            this.PairingCode.Size = new System.Drawing.Size(100, 36);
+            this.PairingCode.TabIndex = 7;
+            this.PairingCode.Text = "配对码";
+            this.PairingCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PairingCode.Enter += new System.EventHandler(this.PairingCode_Enter);
+            this.PairingCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PairingCode_KeyPress);
+            this.PairingCode.Leave += new System.EventHandler(this.PairingCode_Leave);
+            // 
+            // PairingPort
+            // 
+            this.PairingPort.Font = new System.Drawing.Font("微软雅黑", 16F);
+            this.PairingPort.ForeColor = System.Drawing.Color.Silver;
+            this.PairingPort.Location = new System.Drawing.Point(276, 170);
+            this.PairingPort.MaxLength = 5;
+            this.PairingPort.Name = "PairingPort";
+            this.PairingPort.Size = new System.Drawing.Size(100, 36);
+            this.PairingPort.TabIndex = 8;
+            this.PairingPort.Text = "端口";
+            this.PairingPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.PairingPort.Enter += new System.EventHandler(this.PairingPort_Enter);
+            this.PairingPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PairingPort_KeyPress);
+            this.PairingPort.Leave += new System.EventHandler(this.PairingPort_Leave);
+            // 
+            // PairingLabel
+            // 
+            this.PairingLabel.AutoSize = true;
+            this.PairingLabel.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PairingLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.PairingLabel.Location = new System.Drawing.Point(106, 135);
+            this.PairingLabel.Name = "PairingLabel";
+            this.PairingLabel.Size = new System.Drawing.Size(295, 19);
+            this.PairingLabel.TabIndex = 9;
+            this.PairingLabel.Text = "若需要使用配对码请在下方输入配对端口和配对码";
+            // 
             // WirelessDebugging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 227);
+            this.ClientSize = new System.Drawing.Size(488, 310);
+            this.Controls.Add(this.PairingLabel);
+            this.Controls.Add(this.PairingPort);
+            this.Controls.Add(this.PairingCode);
             this.Controls.Add(this.CheckPortLabel);
             this.Controls.Add(this.Enter);
             this.Controls.Add(this.label1);
@@ -162,5 +210,8 @@
         private System.Windows.Forms.Label CheckPortLabel;
         private System.Windows.Forms.Timer CheckPortTimer;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox PairingCode;
+        private System.Windows.Forms.TextBox PairingPort;
+        private System.Windows.Forms.Label PairingLabel;
     }
 }
