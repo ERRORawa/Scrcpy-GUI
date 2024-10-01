@@ -312,8 +312,8 @@ namespace Scrcpy_GUI
                                 }
                             }
                         }
-                        File.Delete(appPath + "\\ver");
                     }
+                    File.Delete(appPath + "\\ver");
                 }
             });
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;        //窗体对齐
