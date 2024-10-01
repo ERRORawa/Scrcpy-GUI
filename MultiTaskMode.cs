@@ -76,6 +76,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd1(string command)    //执行命令（异步），无输出
         {
+            Debug.Print("投屏1：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -93,6 +94,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd2(string command)    //执行命令（异步），无输出
         {
+            Debug.Print("投屏2：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -110,6 +112,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd3(string command)    //执行命令（异步），无输出
         {
+            Debug.Print("投屏3：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -127,6 +130,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd4(string command)    //执行命令（异步），无输出
         {
+            Debug.Print("投屏4：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -278,7 +282,16 @@ namespace Scrcpy_GUI
             app3.SelectedItem = app3.Items[0];
             app4.SelectedItem = app4.Items[0];
             _ = main.Cmd("bin\\adb -s " + device + " push MultiModeSh /data/local/tmp", "pushShFile");
-            _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/MultiModeSh/aapt", "pushaapt");
+            string[] cpuabi = main.Cmd("bin\\adb -s " + device + " shell getprop ro.product.cpu.abi","getCPUabi");
+            if (cpuabi[4] == "arm64-v8a")
+            {
+                _ = main.Cmd("bin\\adb -s " + device + " shell mv /data/local/tmp/MultiModeSh/aapt-arm64-v8a /data/local/tmp/MultiModeSh/aapt", "pushaapt");
+            }
+            else
+            {
+                _ = main.Cmd("bin\\adb -s " + device + " shell mv /data/local/tmp/MultiModeSh/aapt-armeabi-v7a /data/local/tmp/MultiModeSh/aapt", "pushaapt");
+            }
+            _ = main.Cmd("bin\\adb -s " + device + " shell chmod 777 /data/local/tmp/MultiModeSh/aapt", "chmodaapt");
             Task task = Task.Run(() =>
             {
                 _ = main.Cmd("bin\\adb -s " + device + " shell sh /data/local/tmp/MultiModeSh/div.sh", "shdiv");
@@ -812,9 +825,11 @@ namespace Scrcpy_GUI
 
         private void waitScrcpy_Tick(object sender, EventArgs e)
         {
+            Debug.Print("等待" + nowApp + "窗口出现");
             IntPtr hWnd = FindWindow(null, nowApp);
             if (hWnd != IntPtr.Zero)
             {
+                Debug.Print("检测到了，开始下一个");
                 waitScrcpy.Enabled = false;
                 check.Enabled = true;
             }

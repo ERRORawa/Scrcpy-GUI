@@ -195,7 +195,7 @@ namespace Scrcpy_GUI
                     selectDevices.Cmd("bin\\scrcpy -s " + args[0] + " --shortcut-mod lctrl,rctrl" + command);
                 }
             }
-            if ((!File.Exists(appPath + "\\bin\\scrcpy.exe") || !Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh")) && !disableMultiMode)        //检查文件完整性
+            if ((!File.Exists(appPath + "\\bin\\scrcpy.exe") || !Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt-arm64-v8a") || !File.Exists(appPath + "\\MultiModeSh\\aapt-armeabi-v7a") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh")) && !disableMultiMode)        //检查文件完整性
             {
                 DialogResult dialogResult = MessageBox.Show("缺少环境配置文件，是否下载？","下载？",MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialogResult == DialogResult.Yes)
@@ -223,7 +223,7 @@ namespace Scrcpy_GUI
                         File.Delete(appPath + "\\scrcpy.zip");
                         Debug.Print("Scrcpy下载完成");
                     }
-                    if (!Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh"))
+                    if (!Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt-arm64-v8a") || !File.Exists(appPath + "\\MultiModeSh\\aapt-armeabi-v7a") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh"))
                     {
                         Directory.CreateDirectory(appPath + "\\MultiModeSh");
                         try         //gitdl代理下载多任务模式所需配置文件
@@ -531,6 +531,7 @@ namespace Scrcpy_GUI
             if (devices.Length - 2 > 1)    //有多个设备时
             {
                 Debug.Print("有多个可用设备");
+                multiTask = true;
                 SetArgs();
                 selectDevices.devices = devices;
                 selectDevices.arg = 2;
