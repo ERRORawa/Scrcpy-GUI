@@ -19,7 +19,7 @@ namespace Scrcpy_GUI
 {
     public partial class Main : Form
     {
-        bool debug = true;     //开启|关闭调试模式
+        bool debug = false;     //开启|关闭调试模式
 
         [DllImport("kernel32.dll")]
         public static extern bool AllocConsole();
