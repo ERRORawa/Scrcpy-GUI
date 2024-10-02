@@ -295,9 +295,18 @@ namespace Scrcpy_GUI
                     Process.Start(this.GetType().Assembly.Location);        //重启程序防止窗体错位
                     Environment.Exit(0);
                 }
+                else if (File.Exists(appPath + "\\bin\\scrcpy.exe"))
+                {
+                    Console.WriteLine("已取消下载多任务模式配置");
+                    Process disableMulti = new Process();
+                    disableMulti.StartInfo.FileName = appPath + "\\" + Path.GetFileName(Application.ExecutablePath);
+                    disableMulti.StartInfo.Arguments = "--disableMulti";
+                    disableMulti.Start();
+                    Environment.Exit(1);
+                }
                 else
                 {
-                    Console.WriteLine("已取消下载，退出程序");
+                    Console.WriteLine("已取消下载环境配置，退出程序");
                     Environment.Exit(1);
                 }
             }
