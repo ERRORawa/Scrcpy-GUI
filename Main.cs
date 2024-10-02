@@ -19,7 +19,7 @@ namespace Scrcpy_GUI
 {
     public partial class Main : Form
     {
-        bool debug = false;     //开启|关闭调试模式
+        bool debug = true;     //开启|关闭调试模式
 
         [DllImport("kernel32.dll")]
         public static extern bool AllocConsole();
@@ -357,11 +357,11 @@ namespace Scrcpy_GUI
                     }
                     if(!File.Exists(appPath + "\\bin\\version"))
                     {
-                        _ = Cmd("echo " + ReadFile("ver")[1] + "> " + appPath + "\\bin\\version", "touchVer");
+                        _ = Cmd("echo " + ReadFile("ver")[1] + " > " + appPath + "\\bin\\version", "touchVer");
                     }
-                    if (ReadFile("ver")[1] != ReadFile("bin\\version")[0])
+                    if (ReadFile("ver")[1] != ReadFile("bin\\version")[0].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[0])
                     {
-                        Console.WriteLine("发现新版本Scrcpy：" + ReadFile("ver")[1] + "，当前版本：" + ReadFile("bin\\version")[0] + "。");
+                        Console.WriteLine("发现新版本Scrcpy：" + ReadFile("ver")[1] + "，当前版本：" + ReadFile("bin\\version")[0].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[0] + "。");
                         DialogResult update = MessageBox.Show("检查到新版本Scrcpy：v" + ReadFile("ver")[1] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (update == DialogResult.Yes)
                         {
@@ -392,8 +392,8 @@ namespace Scrcpy_GUI
                                 ZipFile.ExtractToDirectory(appPath + "\\updated.zip", appPath);      //解压Scrcpy
                                 _ = Cmd("rmdir /S /Q bin", "delBin");
                                 Directory.Move(appPath + "\\scrcpy-win64-v" + ReadFile(appPath + "\\ver")[1], appPath + "\\bin");
-                                File.Delete(appPath + "\\scrcpy.zip");
-                                _ = Cmd("echo 2.7 > " + appPath + "\\bin\version", "touchVer");
+                                File.Delete(appPath + "\\updated.zip");
+                                _ = Cmd("echo " + ReadFile(appPath + "\\ver")[1] + " > " + appPath + "\\bin\\version", "touchVer");
                                 Console.WriteLine("Scrcpy下载完成");
                             }
                         }
