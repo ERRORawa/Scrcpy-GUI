@@ -73,9 +73,12 @@ namespace Scrcpy_GUI
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
         }
-        public void Cmd1(string command)    //执行命令（异步），无输出
+        public void Cmd(string command)    //执行命令（异步），无输出
         {
-            Console.WriteLine("投屏1：" + command);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\n[执行命令]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -89,61 +92,6 @@ namespace Scrcpy_GUI
             string strOutput = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
             p.Close();
-            main.WriteFile("multi1", strOutput);
-        }
-        public void Cmd2(string command)    //执行命令（异步），无输出
-        {
-            Console.WriteLine("投屏2：" + command);
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.CreateNoWindow = true;
-            p.Start();
-            p.StandardInput.WriteLine(command + " & exit");
-            p.StandardInput.AutoFlush = true;
-            string strOutput = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
-            p.Close();
-            main.WriteFile("multi2", strOutput);
-        }
-        public void Cmd3(string command)    //执行命令（异步），无输出
-        {
-            Console.WriteLine("投屏3：" + command);
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.CreateNoWindow = true;
-            p.Start();
-            p.StandardInput.WriteLine(command + " & exit");
-            p.StandardInput.AutoFlush = true;
-            string strOutput = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
-            p.Close();
-            main.WriteFile("multi3", strOutput);
-        }
-        public void Cmd4(string command)    //执行命令（异步），无输出
-        {
-            Console.WriteLine("投屏4：" + command);
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardError = true;
-            p.StartInfo.CreateNoWindow = true;
-            p.Start();
-            p.StandardInput.WriteLine(command + " & exit");
-            p.StandardInput.AutoFlush = true;
-            string strOutput = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
-            p.Close();
-            main.WriteFile("multi4", strOutput);
         }
         private void Enter_Click(object sender, EventArgs e)
         {
@@ -511,7 +459,7 @@ namespace Scrcpy_GUI
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[0] + " --windowingMode 1 " + appActivity[1], "displayApp1");
                     Task task1 = Task.Run(() =>
                     {
-                        Cmd1("bin\\scrcpy -s " + device + " --display-id=" + id[0] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command);
+                        Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[0] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app1.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
@@ -535,7 +483,7 @@ namespace Scrcpy_GUI
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[1] + " --windowingMode 1 " + appActivity[1], "displayApp2");
                     Task task2 = Task.Run(() =>
                     {
-                        Cmd2("bin\\scrcpy -s " + device + " --display-id=" + id[1] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command);
+                        Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[1] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app2.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
@@ -559,7 +507,7 @@ namespace Scrcpy_GUI
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[2] + " --windowingMode 1 " + appActivity[1], "displayApp3");
                     Task task3 = Task.Run(() =>
                     {
-                        Cmd3("bin\\scrcpy -s " + device + " --display-id=" + id[2] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command);
+                        Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[2] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app3.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
@@ -583,7 +531,7 @@ namespace Scrcpy_GUI
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[3] + " --windowingMode 1 " + appActivity[1], "displayApp4");
                     Task task4 = Task.Run(() =>
                     {
-                        Cmd4("bin\\scrcpy -s " + device + " --display-id=" + id[3] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command);
+                        Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[3] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app4.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
