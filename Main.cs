@@ -280,23 +280,28 @@ namespace Scrcpy_GUI
             }
             Task task = Task.Run(() =>      //检查App更新
             {
-                try         //从gitdl代理获取版本
+                /*try         //从gitdl代理获取版本
                 {
+                    Debug.Print("gitdl获取版本更新");
                     new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
                 }
                 catch
                 {
+                    Debug.Print("gitdl获取失败");
                     try         //直连获取版本
                     {
+                        Debug.Print("直连获取版本更新");
                         new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
                     }
                     catch
                     {
+                        Debug.Print("直连获取失败");
                         Debug.Print("无法检查更新");
                     }
-                }
+                }*/
                 if (File.Exists(appPath + "\\ver"))
                 {
+                    Debug.Print("读取更新版本");
                     if (ReadFile(appPath + "\\ver")[0] != Application.ProductVersion)
                     {
                         Debug.Print("发现新版本：" + ReadFile(appPath + "\\ver")[0]);
@@ -329,11 +334,11 @@ namespace Scrcpy_GUI
                     }
                     if(!File.Exists(appPath + "\\bin\\version"))
                     {
-                        _ = Cmd("echo " + ReadFile(appPath + "\\ver")[1] + " > " + appPath + "\\bin\\version", "touchVer");
+                        _ = Cmd("echo " + ReadFile(appPath + "\\ver")[1] + "> " + appPath + "\\bin\\version", "touchVer");
                     }
                     if (ReadFile(appPath + "\\ver")[1] != ReadFile(appPath + "\\bin\\version")[0])
                     {
-                        Debug.Print("发现新版本Scrcpy：" + ReadFile(appPath + "\\ver")[1]);
+                        Debug.Print("发现新版本Scrcpy：" + ReadFile(appPath + "\\ver")[1] + "，当前版本：" + ReadFile(appPath + "\\bin\\version")[0] + "。");
                         DialogResult update = MessageBox.Show("检查到新版本Scrcpy：v" + ReadFile(appPath + "\\ver")[1] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (update == DialogResult.Yes)
                         {
@@ -371,6 +376,7 @@ namespace Scrcpy_GUI
                             }
                         }
                     }
+                    Debug.Print("读取完成");
                     File.Delete(appPath + "\\ver");
                 }
             });
