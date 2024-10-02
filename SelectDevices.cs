@@ -58,9 +58,11 @@ namespace Scrcpy_GUI
         {
             e.DrawBackground();
             e.DrawFocusRectangle();
-            StringFormat strFmt = new StringFormat();
-            strFmt.Alignment = StringAlignment.Center;
-            strFmt.LineAlignment = StringAlignment.Center;
+            StringFormat strFmt = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
             e.Graphics.DrawString(SelectDevice.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds, strFmt);
         }
 
@@ -76,9 +78,11 @@ namespace Scrcpy_GUI
             switch (arg) 
             {
                 case 0:    //投屏
-                    ToolBar toolBar = new ToolBar();
-                    toolBar.alwaysOnTop = alwaysOnTop;
-                    toolBar.device = SelectDevice.SelectedItem.ToString();
+                    ToolBar toolBar = new ToolBar
+                    {
+                        alwaysOnTop = alwaysOnTop,
+                        device = SelectDevice.SelectedItem.ToString()
+                    };
                     toolBar.Show();
                     Cmd("bin\\scrcpy -s " + SelectDevice.SelectedItem.ToString() + " --shortcut-mod lctrl,rctrl" + command);
                     this.Hide();
@@ -109,9 +113,11 @@ namespace Scrcpy_GUI
                     }
                     break;
                 case 2:
-                    MultiTaskMode multiTaskMode = new MultiTaskMode();
-                    multiTaskMode.device = SelectDevice.SelectedItem.ToString();
-                    multiTaskMode.command = command;
+                    MultiTaskMode multiTaskMode = new MultiTaskMode
+                    {
+                        device = SelectDevice.SelectedItem.ToString(),
+                        command = command
+                    };
                     multiTaskMode.Show();
                     this.Hide();    //隐藏当前窗体
                     break;

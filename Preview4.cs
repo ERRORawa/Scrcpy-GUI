@@ -44,10 +44,5 @@ namespace Scrcpy_GUI
             this.MinimumSize = new Size(vWidth + 100, vHeight + 100);
             this.MaximumSize = new Size(vWidth + 1365, vHeight + 1365);
         }
-        private void Preview4_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        }
     }
 }

@@ -156,7 +156,7 @@ namespace Scrcpy_GUI
                     await Task.Delay(500);     //延迟0.5秒
                     if (PairingCode.ForeColor == Color.Silver && PairingPort.ForeColor == Color.Silver)     //判断是否使用配对码连接
                     {
-                        Debug.Print("不使用配对模式");
+                        Console.WriteLine("不使用配对模式");
                         string[] output = main.Cmd("bin\\adb connect " + IP.Text + ":" + Port.Text, "wireless");     //执行连接
                         if (output[4].Substring(0, 6) == "cannot")      //判断连接失败
                         {
@@ -175,9 +175,9 @@ namespace Scrcpy_GUI
                     }
                     else if(PairingCode.ForeColor == Color.Black && PairingPort.ForeColor == Color.Black)
                     {
-                        Debug.Print("使用配对模式");
-                        Debug.Print("执行命令：" + "bin\\adb pair " + IP.Text + ":" + PairingPort.Text);
-                        Debug.Print("配对码：" + PairingCode.Text);
+                        Console.WriteLine("使用配对模式");
+                        Console.WriteLine("执行命令：" + "bin\\adb pair " + IP.Text + ":" + PairingPort.Text);
+                        Console.WriteLine("配对码：" + PairingCode.Text);
                         Process p = new Process();
                         p.StartInfo.FileName = "cmd.exe";
                         p.StartInfo.UseShellExecute = false;
@@ -200,7 +200,7 @@ namespace Scrcpy_GUI
                         {
                             if (output[4].Substring(20, 12) == "Successfully")      //判断连接成功
                             {
-                                Debug.Print("配对成功");
+                                Console.WriteLine("配对成功");
                                 main.Cmd("bin\\adb connect " + IP.Text + ":" + Port.Text, "wireless");     //执行连接;
                                 return "成功";
                             }
@@ -208,14 +208,14 @@ namespace Scrcpy_GUI
                         }
                         catch       //因为连接失败会导致程序错误，所以使用try catch
                         {
-                            Debug.Print("配对失败");
+                            Console.WriteLine("配对失败");
                             MessageBox.Show("请检查IP、端口、配对端口或配对码是否正确", "无法连接到设备");
                             return "失败";
                         }
                     }
                     else
                     {
-                        Debug.Print("配对模式有东西漏填了");
+                        Console.WriteLine("配对模式有东西漏填了");
                         MessageBox.Show("你下面配对模式漏了个没填欸！", "真粗心！");
                         return "失败";
                     }

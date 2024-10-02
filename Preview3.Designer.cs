@@ -67,7 +67,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "预览窗口#3";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Preview3_FormClosing);
             this.Load += new System.EventHandler(this.Preview3_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -13,11 +13,20 @@ using System.Windows.Forms;
 using System.IO.Compression;
 using System.Xml;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Scrcpy_GUI
 {
     public partial class Main : Form
     {
+        bool debug = false;     //开启|关闭调试模式
+
+        [DllImport("kernel32.dll")]
+        public static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll")]
+        public static extern bool FreeConsole();
+
         SelectDevices selectDevices = new SelectDevices();    //调用选择窗体
 
         WirelessDebugging wirelessDebugging = new WirelessDebugging();    //调用无线调试窗体
@@ -34,6 +43,8 @@ namespace Scrcpy_GUI
 
         bool multiTask = false;
 
+        public bool notAtMain = false;
+
         public void WriteFile(string fileName,string content)    //写入文件（文件名，内容）
         {
             Debug.Print("写入文件：" + fileName);
@@ -46,7 +57,7 @@ namespace Scrcpy_GUI
         {
             Debug.Print("读取文件：" + fileName);
             StreamReader sr = new StreamReader(fileName,Encoding.UTF8);
-            string str = string.Empty;
+            string str;
             string content = string.Empty;
             while ((str = sr.ReadLine()) != null)
             {
@@ -58,7 +69,10 @@ namespace Scrcpy_GUI
  
         public string[] Cmd(string command,string fileName)    //执行命令（命令，输出文件名）   需等待程序退出
         {
-            Debug.Print("执行命令：" + command);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\n[执行命令]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -123,7 +137,7 @@ namespace Scrcpy_GUI
                 command = command + " --window-title=" + Settings.Default.窗口标题;
             }
             command = command + " --push-target=" + Settings.Default.文件存放目录;
-            Debug.Print("设置参数：" + command);
+            Console.WriteLine("设置参数：" + command);
         }
 
         public Main()
@@ -138,15 +152,23 @@ namespace Scrcpy_GUI
         }
         private void Main_FormClosed(object sender, FormClosedEventArgs e)    //关闭窗口
         {
-            Debug.Print("关闭程序");
+            Console.WriteLine("关闭程序");
+            if (debug)
+            {
+                FreeConsole();
+            }
             Environment.Exit(0);    //退出程序
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
+            if (debug)
+            {
+                AllocConsole();
+            }
             if (Path.GetFileName(Application.ExecutablePath) != "Scrcpy-GUI.exe" && Path.GetFileName(Application.ExecutablePath) != "scrcpy-gui.exe")       //修正App名字
             {
-                Debug.Print("程序名错误：" + Path.GetFileName(Application.ExecutablePath) + "  正在修正");
+                Console.WriteLine("程序名错误：" + Path.GetFileName(Application.ExecutablePath) + "  正在修正");
                 try
                 {
                     File.Delete(appPath + "Scrcpy-GUI.exe");
@@ -156,12 +178,12 @@ namespace Scrcpy_GUI
                     rename.StartInfo.FileName = appPath + "\\Scrcpy-GUI.exe";
                     rename.StartInfo.Arguments = " -D " + Path.GetFileName(Application.ExecutablePath);
                     rename.Start();
-                    Debug.Print("修正完成，重启程序");
+                    Console.WriteLine("修正完成，重启程序");
                     Environment.Exit(0);
                 }
                 catch
                 {
-                    Debug.Print("修正失败");
+                    Console.WriteLine("修正失败");
                 }
             }
             bool disableMultiMode = false;
@@ -169,20 +191,20 @@ namespace Scrcpy_GUI
             {
                 if (args[0] == "-D")     //更新App使用的参数
                 {
-                    Debug.Print("更新中");
+                    Console.WriteLine("更新中");
                     File.Delete(appPath + "\\" + args[1]);
                     Process.Start(this.GetType().Assembly.Location);
                     Environment.Exit(0);
                 }
                 else if (args[0] == "--disableMulti")
                 {
-                    Debug.Print("禁用多任务模式");
+                    Console.WriteLine("禁用多任务模式");
                     disableMultiMode = true;
                     MultiTaskMode.Enabled = false;
                 }
                 else
                 {
-                    Debug.Print("进入投屏");
+                    Console.WriteLine("进入投屏");
                     disableMultiMode = true;
                     SetArgs();      //应用Scrcpy参数
                     ToolBar toolBar = new ToolBar
@@ -192,6 +214,7 @@ namespace Scrcpy_GUI
                         disableToolBar = disableToolBar.Checked    //启动投屏
                     };
                     toolBar.Show();
+                    notAtMain = true;
                     selectDevices.Cmd("bin\\scrcpy -s " + args[0] + " --shortcut-mod lctrl,rctrl" + command);
                 }
             }
@@ -222,7 +245,7 @@ namespace Scrcpy_GUI
                         Directory.Move(appPath + "\\scrcpy-win64-v2.7", appPath + "\\bin");
                         File.Delete(appPath + "\\scrcpy.zip");
                         _ = Cmd("echo 2.7 > " + appPath + "\\bin\\version", "touchVer");
-                        Debug.Print("Scrcpy下载完成");
+                        Console.WriteLine("Scrcpy下载完成");
                     }
                     if (!Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt-arm64-v8a") || !File.Exists(appPath + "\\MultiModeSh\\aapt-armeabi-v7a") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh"))
                     {
@@ -267,14 +290,14 @@ namespace Scrcpy_GUI
                                 }
                             }
                         }
-                        Debug.Print("多任务模式环境配置下载完成");
+                        Console.WriteLine("多任务模式环境配置下载完成");
                     }
                     Process.Start(this.GetType().Assembly.Location);        //重启程序防止窗体错位
                     Environment.Exit(0);
                 }
                 else
                 {
-                    Debug.Print("已取消下载，退出程序");
+                    Console.WriteLine("已取消下载，退出程序");
                     Environment.Exit(1);
                 }
             }
@@ -282,29 +305,29 @@ namespace Scrcpy_GUI
             {
                 try         //从gitdl代理获取版本
                 {
-                    Debug.Print("gitdl获取版本更新");
+                    Console.WriteLine("gitdl获取版本更新");
                     new WebClient().DownloadFile("https://gitdl.cn/https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
                 }
                 catch
                 {
-                    Debug.Print("gitdl获取失败");
+                    Console.WriteLine("gitdl获取失败");
                     try         //直连获取版本
                     {
-                        Debug.Print("直连获取版本更新");
+                        Console.WriteLine("直连获取版本更新");
                         new WebClient().DownloadFile("https://raw.githubusercontent.com/ERRORawa/Scrcpy-GUI/main/Version", appPath + "\\ver");
                     }
                     catch
                     {
-                        Debug.Print("直连获取失败");
-                        Debug.Print("无法检查更新");
+                        Console.WriteLine("直连获取失败");
+                        Console.WriteLine("无法检查更新");
                     }
                 }
                 if (File.Exists(appPath + "\\ver"))
                 {
-                    Debug.Print("读取更新版本");
+                    Console.WriteLine("读取更新版本");
                     if (ReadFile("ver")[0] != Application.ProductVersion)
                     {
-                        Debug.Print("发现新版本：" + ReadFile("ver")[0]);
+                        Console.WriteLine("发现新版本：" + ReadFile("ver")[0]);
                         DialogResult update = MessageBox.Show("检查到新版本：v" + ReadFile("ver")[0] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (update == DialogResult.Yes)
                         {
@@ -312,7 +335,7 @@ namespace Scrcpy_GUI
                             {
                                 new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                 Process.Start(appPath + "\\updated.exe");
-                                Debug.Print("更新完毕，重启程序");
+                                Console.WriteLine("更新完毕，重启程序");
                                 Environment.Exit(1);
                             }
                             catch
@@ -321,12 +344,12 @@ namespace Scrcpy_GUI
                                 {
                                     new WebClient().DownloadFile("https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                     Process.Start(appPath + "\\updated.exe");
-                                    Debug.Print("更新完毕，重启程序");
+                                    Console.WriteLine("更新完毕，重启程序");
                                     Environment.Exit(1);
                                 }
                                 catch
                                 {
-                                    Debug.Print("下载失败");
+                                    Console.WriteLine("下载失败");
                                     MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
@@ -338,7 +361,7 @@ namespace Scrcpy_GUI
                     }
                     if (ReadFile("ver")[1] != ReadFile("bin\\version")[0])
                     {
-                        Debug.Print("发现新版本Scrcpy：" + ReadFile("ver")[1] + "，当前版本：" + ReadFile("bin\\version")[0] + "。");
+                        Console.WriteLine("发现新版本Scrcpy：" + ReadFile("ver")[1] + "，当前版本：" + ReadFile("bin\\version")[0] + "。");
                         DialogResult update = MessageBox.Show("检查到新版本Scrcpy：v" + ReadFile("ver")[1] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (update == DialogResult.Yes)
                         {
@@ -346,18 +369,18 @@ namespace Scrcpy_GUI
                             try         //从gitdl代理下载更新程序
                             {
                                 new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v" + ReadFile("ver")[1] + "/scrcpy-win64-v" + ReadFile("ver")[1] + ".zip", appPath + "\\updated.zip");
-                                Debug.Print("更新完毕");
+                                Console.WriteLine("更新完毕");
                             }
                             catch
                             {
                                 try         //直连下载更新程序
                                 {
                                     new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v" + ReadFile("ver")[1] + "/scrcpy-win64-v" + ReadFile("ver")[1] + ".zip", appPath + "\\updated.zip");
-                                    Debug.Print("更新完毕");
+                                    Console.WriteLine("更新完毕");
                                 }
                                 catch
                                 {
-                                    Debug.Print("下载失败");
+                                    Console.WriteLine("下载失败");
                                     MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     flag = false;
                                 }
@@ -367,16 +390,15 @@ namespace Scrcpy_GUI
                                 CheckDevices.Enabled = false;
                                 _ = Cmd("bin\\adb kill-server", "killadb");
                                 ZipFile.ExtractToDirectory(appPath + "\\updated.zip", appPath);      //解压Scrcpy
-                                _ = Cmd("del /f /s /q " + appPath + "\\bin", "deleteOld");
-                                Directory.Delete(appPath + "\\bin");
+                                _ = Cmd("rmdir /S /Q bin", "delBin");
                                 Directory.Move(appPath + "\\scrcpy-win64-v" + ReadFile(appPath + "\\ver")[1], appPath + "\\bin");
                                 File.Delete(appPath + "\\scrcpy.zip");
                                 _ = Cmd("echo 2.7 > " + appPath + "\\bin\version", "touchVer");
-                                Debug.Print("Scrcpy下载完成");
+                                Console.WriteLine("Scrcpy下载完成");
                             }
                         }
                     }
-                    Debug.Print("读取完成");
+                    Console.WriteLine("读取完成");
                     File.Delete(appPath + "\\ver");
                 }
             });
@@ -415,10 +437,16 @@ namespace Scrcpy_GUI
                     this.Hide();
                 }
             }
+            if (notAtMain)
+            {
+                Console.WriteLine("不在主菜单，停止获取设备");
+                CheckDevices.Enabled = false;
+                return;
+            }
             string[] output = Cmd("bin\\adb devices", "devicesInfo");    //获取设备信息
             ConnectedDevices.Text = "";
             UnauthDevices.Text = "";
-            Debug.Print("识别到的设备：");
+            Console.WriteLine("识别到的设备：");
             for (int i = 5; ; i++)
             {
                 if (output[i] == "")     //无设备
@@ -433,7 +461,7 @@ namespace Scrcpy_GUI
                 {
                     UnauthDevices.Text = UnauthDevices.Text + output[i].Substring(0, output[i].Length - 13) + Environment.NewLine;
                 }
-                Debug.Print(output[i]);
+                Console.WriteLine(output[i]);
             }
             WriteFile("devices", ConnectedDevices.Text);    //写入文件
             devices = ReadFile("devices");    //获取devices
@@ -451,7 +479,9 @@ namespace Scrcpy_GUI
 
         private void Reset_Click(object sender, EventArgs e)    //重置连接状态
         {
-            Debug.Print("重置adb");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n重置adb");
+            Console.ForegroundColor = ConsoleColor.White;
             UnauthTitle.Text = "";
             ConnectedDevices.Text = "";
             UnauthDevices.Text = "";
@@ -463,7 +493,7 @@ namespace Scrcpy_GUI
 
         private void disableToolBar_CheckedChanged(object sender, EventArgs e)
         {
-            Debug.Print("关闭工具栏：" + disableToolBar.Checked);
+            Console.WriteLine("关闭工具栏：" + disableToolBar.Checked);
             Settings.Default["关闭工具栏"] = disableToolBar.Checked;     //记住设置
             if (!disableToolBar.Checked)
             {
@@ -474,7 +504,7 @@ namespace Scrcpy_GUI
 
         private void OTG_CheckedChanged(object sender, EventArgs e)
         {
-            Debug.Print("启用OTG：" + OTG.Checked);
+            Console.WriteLine("启用OTG：" + OTG.Checked);
             Settings.Default["用OTG"] = OTG.Checked;     //记住设置
             disableToolBar.Checked = OTG.Checked;
             Settings.Default.Save();
@@ -489,7 +519,7 @@ namespace Scrcpy_GUI
                 ReshowDelay = 500,
                 ShowAlways = true
             };        //显示OTG提示
-            Debug.Print("显示OTG提示");
+            Console.WriteLine("显示OTG提示");
             toolTip.SetToolTip(this.OTG, "只有选择的设备处于有线连接时可用\n若是选择了无线连接的设备将会导致程序闪退");
         }
 
@@ -497,12 +527,13 @@ namespace Scrcpy_GUI
         {
             if (devices.Length - 2 > 1)    //有多个设备时
             {
-                Debug.Print("有多个可用设备");
+                Console.WriteLine("\n有多个可用设备");
                 SetArgs();
                 selectDevices.devices = devices;
                 selectDevices.arg = 0;
                 selectDevices.command = command;
                 selectDevices.Show();           //显示选择窗体
+                notAtMain = true;
                 this.Hide();
             }
             else if (devices.Length - 2 == 0)    //无设备时
@@ -518,8 +549,9 @@ namespace Scrcpy_GUI
                     device = devices[0],
                     disableToolBar = disableToolBar.Checked
                 };
-                Debug.Print("启动投屏");
+                Console.WriteLine("启动投屏");
                 toolBar.Show();
+                notAtMain = true;
                 selectDevices.Cmd("bin\\scrcpy -s " + devices[0] + " --shortcut-mod lctrl,rctrl" + command);       //启动Scrcpy
                 this.Hide();
             }
@@ -529,7 +561,7 @@ namespace Scrcpy_GUI
         {
             if (devices.Length - 2 > 1)    //多设备时
             {
-                Debug.Print("有多个可用设备");
+                Console.WriteLine("有多个可用设备");
                 selectDevices.devices = devices;
                 selectDevices.arg = 1;
                 selectDevices.Show();            //显示选择窗体
@@ -550,7 +582,7 @@ namespace Scrcpy_GUI
                     int start1 = output[6].LastIndexOf("inet ");
                     int end1 = output[6].LastIndexOf("/");
                     ip = output[6].Substring(start1 + 5, end1 - start1 - 5);
-                    Debug.Print("成功获取到设备IP：" + ip);
+                    Console.WriteLine("成功获取到设备IP：" + ip);
                     flag = true;    //成功获取到ip
                 }
                 catch    //获取失败时
@@ -568,12 +600,12 @@ namespace Scrcpy_GUI
 
         private void WirelessDebug_Click(object sender, EventArgs e)    //跳转无线调试窗体
         {
-            CheckDevices.Enabled = false;
             if (!MultiTaskMode.Enabled)
             {
                 wirelessDebugging.disableMulti = true;
             }
             wirelessDebugging.Show();
+            notAtMain = true;
             this.Hide();
         }
 
@@ -581,13 +613,14 @@ namespace Scrcpy_GUI
         {
             if (devices.Length - 2 > 1)    //有多个设备时
             {
-                Debug.Print("有多个可用设备");
+                Console.WriteLine("\n有多个可用设备");
                 multiTask = true;
                 SetArgs();
                 selectDevices.devices = devices;
                 selectDevices.arg = 2;
                 selectDevices.command = command;
                 selectDevices.Show();             //显示选择窗体
+                notAtMain = true;
                 this.Hide();
             }
             else if (devices.Length - 2 == 0)    //无设备时
@@ -604,12 +637,13 @@ namespace Scrcpy_GUI
                     command = command
                 };
                 multiTaskMode.Show();           //显示多任务模式设置窗体
+                notAtMain = true;
                 this.Hide();
             }
         }
         private void version_Click(object sender, EventArgs e)
         {
-            Debug.Print("打开项目地址");
+            Console.WriteLine("打开项目地址");
             Process.Start("https://github.com/ERRORawa/Scrcpy-GUI");       //打开项目地址
         }
 

@@ -280,8 +280,10 @@ namespace Scrcpy_GUI
             IntPtr hasMore = FindWindow(null, "更多");      //获取More句柄
             if (hasMore.ToString() == "0")
             {
-                More more = new More();
-                more.device = device;
+                More more = new More
+                {
+                    device = device
+                };
                 more.Show();        //显示More
             }
             else

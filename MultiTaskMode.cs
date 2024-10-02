@@ -34,17 +34,16 @@ namespace Scrcpy_GUI
             public bool Focused;
         }
 
-        Main main = new Main();
+        Main main = new Main
+        {
+            notAtMain = true
+        };
 
         public string device;
 
         public string command;
 
-        ArrayList packNameAr = new ArrayList();
-
         ArrayList packActivityAr = new ArrayList();
-
-        string[] packName;
 
         string[] appLabel;
 
@@ -76,7 +75,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd1(string command)    //执行命令（异步），无输出
         {
-            Debug.Print("投屏1：" + command);
+            Console.WriteLine("投屏1：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -94,7 +93,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd2(string command)    //执行命令（异步），无输出
         {
-            Debug.Print("投屏2：" + command);
+            Console.WriteLine("投屏2：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -112,7 +111,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd3(string command)    //执行命令（异步），无输出
         {
-            Debug.Print("投屏3：" + command);
+            Console.WriteLine("投屏3：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -130,7 +129,7 @@ namespace Scrcpy_GUI
         }
         public void Cmd4(string command)    //执行命令（异步），无输出
         {
-            Debug.Print("投屏4：" + command);
+            Console.WriteLine("投屏4：" + command);
             Process p = new Process();
             p.StartInfo.FileName = "cmd.exe";
             p.StartInfo.UseShellExecute = false;
@@ -158,7 +157,7 @@ namespace Scrcpy_GUI
             int num = 0;
             if (checkBox1.Checked)
             {
-                displayInfo = displayInfo + res1l.Text + "x" + res1r.Text + "/" + dpi1.Text;
+                displayInfo += res1l.Text + "x" + res1r.Text + "/" + dpi1.Text;
                 flag = true;
                 num++;
             }
@@ -166,9 +165,9 @@ namespace Scrcpy_GUI
             {
                 if (flag)
                 {
-                    displayInfo = displayInfo + "\\;";
+                    displayInfo += "\\;";
                 }
-                displayInfo = displayInfo + res2l.Text + "x" + res2r.Text + "/" + dpi2.Text;
+                displayInfo += res2l.Text + "x" + res2r.Text + "/" + dpi2.Text;
                 flag = true;
                 num++;
             }
@@ -176,9 +175,9 @@ namespace Scrcpy_GUI
             {
                 if (flag)
                 {
-                    displayInfo = displayInfo + "\\;";
+                    displayInfo += "\\;";
                 }
-                displayInfo = displayInfo + res3l.Text + "x" + res3r.Text + "/" + dpi3.Text;
+                displayInfo += res3l.Text + "x" + res3r.Text + "/" + dpi3.Text;
                 flag = true;
                 num++;
             }
@@ -186,10 +185,9 @@ namespace Scrcpy_GUI
             {
                 if (flag)
                 {
-                    displayInfo = displayInfo + "\\;";
+                    displayInfo += "\\;";
                 }
-                displayInfo = displayInfo + res4l.Text + "x" + res4r.Text + "/" + dpi4.Text;
-                flag = true;
+                displayInfo += res4l.Text + "x" + res4r.Text + "/" + dpi4.Text;
                 num++;
             }
             _ = main.Cmd("bin\\adb -s " + device + " shell settings put global overlay_display_devices \"" + displayInfo + "\"", "createDisplay");
@@ -204,7 +202,6 @@ namespace Scrcpy_GUI
                 }
                 else
                 {
-                    Debug.Print(displayID[k].ToString());
                     idAr.Add(int.Parse(displayID[k].Substring(15, displayID[k].Length - 15)));
                 }
             }
@@ -212,28 +209,31 @@ namespace Scrcpy_GUI
             idx = id.Length - num;
             int[] ida = new int[4];
             int i = 0;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("\n[虚拟显示屏ID]");
+            Console.ForegroundColor = ConsoleColor.White;
             if (checkBox1.Checked)
             {
                 ida[0] = id[idx];
-                Debug.Print(id[idx + i].ToString());
+                Console.Write(" " + id[idx + i].ToString());
                 i++;
             }
             if (checkBox2.Checked)
             {
                 ida[1] = id[idx + i];
-                Debug.Print(id[idx + i].ToString());
+                Console.Write(" " + id[idx + i].ToString());
                 i++;
             }
             if (checkBox3.Checked)
             {
                 ida[2] = id[idx + i];
-                Debug.Print(id[idx + i].ToString());
+                Console.Write(" " + id[idx + i].ToString());
                 i++;
             }
             if (checkBox4.Checked)
             {
                 ida[3] = id[idx + i];
-                Debug.Print(id[idx + i].ToString());
+                Console.Write(" " + id[idx + i].ToString());
             }
             id = ida;
             check.Enabled = true;
@@ -307,7 +307,6 @@ namespace Scrcpy_GUI
                 {
                     if (appLabel[i] != "NoLabel" && activity[i] != "NoActivity")
                     {
-                        packNameAr.Add(name[i]);
                         packActivityAr.Add(activity[i]);
                         app1.Items.Add(appLabel[i]);
                         app2.Items.Add(appLabel[i]);
@@ -315,7 +314,6 @@ namespace Scrcpy_GUI
                         app4.Items.Add(appLabel[i]);
                     }
                 }
-                packName = (string[])packNameAr.ToArray(typeof(string));
                 packActivity = (string[])packActivityAr.ToArray(typeof(string));
                 app1.SelectedItem = app1.Items[0];
                 app2.SelectedItem = app2.Items[1];
@@ -415,30 +413,70 @@ namespace Scrcpy_GUI
 
         private void ui1_Click(object sender, EventArgs e)
         {
-            preview1.Show();
-            preview1.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
-            getResolution.Enabled = true;
+            try
+            {
+                preview1.Show();
+                preview1.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
+                getResolution.Enabled = true;
+            }
+            catch
+            { 
+                preview1 = new Preview1();
+                preview1.Show();
+                preview1.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
+                getResolution.Enabled = true;
+            }
         }
 
         private void ui2_Click(object sender, EventArgs e)
         {
-            preview2.Show();
-            preview2.SetForm(new Size(int.Parse(res2l.Text), int.Parse(res2r.Text)));
-            getResolution.Enabled = true;
+            try
+            {
+                preview2.Show();
+                preview2.SetForm(new Size(int.Parse(res2l.Text), int.Parse(res2r.Text)));
+                getResolution.Enabled = true;
+            }
+            catch
+            {
+                preview2 = new Preview2();
+                preview2.Show();
+                preview2.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
+                getResolution.Enabled = true;
+            }
         }
 
         private void ui3_Click(object sender, EventArgs e)
         {
-            preview3.Show();
-            preview3.SetForm(new Size(int.Parse(res3l.Text), int.Parse(res3r.Text)));
-            getResolution.Enabled = true;
+            try
+            {
+                preview3.Show();
+                preview3.SetForm(new Size(int.Parse(res3l.Text), int.Parse(res3r.Text)));
+                getResolution.Enabled = true;
+            }
+            catch
+            {
+                preview3 = new Preview3();
+                preview3.Show();
+                preview3.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
+                getResolution.Enabled = true;
+            }
         }
 
         private void ui4_Click(object sender, EventArgs e)
         {
-            preview4.Show();
-            preview4.SetForm(new Size(int.Parse(res4l.Text), int.Parse(res4r.Text)));
-            getResolution.Enabled = true;
+            try
+            {
+                preview4.Show();
+                preview4.SetForm(new Size(int.Parse(res4l.Text), int.Parse(res4r.Text)));
+                getResolution.Enabled = true;
+            }
+            catch
+            {
+                preview4 = new Preview4();
+                preview4.Show();
+                preview4.SetForm(new Size(int.Parse(res1l.Text), int.Parse(res1r.Text)));
+                getResolution.Enabled = true;
+            }
         }
 
         private void check_Tick(object sender, EventArgs e)
@@ -469,6 +507,7 @@ namespace Scrcpy_GUI
                 {
                     flag = false;
                     string[] appActivity = packActivity[app1.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    Console.WriteLine("\n\n当前虚拟显示屏ID：" + id[0] + " 要启动的包名：" + appActivity[1] + " 应用名：" + app1.SelectedItem.ToString());
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[0] + " --windowingMode 1 " + appActivity[1], "displayApp1");
                     Task task1 = Task.Run(() =>
                     {
@@ -476,7 +515,7 @@ namespace Scrcpy_GUI
                     });
                     nowApp = app1.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
-                    Debug.Print(app1.SelectedItem.ToString() + " " + id[0] + " " + appActivity[1]);
+                    Console.WriteLine(app1.SelectedItem.ToString() + " " + id[0] + " " + appActivity[1]);
                     check.Enabled = false;
                     return;
                 }
@@ -492,6 +531,7 @@ namespace Scrcpy_GUI
                 {
                     flag = false;
                     string[] appActivity = packActivity[app2.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    Console.WriteLine("\n\n当前虚拟显示屏ID：" + id[1] + " 要启动的包名：" + appActivity[1] + " 应用名：" + app2.SelectedItem.ToString());
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[1] + " --windowingMode 1 " + appActivity[1], "displayApp2");
                     Task task2 = Task.Run(() =>
                     {
@@ -499,7 +539,7 @@ namespace Scrcpy_GUI
                     });
                     nowApp = app2.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
-                    Debug.Print(app2.SelectedItem.ToString() + " " + id[1] + " " + appActivity[1]);
+                    Console.WriteLine(app2.SelectedItem.ToString() + " " + id[1] + " " + appActivity[1]);
                     check.Enabled = false;
                     return;
                 }
@@ -515,6 +555,7 @@ namespace Scrcpy_GUI
                 {
                     flag = false;
                     string[] appActivity = packActivity[app3.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    Console.WriteLine("\n\n当前虚拟显示屏ID：" + id[2] + " 要启动的包名：" + appActivity[1] + " 应用名：" + app3.SelectedItem.ToString());
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[2] + " --windowingMode 1 " + appActivity[1], "displayApp3");
                     Task task3 = Task.Run(() =>
                     {
@@ -522,7 +563,7 @@ namespace Scrcpy_GUI
                     });
                     nowApp = app3.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
-                    Debug.Print(app3.SelectedItem.ToString() + " " + id[2] + " " + appActivity[1]);
+                    Console.WriteLine(app3.SelectedItem.ToString() + " " + id[2] + " " + appActivity[1]);
                     check.Enabled = false;
                     return;
                 }
@@ -538,6 +579,7 @@ namespace Scrcpy_GUI
                 {
                     flag = false;
                     string[] appActivity = packActivity[app4.SelectedIndex].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    Console.WriteLine("\n\n当前虚拟显示屏ID：" + id[3] + " 要启动的包名：" + appActivity[1] + " 应用名：" + app4.SelectedItem.ToString());
                     _ = main.Cmd("bin\\adb -s " + device + " shell am start-activity -S --display " + id[3] + " --windowingMode 1 " + appActivity[1], "displayApp4");
                     Task task4 = Task.Run(() =>
                     {
@@ -545,7 +587,7 @@ namespace Scrcpy_GUI
                     });
                     nowApp = app4.SelectedItem.ToString();
                     waitScrcpy.Enabled = true;
-                    Debug.Print(app4.SelectedItem.ToString() + " " + id[3] + " " + appActivity[1]);
+                    Console.WriteLine(app4.SelectedItem.ToString() + " " + id[3] + " " + appActivity[1]);
                     check.Enabled = false;
                     return;
                 }
@@ -605,6 +647,7 @@ namespace Scrcpy_GUI
                 getResolution.Interval = 300;
                 getResolution.Enabled = false;
             }
+            Console.Write("?");
         }
 
         private void Input_KeyPress(object sender, KeyPressEventArgs e)
@@ -825,11 +868,19 @@ namespace Scrcpy_GUI
 
         private void waitScrcpy_Tick(object sender, EventArgs e)
         {
-            Debug.Print("等待" + nowApp + "窗口出现");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("等待[");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(nowApp);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("]窗口出现");
+            Console.ForegroundColor = ConsoleColor.White;
             IntPtr hWnd = FindWindow(null, nowApp);
             if (hWnd != IntPtr.Zero)
             {
-                Debug.Print("检测到了，开始下一个");
+                Console.ForegroundColor= ConsoleColor.Green;
+                Console.WriteLine("成功\n");
+                Console.ForegroundColor = ConsoleColor.White;
                 waitScrcpy.Enabled = false;
                 check.Enabled = true;
             }
