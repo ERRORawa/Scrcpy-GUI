@@ -402,6 +402,7 @@ namespace Scrcpy_GUI
                     File.Delete(appPath + "\\ver");
                 }
             });
+            version.Text = "Ver " + Application.ProductVersion;
             Start.Left = this.ClientRectangle.Width / 3 / 2 - Start.Width / 2;        //窗体对齐
             disableToolBar.Left = Start.Left + Start.Width / 2 - disableToolBar.Width /2;
             OTG.Left = disableToolBar.Left + disableToolBar.Width / 2 - OTG.Width / 2;

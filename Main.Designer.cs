@@ -194,9 +194,9 @@
             this.version.ForeColor = System.Drawing.Color.DarkGray;
             this.version.Location = new System.Drawing.Point(531, 9);
             this.version.Name = "version";
-            this.version.Size = new System.Drawing.Size(54, 20);
+            this.version.Size = new System.Drawing.Size(59, 20);
             this.version.TabIndex = 13;
-            this.version.Text = "Ver 3.4";
+            this.version.Text = "Version";
             this.version.Click += new System.EventHandler(this.version_Click);
             this.version.MouseLeave += new System.EventHandler(this.version_MouseLeave);
             this.version.MouseMove += new System.Windows.Forms.MouseEventHandler(this.version_MouseMove);
