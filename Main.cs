@@ -84,7 +84,7 @@ namespace Scrcpy_GUI
             if (Settings.Default.用OTG && !multiTask)
             {
                 MessageBox.Show("使用OTG模式时\n所有功能将无法使用\n按下Alt或切换窗口即可释放焦点", "你莫得选择！", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                command = " --otg";
+                command = " --no-video --no-audio";
             }
             else
             {
@@ -204,13 +204,13 @@ namespace Scrcpy_GUI
                     {
                         try         //gitdl代理下载Scrcpy
                         {
-                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.5/scrcpy-win64-v2.5.zip", appPath + "\\scrcpy.zip");
+                            new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v2.7/scrcpy-win64-v2.7.zip", appPath + "\\scrcpy.zip");
                         }
                         catch
                         {
                             try         //直连下载Scrcpy
                             {
-                                new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v2.5/scrcpy-win64-v2.5.zip", appPath + "\\scrcpy.zip");
+                                new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v2.7/scrcpy-win64-v2.7.zip", appPath + "\\scrcpy.zip");
                             }
                             catch
                             {
@@ -219,8 +219,9 @@ namespace Scrcpy_GUI
                             }
                         }
                         ZipFile.ExtractToDirectory(appPath + "\\scrcpy.zip", appPath);      //解压Scrcpy
-                        Directory.Move(appPath + "\\scrcpy-win64-v2.5", appPath + "\\bin");
+                        Directory.Move(appPath + "\\scrcpy-win64-v2.7", appPath + "\\bin");
                         File.Delete(appPath + "\\scrcpy.zip");
+                        _ = Cmd("echo 2.7 > " + appPath + "\\bin\\version", "touchVer");
                         Debug.Print("Scrcpy下载完成");
                     }
                     if (!Directory.Exists(appPath + "\\MultiModeSh") || !File.Exists(appPath + "\\MultiModeSh\\aapt-arm64-v8a") || !File.Exists(appPath + "\\MultiModeSh\\aapt-armeabi-v7a") || !File.Exists(appPath + "\\MultiModeSh\\pA.sh") || !File.Exists(appPath + "\\MultiModeSh\\pL.sh") || !File.Exists(appPath + "\\MultiModeSh\\div.sh"))
@@ -296,15 +297,15 @@ namespace Scrcpy_GUI
                 }
                 if (File.Exists(appPath + "\\ver"))
                 {
-                    if (ReadFile("ver")[0] != Application.ProductVersion)
+                    if (ReadFile(appPath + "\\ver")[0] != Application.ProductVersion)
                     {
-                        Debug.Print("发现新版本：" + ReadFile("ver")[0]);
-                        DialogResult update = MessageBox.Show("检查到新版本：v" + ReadFile("ver")[0] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        Debug.Print("发现新版本：" + ReadFile(appPath + "\\ver")[0]);
+                        DialogResult update = MessageBox.Show("检查到新版本：v" + ReadFile(appPath + "\\ver")[0] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (update == DialogResult.Yes)
                         {
                             try         //从gitdl代理下载更新程序
                             {
-                                new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
+                                new WebClient().DownloadFile("https://gitdl.cn/https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile(appPath + "\\ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                 Process.Start(appPath + "\\updated.exe");
                                 Debug.Print("更新完毕，重启程序");
                                 Environment.Exit(1);
@@ -313,7 +314,7 @@ namespace Scrcpy_GUI
                             {
                                 try         //直连下载更新程序
                                 {
-                                    new WebClient().DownloadFile("https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile("ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
+                                    new WebClient().DownloadFile("https://github.com/ERRORawa/Scrcpy-GUI/releases/download/v" + ReadFile(appPath + "\\ver")[0] + "/Scrcpy-GUI.exe", appPath + "\\updated.exe");
                                     Process.Start(appPath + "\\updated.exe");
                                     Debug.Print("更新完毕，重启程序");
                                     Environment.Exit(1);
@@ -323,6 +324,50 @@ namespace Scrcpy_GUI
                                     Debug.Print("下载失败");
                                     MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
+                            }
+                        }
+                    }
+                    if(!File.Exists(appPath + "\\bin\\version"))
+                    {
+                        _ = Cmd("echo " + ReadFile(appPath + "\\ver")[1] + " > " + appPath + "\\bin\\version", "touchVer");
+                    }
+                    if (ReadFile(appPath + "\\ver")[1] != ReadFile(appPath + "\\bin\\version")[0])
+                    {
+                        Debug.Print("发现新版本Scrcpy：" + ReadFile(appPath + "\\ver")[1]);
+                        DialogResult update = MessageBox.Show("检查到新版本Scrcpy：v" + ReadFile(appPath + "\\ver")[1] + "\n是否立即更新？", "要更新吗？", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (update == DialogResult.Yes)
+                        {
+                            bool flag = true;
+                            try         //从gitdl代理下载更新程序
+                            {
+                                new WebClient().DownloadFile("https://gitdl.cn/https://github.com/Genymobile/scrcpy/releases/download/v" + ReadFile(appPath + "\\ver")[1] + "/scrcpy-win64-v" + ReadFile(appPath + "\\ver")[1] + ".zip", appPath + "\\updated.zip");
+                                Debug.Print("更新完毕");
+                            }
+                            catch
+                            {
+                                try         //直连下载更新程序
+                                {
+                                    new WebClient().DownloadFile("https://github.com/Genymobile/scrcpy/releases/download/v" + ReadFile(appPath + "\\ver")[1] + "/scrcpy-win64-v" + ReadFile(appPath + "\\ver")[1] + ".zip", appPath + "\\updated.zip");
+                                    Debug.Print("更新完毕");
+                                }
+                                catch
+                                {
+                                    Debug.Print("下载失败");
+                                    MessageBox.Show("下载失败，请检查网络状态", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    flag = false;
+                                }
+                            }
+                            if (flag)
+                            {
+                                CheckDevices.Enabled = false;
+                                _ = Cmd("bin\\adb kill-server", "killadb");
+                                ZipFile.ExtractToDirectory(appPath + "\\updated.zip", appPath);      //解压Scrcpy
+                                _ = Cmd("del /f /s /q " + appPath + "\\bin", "deleteOld");
+                                Directory.Delete(appPath + "\\bin");
+                                Directory.Move(appPath + "\\scrcpy-win64-v" + ReadFile(appPath + "\\ver")[1], appPath + "\\bin");
+                                File.Delete(appPath + "\\scrcpy.zip");
+                                _ = Cmd("echo 2.7 > " + appPath + "\\bin\version", "touchVer");
+                                Debug.Print("Scrcpy下载完成");
                             }
                         }
                     }
