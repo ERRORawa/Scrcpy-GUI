@@ -88,17 +88,17 @@ namespace Scrcpy_GUI
 
         bool isFocus = true;    //判断活动窗口是否为Scrcpy
 
-        public bool alwaysOnTop = false;
+        public bool alwaysOnTop = false;    //判断是否置顶
 
         public bool disableToolBar = false;     //判断工具栏是否开启
 
-        public bool multiEnabled = false;
+        public bool multiEnabled = false;   //判断是否多任务模式
 
-        public string[] formNames = null;
+        public string[] formNames = null;     //多任务模式所有窗口名
 
         string formTitle = Settings.Default.窗口标题;       //获取Scrcpy的标题
 
-        string lastFormName = null;
+        string lastFormName = null;     //最后活动的Scrcpy窗口名
 
         IntPtr hWnd = FindWindow(null, Settings.Default.窗口标题);       //获取Scrcpy的句柄
 
@@ -115,15 +115,15 @@ namespace Scrcpy_GUI
         {
             if(multiEnabled)
             {
-                lastFormName = formNames[0];
+                lastFormName = formNames[0];    //初始化多任务模式窗口名
             }
             if (alwaysOnTop)
             {
-                this.TopMost = true;
+                this.TopMost = true;        //设置置顶
             }
             if (Settings.Default.始终显示工具栏)
             {
-                CheckMouse.Enabled = false;
+                CheckMouse.Enabled = false;     //始终显示
             }
         }
 
@@ -141,14 +141,14 @@ namespace Scrcpy_GUI
             GetWindowRect(hWnd, ref fx);        //获取窗口位置
             if (fx.Left == 0 && fx.Top == 0 && flag && windowName.ToString() != "更多")        //如果成功获取过Scrcpy的位置并且Scrcpy已关闭
             {
-                Main main = new Main()
+                Main main = new Main()     //拉起Main（只用作执行cmd命令）
                 {
                     notAtMain = true
                 };
-                if (multiEnabled)
+                if (multiEnabled)       //多任务模式
                 {
                     bool exitFlag = true;
-                    for (int i = 0; i < formNames.Length; i++)
+                    for (int i = 0; i < formNames.Length; i++)      //判断窗口是否全部关闭
                     {
                         GetWindowRect(FindWindow(null, formNames[i]), ref fx);        //获取窗口位置
                         if (fx.Left != 0 || fx.Top != 0)
@@ -156,7 +156,7 @@ namespace Scrcpy_GUI
                             exitFlag = false;
                         }
                     }
-                    if(exitFlag)
+                    if(exitFlag)        //删除虚拟显示屏
                     {
                         _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "deleteDisplay");
                     }
@@ -165,12 +165,12 @@ namespace Scrcpy_GUI
                         return;
                     }
                 }
-                _ = main.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"", "quit");
+                _ = main.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"", "quit");     //取消息屏
                 Environment.Exit(0);        //退出程序
             }
             else if (fx.Left == -8 && fx.Top == -8)         //如果Scrcpy全屏了
             {
-                if (alwaysOnTop)
+                if (alwaysOnTop)        //判断始终置顶
                 {
                     return;
                 }
@@ -247,13 +247,13 @@ namespace Scrcpy_GUI
 
         private void TopForm_Tick(object sender, EventArgs e)
         {
-            if (alwaysOnTop)
+            if (alwaysOnTop)    //判断始终置顶
             {
-                return;
+                TopForm.Enabled = false;
             }
             IntPtr foregroundForm = GetForegroundWindow();      //获取活动窗口句柄
             GetWindowText(foregroundForm, windowName, windowName.Capacity);     //获取活动窗口标题
-            if (multiEnabled)
+            if (multiEnabled)       //多任务模式
             {
                 if (windowName.ToString() == formNames[0] || windowName.ToString() == formNames[1] || windowName.ToString() == formNames[2] || windowName.ToString() == formNames[3] || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
                 {
@@ -261,9 +261,9 @@ namespace Scrcpy_GUI
                     {
                         isFocus = true;
                         IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
-                        SetForegroundWindow(toolBarhWnd);
+                        SetForegroundWindow(toolBarhWnd);       //显示工具栏
                         SetForegroundWindow(hWnd);
-                        lastFormName = windowName.ToString();
+                        lastFormName = windowName.ToString();       //设置最后活动的Scrcpy窗口名
                     }
                 }
                 else
@@ -282,7 +282,7 @@ namespace Scrcpy_GUI
                     {
                         isFocus = true;
                         IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
-                        SetForegroundWindow(toolBarhWnd);
+                        SetForegroundWindow(toolBarhWnd);       //显示工具栏
                         SetForegroundWindow(hWnd);
                     }
                 }
@@ -323,7 +323,7 @@ namespace Scrcpy_GUI
             {
                 await Task.Delay(1000);     //判断有没有把截图丢到桌面上
                 while (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + time + ".png"))
-                {
+                {       //复制截图到电脑桌面
                     selectDevices.Cmd("bin\\adb -s " + device + " pull /sdcard/" + time + ".png " + Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\" + time + ".png");
                     await Task.Delay(100);
                 }
@@ -364,7 +364,7 @@ namespace Scrcpy_GUI
             }
             else
             {
-                SetForegroundWindow(hasMore);
+                SetForegroundWindow(hasMore);        //显示More
             }
         }
 
@@ -373,20 +373,20 @@ namespace Scrcpy_GUI
             SetForegroundWindow(hWnd);      //设置Scrcpy为活动窗口
         }
 
-        private void ScreenOn_CheckedChanged(object sender, EventArgs e)
+        private void ScreenOn_CheckedChanged(object sender, EventArgs e)        //手机息屏
         {
             SetForegroundWindow(hWnd);
             IntPtr SO = FindWindow(null, "ScrcpyScreenOff");
-            if (SO.ToString() == "0")
+            if (SO.ToString() == "0")     //创建新Scrcpy窗口
             {
                 Process p = new Process();
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 p.StartInfo.FileName = "bin\\scrcpy.exe";
-                p.StartInfo.Arguments = "-s " + device + " -S --window-title=ScrcpyScreenOff";
+                p.StartInfo.Arguments = "-s " + device + " -S --window-title=ScrcpyScreenOff";  //添加息屏参数
                 p.Start();
             }
-            CheckScreenOn.Enabled = true;
-            if (ScreenOn.Checked)
+            CheckScreenOn.Enabled = true;   //定时判断息屏
+            if (ScreenOn.Checked)   //切换工具栏图标
             {
                 ScreenOn.BackgroundImage = Resource.ScreenOn;
             }
@@ -396,14 +396,14 @@ namespace Scrcpy_GUI
             }
         }
 
-        private void CheckScreenOn_Tick(object sender, EventArgs e)
+        private void CheckScreenOn_Tick(object sender, EventArgs e)     //判断息屏
         {
             IntPtr SO = FindWindow(null, "ScrcpyScreenOff");
-            if (SO.ToString() != "0")
+            if (SO.ToString() != "0")   //成功
             {
-                if (ScreenOn.Checked)
+                if (ScreenOn.Checked)   //取消息屏
                 {
-                    selectDevices.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"");
+                    selectDevices.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"");    //退出息屏Scrcpy
                     SetForegroundWindow(hWnd);
                 }
                 CheckScreenOn.Enabled = false;
