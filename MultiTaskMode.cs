@@ -55,6 +55,8 @@ namespace Scrcpy_GUI
 
         string nowApp;
 
+        String[] formNames = { "", "", "", "" };
+
         bool flag = true;
 
         bool success = false;
@@ -440,6 +442,11 @@ namespace Scrcpy_GUI
                         Environment.Exit(0);
                     }
                     success = true;
+                    ToolBar toolBar = new ToolBar()
+                    {
+                        multiEnabled = true,
+                        formNames = formNames
+                    };
                 }
                 else
                 {
@@ -462,6 +469,7 @@ namespace Scrcpy_GUI
                         Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[0] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app1.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app1.SelectedItem.ToString();
+                    formNames[0] = nowApp;
                     waitScrcpy.Enabled = true;
                     Console.WriteLine(app1.SelectedItem.ToString() + " " + id[0] + " " + appActivity[1]);
                     check.Enabled = false;
@@ -486,6 +494,7 @@ namespace Scrcpy_GUI
                         Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[1] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app2.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app2.SelectedItem.ToString();
+                    formNames[1] = nowApp;
                     waitScrcpy.Enabled = true;
                     Console.WriteLine(app2.SelectedItem.ToString() + " " + id[1] + " " + appActivity[1]);
                     check.Enabled = false;
@@ -510,6 +519,7 @@ namespace Scrcpy_GUI
                         Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[2] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app3.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app3.SelectedItem.ToString();
+                    formNames[2] = nowApp;
                     waitScrcpy.Enabled = true;
                     Console.WriteLine(app3.SelectedItem.ToString() + " " + id[2] + " " + appActivity[1]);
                     check.Enabled = false;
@@ -534,6 +544,7 @@ namespace Scrcpy_GUI
                         Cmd("bin\\scrcpy -s " + device + " --display-id=" + id[3] + " --shortcut-mod lctrl,rctrl --window-title=\"" + app4.SelectedItem.ToString() + "\" " + command);
                     });
                     nowApp = app4.SelectedItem.ToString();
+                    formNames[3] = nowApp;
                     waitScrcpy.Enabled = true;
                     Console.WriteLine(app4.SelectedItem.ToString() + " " + id[3] + " " + appActivity[1]);
                     check.Enabled = false;

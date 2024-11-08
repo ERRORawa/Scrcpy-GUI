@@ -92,7 +92,13 @@ namespace Scrcpy_GUI
 
         public bool disableToolBar = false;     //判断工具栏是否开启
 
+        public bool multiEnabled = false;
+
+        public string[] formNames = null;
+
         string formTitle = Settings.Default.窗口标题;       //获取Scrcpy的标题
+
+        string lastFormName = null;
 
         IntPtr hWnd = FindWindow(null, Settings.Default.窗口标题);       //获取Scrcpy的句柄
 
@@ -105,14 +111,60 @@ namespace Scrcpy_GUI
             InitializeComponent();
         }
 
+        private void ToolBar_Load(object sender, EventArgs e)
+        {
+            if(multiEnabled)
+            {
+                lastFormName = formNames[0];
+            }
+            if (alwaysOnTop)
+            {
+                this.TopMost = true;
+            }
+            if (Settings.Default.始终显示工具栏)
+            {
+                CheckMouse.Enabled = false;
+            }
+        }
+
         private void FollowScrcpy_Tick(object sender, EventArgs e)        //设置跟随Scrcpy窗体
         {
-            hWnd = FindWindow(null, formTitle);      //获取Scrcpy句柄
+            if (multiEnabled)
+            {
+                hWnd = FindWindow(null, lastFormName);      //获取Scrcpy句柄
+            }
+            else
+            {
+                hWnd = FindWindow(null, formTitle);      //获取Scrcpy句柄
+            }
             RECT fx = new RECT();       //定义窗口位置
             GetWindowRect(hWnd, ref fx);        //获取窗口位置
             if (fx.Left == 0 && fx.Top == 0 && flag && windowName.ToString() != "更多")        //如果成功获取过Scrcpy的位置并且Scrcpy已关闭
             {
-                Main main = new Main();
+                Main main = new Main()
+                {
+                    notAtMain = true
+                };
+                if (multiEnabled)
+                {
+                    bool exitFlag = true;
+                    for (int i = 0; i < formNames.Length; i++)
+                    {
+                        GetWindowRect(FindWindow(null, formNames[i]), ref fx);        //获取窗口位置
+                        if (fx.Left != 0 || fx.Top != 0)
+                        {
+                            exitFlag = false;
+                        }
+                    }
+                    if(exitFlag)
+                    {
+                        _ = main.Cmd("bin\\adb -s " + device + " shell settings delete global overlay_display_devices", "deleteDisplay");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 _ = main.Cmd("taskkill /F /fi \"windowtitle eq ScrcpyScreenOff\"", "quit");
                 Environment.Exit(0);        //退出程序
             }
@@ -201,21 +253,45 @@ namespace Scrcpy_GUI
             }
             IntPtr foregroundForm = GetForegroundWindow();      //获取活动窗口句柄
             GetWindowText(foregroundForm, windowName, windowName.Capacity);     //获取活动窗口标题
-            if (windowName.ToString() == formTitle || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
+            if (multiEnabled)
             {
-                if (!isFocus)       //显示工具栏
+                if (windowName.ToString() == formNames[0] || windowName.ToString() == formNames[1] || windowName.ToString() == formNames[2] || windowName.ToString() == formNames[3] || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
                 {
-                    isFocus = true;
-                    IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
-                    SetForegroundWindow(toolBarhWnd);
-                    SetForegroundWindow(hWnd);
+                    if (!isFocus)       //显示工具栏
+                    {
+                        isFocus = true;
+                        IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
+                        SetForegroundWindow(toolBarhWnd);
+                        SetForegroundWindow(hWnd);
+                        lastFormName = windowName.ToString();
+                    }
+                }
+                else
+                {
+                    if (isFocus)        //重置判断
+                    {
+                        isFocus = false;
+                    }
                 }
             }
             else
             {
-                if (isFocus)        //重置判断
+                if (windowName.ToString() == formTitle || windowName.ToString() == "ToolBar")        //判断窗口标题是ToolBar或者Scrcpy
                 {
-                    isFocus = false;
+                    if (!isFocus)       //显示工具栏
+                    {
+                        isFocus = true;
+                        IntPtr toolBarhWnd = FindWindow(null, "ToolBar");       //获取Scrcpy的句柄
+                        SetForegroundWindow(toolBarhWnd);
+                        SetForegroundWindow(hWnd);
+                    }
+                }
+                else
+                {
+                    if (isFocus)        //重置判断
+                    {
+                        isFocus = false;
+                    }
                 }
             }
         }
@@ -295,18 +371,6 @@ namespace Scrcpy_GUI
         private void ToolBar_Click(object sender, EventArgs e)      //点击ToolBar窗体
         {
             SetForegroundWindow(hWnd);      //设置Scrcpy为活动窗口
-        }
-
-        private void ToolBar_Load(object sender, EventArgs e)
-        {
-            if(alwaysOnTop)
-            {
-                this.TopMost = true;
-            }
-            if (Settings.Default.始终显示工具栏)
-            {
-                CheckMouse.Enabled = false;
-            }
         }
 
         private void ScreenOn_CheckedChanged(object sender, EventArgs e)
